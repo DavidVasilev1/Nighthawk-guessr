@@ -1,4 +1,6 @@
-## The Reunion Project
+## Nighthawk Guessr
+
+https://davidvasilev1.github.io/Nighthawk-guessr/
 
 Usage
 
