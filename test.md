@@ -1,7 +1,8 @@
 <html>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/7/77/Avatar_cat.png" height="256" width="256" alt="kitten" id="imageid">
+<img src="/images/map.png" id="imageid">
 
   <script>
     document.getElementById("imageid").addEventListener('click', function (event) {
@@ -14,9 +15,7 @@
       var ch=this.clientHeight
       var iw=this.naturalWidth
       var ih=this.naturalHeight
-      var px=x/cw*iw
-      var py=y/ch*ih
-      alert("mouse pos ("+x+", " + y+ ") | client image size: "+cw+" x "+ch+" | natural image size: "+iw+" x "+ih );
+      alert("mouse pos ("+x+", " +y+ ") | client image size: "+cw+" x "+ch+" | natural image size: "+iw+" x "+ih );
     });
   </script>
 
