@@ -9,7 +9,9 @@
 
 
 ## Picture Database (Ethan T.)
-
+- Used CRUD methods which have create, read, update, and delete rows in the table.  There is a function called initEasyImages which populates the 'Images' table with data.
+- The __init__ method is used to create a new row in the table with a given imagePath, xCoord, yCoord, and difficulty. The __repr__ method returns a string representation of the object when it is printed.
+-  The table has five columns: id, _imagePath, _xCoord, _yCoord, and _difficulty.
 
 
 ## Connection of Databases from Frontend to Backend (David and Alex)
