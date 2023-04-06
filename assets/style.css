@@ -29,7 +29,14 @@
 .barText {
     font-family: "FuturaBoldItalic";
     font-size: 26px;
-    position:absolute;
+    position: absolute;
     color: #F4FAF8;
     z-index: 2;
+}
+
+.home {
+    position: absolute;
+    font-family: "FuturaBoldItalic";
+    font-size: 35px;
+    z-index: 1;
 }
