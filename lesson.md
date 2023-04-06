@@ -1,7 +1,7 @@
 # Big Idea 3 (Data Structures including List, Dictionaries, 2D arrays and Iteration)
 
 ## Leaderboard Database (Kaiden and Navan)
-
+- The details related to the leaderboard database will be here. 
 
 
 ## JWT (Nikhil)
