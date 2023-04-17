@@ -1,8 +1,17 @@
 # Big Idea 3 (Data Structures including List, Dictionaries, 2D arrays and Iteration)
 
 ## Leaderboard Database (Kaiden and Navan)
-- The details related to the leaderboard database will be here. 
-
+- This is the Leaderboard Class and this part is declaring the keys for the data within the class 
+    - ![](https://user-images.githubusercontent.com/69410126/232369087-905a0d82-4bc9-44c8-8f34-1a40543b5783.png)
+- These are the setters and getters for the values: username, pointsEasy, pointsMedium, and pointsHard
+    - ![](https://user-images.githubusercontent.com/69410126/232369492-e04cf294-5805-468c-8414-402db8b85739.png)
+    - This is for the password and it also has a function to check if the password matches and a function to encrypt the password ![](https://user-images.githubusercontent.com/69410126/232369674-a6719a7a-1b44-49e0-b3cb-afbf20f7f83f.png)
+- These display the values of the Leaderboard in JSON values for analyzation, and CRUD functions later on
+    - ![](https://user-images.githubusercontent.com/69410126/232369779-f10018e9-f7ce-43cc-a2f7-3c7ee761d9aa.png)
+- These CRUD functions allow us to test out the Create, Read, Update, and Delete
+    - ![](https://user-images.githubusercontent.com/69410126/232370060-6d36173d-414e-47f0-ace6-86880603dfc7.png)
+    - This is the tester data that would populate the database in order to test the data ![](https://user-images.githubusercontent.com/69410126/232370169-b2632e88-459b-4a06-87b7-cf6b5e0d2c26.png)
+    - The try and except allows the code to continue to function even if there is an error, if there is an error, it is reported but the init_leaderboards() still initializes all of the leaderboards after the error
 
 ## Connection of Databases from Frontend to Backend (David and Alex)
 We will establish endpoints in the backend, which will ultimately connect to the frontend
