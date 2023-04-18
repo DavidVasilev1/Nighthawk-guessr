@@ -84,8 +84,17 @@
   
  <div id="container">
   <h1>NIGHTHAWKGUESSR Leaderboard</h1>
-
-  <table class="board">
+  <table class="board" id="schedule" style="width: 100%; margin-left: auto; margin-right: auto;">
+    <tr>
+      <thead>
+        <td>Name</td>
+        <td>Easy Points</td>
+        <td>Medium Points</td>
+        <td>Hard Points</td>
+      </thead>
+    </tr>
+  </table>
+  <!-- <table class="board">
     <thead>
       <td>Name</td>
       <td>Easy Points</td>
@@ -129,7 +138,7 @@
   </tr>
       
     <tbody id='tbody'></tbody>
-  </table>
+  </table> -->
 </div>
     
 </body>
@@ -200,5 +209,86 @@
           alert("Are you sure you want to leave?")
           window.location.href = '/index.html'
       }
-  </script>
+    </script>
+    <script>
+      
+      const isLocalhost = Boolean(
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "[::1]" ||
+        window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
+      )
+      const api = isLocalhost ? "http://localhost:8200" : "";
+
+      function addData(username, password, pointsEasy, pointsMedium, pointsHard){
+
+      let data = {
+        "username": username,
+        "password": password,
+        "pointsEasy": pointsEasy,
+        "pointsMedium": pointsMedium,
+        "pointsHard": pointsHard
+      }
+
+      fetch(api + '/leaderboard', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => response.json())
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+      }
+
+      const getList = async () => {
+        const list = await fetch(api + "/leaderboardList").then((r) => r.json());
+        scheduleLocal = list
+        console.log(list)
+        return list
+      };
+
+      getList().then(list => {
+        list.forEach(cls => {
+          addTask(cls.username, cls.password, cls.pointsEasy, cls.pointsMedium, cls.pointsHard)
+        })
+      })
+
+      function addTask(username, password, pointsEasy, pointsMedium, pointsHard) {
+  
+        var tableCells = [username, pointsEasy, pointsMedium, pointsHard]
+        var row = document.createElement('tr')
+        for (var i = 0; i < tableCells.length; i++) {
+          var tableCell = document.createElement('th')
+          tableCell.textContent = tableCells[i]
+          tableCell.className = 'cell'
+          if (i === 0) {
+            tableCell.id = 'period'
+          } else if (i === 1) {
+            tableCell.id = 'class'
+          } else if (i === 2) {
+            tableCell.id = 'classNum'
+          } else if (i === 3) {
+            tableCell.id = 'classStart'
+          } else if (i === 4) {
+            tableCell.id = 'classEnd'
+          }
+          row.appendChild(tableCell)
+        }
+        schedule.appendChild(row)
+      }
+
+      // clear.addEventListener("click", function(){
+      //   remove()
+      // });
+
+      // function remove() {
+      //   fetch(api + '/scheduleList', {
+      //     method: 'DELETE'
+      //   })
+      //     .then((response) => response.json())
+      // }
+      getList()
+    </script>
 </html>
