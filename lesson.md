@@ -52,9 +52,14 @@ Parser is used to look for specific data value you are searching for and then de
 
 
 ## Picture Database (Ethan T.)
+- ![image](https://user-images.githubusercontent.com/111910633/233181629-36a561c0-8ba5-4644-ac43-274c74a55dff.png)
 - Used CRUD methods which have create, read, update, and delete rows in the table.  There is a function called initEasyImages which populates the 'Images' table with data.
-- The __init__ method is used to create a new row in the table with a given imagePath, xCoord, yCoord, and difficulty. The __repr__ method returns a string representation of the object when it is printed.
+![image](https://user-images.githubusercontent.com/111910633/233180602-c81c1931-85a4-4d8e-b738-a091eb803d60.png)
 -  The table has five columns: id, _imagePath, _xCoord, _yCoord, and _difficulty.
+- ![image](https://user-images.githubusercontent.com/111910633/233181071-4442d4c3-8c54-497f-b3bf-d625e6742c05.png)
+- This part of the code defines getter and setter methods for the columns in the Images model.  It sets and retrieves the metadata of the image.  Each column has a getter method defined with the @property decorator, which allows the method to be called like an attribute. The getter simply returns the value of the corresponding attribute (e.g., self._imagePath for imagePath).
+- ![image](https://user-images.githubusercontent.com/111910633/233181852-9daeed5a-6ab7-4d46-8069-8bcf390ea07a.png)
+- The initEasyImages function initializes the database with image metadata for easy difficulty images.
 
 
 
