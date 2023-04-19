@@ -117,27 +117,6 @@
       )
       const api = isLocalhost ? "http://localhost:8200" : "";
 
-      // function addData(bytes, xCoord, yCoord){
-
-      // let data = {
-      //   "bytes": bytes,
-      //   "xCoord": xCoord,
-      //   "yCoord": yCoord
-      // }
-
-      // fetch(api + '/api/images/GetEasyImage', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify(data),
-      // })
-      //   .then((response) => response.json())
-      //   .catch((error) => {
-      //     console.error('Error:', error);
-      //   });
-      // }
-
       const getList = async () => {
         const list = await fetch(api + "/api/images/GetEasyImage").then((r) => r.json());
         return list
