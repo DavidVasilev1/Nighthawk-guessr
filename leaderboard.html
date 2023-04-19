@@ -206,7 +206,6 @@
     </script>
     <script>
       function home() {
-          alert("Are you sure you want to leave?")
           window.location.href = '/index.html'
       }
     </script>
@@ -244,8 +243,6 @@
 
       const getList = async () => {
         const list = await fetch(api + "/leaderboardList").then((r) => r.json());
-        scheduleLocal = list
-        console.log(list)
         return list
       };
 

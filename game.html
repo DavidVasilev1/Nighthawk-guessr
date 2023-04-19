@@ -7,7 +7,7 @@
     <title>Nighthawk Guessr</title>
     <link rel="stylesheet" href="./assets/style.css">
 </head>
-<body style="background-image: url('./assets/img/guess.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: cover;" onload = "resize()">
+<body style=" background-repeat: no-repeat; background-attachment: fixed; background-size: cover;" onload = "resize()">
     <img src = "./assets/svg/home.svg" id="home" onclick = "home()" width = "60" height = "60" class = "topbar" style="top: 32px; left: 0px; opacity: 0.75;">
     <img src = "./assets/svg/bar.svg" id = "bar" width = "800" height = "104" class = "topbar" style="top: 10px; left: 370px; opacity: 0.75;">
     <img src = "./assets/svg/help.svg" id="help" onclick = "//prompt window with information" width = "60" height = "60" class = "topbar" style="top: 32px; right: 0px; opacity: 0.75;">
@@ -107,5 +107,44 @@
             var ih=this.naturalHeight
             console.log("mouse pos ("+x+", " +y+ ") | client image size: "+cw+" x "+ch+" | natural image size: "+iw+" x "+ih );
         });
+    </script>
+    <script>
+        
+      const isLocalhost = Boolean(
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "[::1]" ||
+        window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
+      )
+      const api = isLocalhost ? "http://localhost:8200" : "";
+
+      // function addData(bytes, xCoord, yCoord){
+
+      // let data = {
+      //   "bytes": bytes,
+      //   "xCoord": xCoord,
+      //   "yCoord": yCoord
+      // }
+
+      // fetch(api + '/api/images/GetEasyImage', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify(data),
+      // })
+      //   .then((response) => response.json())
+      //   .catch((error) => {
+      //     console.error('Error:', error);
+      //   });
+      // }
+
+      const getList = async () => {
+        const list = await fetch(api + "/api/images/GetEasyImage").then((r) => r.json());
+        return list
+      };
+
+      getList().then(list => {
+        document.getElementsByTagName("body")[0].style = "background-image: url('data:image/png;base64, " + list.bytes +"');"
+      })
     </script>
 </html>
