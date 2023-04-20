@@ -51,12 +51,115 @@ Parser is used to look for specific data value you are searching for and then up
 Parser is used to look for specific data value you are searching for and then delete that found data fragment.
 
 ## JWT (Nikhil)
+![Screenshot 2023-04-19 at 11 10 22 PM](https://user-images.githubusercontent.com/111464993/233273969-b65fca5c-9269-4934-a93c-7ec4a4a103ec.png)
+<br>
+In this pciture there is a function called getPassAPI and the function of it is to generate a random password. 
+A function called "getPassAPI" is created, with a default password length of 3.
+An empty list called "password" is made to store the password.
+A rapid API is used to set up to get random words.
+The code asks the website for random words based on the password length.
+The random words are added to the "password" list.
+Extra random characters are added to make the password longer.
+The password list is shuffled to mix the words and characters.
+The shuffled list is combined to make the final password.
+The password is returned as the result of the function.
 
+The next few functions are just app routes routing to the html file, and generating and saving the password into a json file. 
+![Screenshot 2023-04-19 at 11 10 35 PM](https://user-images.githubusercontent.com/111464993/233273967-8a506d87-9eca-4fcf-92dd-afe65df23457.png)
+<br> 
+There are two functions, register and login, which handle user registration and login for a web application. 
+Steps for each
+register function:
+a. Creates a registration form using the RegisterForm class.
+b. If the form is valid, it hashes the password entered by the user.
+c. Creates a new user with the provided username and hashed password.
+d. Adds the new user to the database and saves the changes.
+e. Redirects the user to the login page.
+f. If the form is not valid, it displays the registration page with the form.
+
+login function:
+a. Creates a login form using the LoginForm class.
+b. If the form is valid, it checks if the entered username exists in the database.
+c. If the user exists, it checks if the entered password matches the stored password.
+d. If the password matches, it creates a token using the username and a secret key.
+e. Redirects the user to the dashboard page and stores the token in a cookie.
+f. If the username or password is incorrect, it displays the login page with the form.
+g. If the form is not valid, it displays the login page with the form.
+
+
+<br>
+
+
+![Screenshot 2023-04-19 at 11 10 49 PM](https://user-images.githubusercontent.com/111464993/233273963-a6088d75-6f63-4488-90aa-91548216951b.png)
+Just saves it to a json file. 
+
+<br>
+
+![Screenshot 2023-04-19 at 11 10 45 PM](https://user-images.githubusercontent.com/111464993/233273965-ecbd9a2b-4427-4f6d-8a20-018d48e6c4fb.png)
+
+<br>
+This code defines two functions, dashboard and logout, which handle user dashboard access and logout for a web application.
+dashboard function:
+a. The route is set to '/dashboard' with both 'GET' and 'POST' methods allowed.
+b. The @token_required decorator is used, meaning a valid token is required to access this function.
+c. If the token is valid, the function renders the 'dashboard.html' template, which is the user's dashboard page.
+
+logout function:
+a. The route is set to '/logout' with both 'GET' and 'POST' methods allowed.
+b. The @token_required decorator is used, meaning a valid token is required to access this function.
+c. The function logs out the user by calling logout_user().
+d. It then creates a response that redirects the user to the login page.
+e. The token cookie is set to expire immediately, effectively removing the token from the user's browser.
+f. The response is returned, and the user is redirected to the login page.
+
+<br>
+
+![Screenshot 2023-04-19 at 11 09 45 PM](https://user-images.githubusercontent.com/111464993/233273962-4c26a095-df29-4d4b-ab9a-7c0fd2489163.png)
+This code defines a User class and a token_required decorator function for a Flask web application.
+
+User class:
+a. Inherits from db.Model and UserMixin to create a database model for user information and provide authentication functionality.
+b. id: A primary key column with an integer type for storing unique user IDs.
+c. username: A string column with a maximum length of 20 characters for storing usernames. It cannot be empty (nullable=False) and must be unique.
+d. password: A string column with a maximum length of 80 characters for storing hashed passwords. It cannot be empty (nullable=False).
+This class is used to store user information in a database, and it helps manage user authentication.
+
+token_required function:
+a. A decorator function that takes another function f as an argument.
+b. The decorator function is defined inside token_required. It checks the token in the user's request and verifies it before executing the function f.
+c. First, it extracts the cookie from the request headers and looks for a token in the cookie. If there is no token, it returns a JSON response saying a valid token is missing.
+d. If a token is present, it tries to decode and verify the token using the app's secret key and the HS256 algorithm. If the token is valid, it retrieves the current user from the database based on the username in the token's payload.
+e. If the token is invalid or decoding fails, it returns a JSON response saying the token is invalid.
+f. If the token is valid, it executes the original function f with the current user and any other arguments or keyword arguments passed to it.
+The token_required decorator is used to protect routes that require user authentication. It ensures that only users with a valid token can access the protected resources.
+
+
+
+
+
+
+![Screenshot 2023-04-19 at 11 09 52 PM](https://user-images.githubusercontent.com/111464993/233273960-f72c048b-f062-4bb8-b834-3af736f8c75c.png)
+
+This code defines two classes, RegisterForm and LoginForm, which are Flask forms used for user registration and login. They are based on the FlaskForm class from the Flask-WTF library. 
+
+RegisterForm class:
+a. username: A StringField representing the username input field with validation rules that require it to be between 4 and 20 characters long. It also has a placeholder text "Username".
+b. password: A PasswordField representing the password input field with validation rules that require it to be between 4 and 20 characters long. It also has a placeholder text "Password".
+c. show_password: A BooleanField that allows users to show or hide the password as they type it.
+d. submit: A SubmitField representing the register button.
+e. validate_username method: A custom validation method for the username field that checks if the provided username already exists in the database. If it does, a ValidationError is raised, prompting the user to choose a different username.
+
+LoginForm class:
+a. username: A StringField representing the username input field with validation rules that require it to be between 4 and 20 characters long. It also has a placeholder text "Username".
+b. password: A PasswordField representing the password input field with validation rules that require it to be between 4 and 20 characters long. It also has a placeholder text "Password".
+c. submit: A SubmitField representing the login button.
+
+These classes are used to create and validate registration and login forms in a Flask web application. They ensure that the input provided by users meets the specified requirements and helps prevent issues related to invalid data.
 
 
 ## Picture Database (Ethan T.)
 - ![image](https://user-images.githubusercontent.com/111910633/233181629-36a561c0-8ba5-4644-ac43-274c74a55dff.png)
-- Used CRUD methods which have create, read, update, and delete rows in the table.  There is a function called initEasyImages which populates the 'Images' table with data.
+- Used CRUD methods which have create, read, update, and delete rows in the table.  There is a function     called initEasyImages which populates the 'Images' table with data.
 ![image](https://user-images.githubusercontent.com/111910633/233180602-c81c1931-85a4-4d8e-b738-a091eb803d60.png)
 -  The table has five columns: id, _imagePath, _xCoord, _yCoord, and _difficulty.
 - ![image](https://user-images.githubusercontent.com/111910633/233181071-4442d4c3-8c54-497f-b3bf-d625e6742c05.png)
