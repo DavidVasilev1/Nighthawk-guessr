@@ -11,8 +11,9 @@
 - These display the values of the Leaderboard in JSON values for analyzation, and CRUD functions later on
     - ![](https://user-images.githubusercontent.com/58792082/233268790-7b16a05c-47b9-4177-8ba7-984fd9145553.png)
 - These CRUD functions allow us to test out the Create, Read, Update, and Delete
-    - ![](https://user-images.githubusercontent.com/69410126/232370060-6d36173d-414e-47f0-ace6-86880603dfc7.png)
-    - This is the tester data that would populate the database in order to test the data ![](https://user-images.githubusercontent.com/69410126/232370169-b2632e88-459b-4a06-87b7-cf6b5e0d2c26.png)
+    - ![](https://user-images.githubusercontent.com/58792082/233269089-7c0c5115-45a5-49b1-ab89-978ccd6d74db.png)
+- This is the tester data that would populate the database in order to test the data 
+    - ![](https://user-images.githubusercontent.com/69410126/232370169-b2632e88-459b-4a06-87b7-cf6b5e0d2c26.png)
     - The try and except allows the code to continue to function even if there is an error, if there is an error, it is reported but the init_leaderboards() still initializes all of the leaderboards after the error
 
 ## Connection of Databases from Frontend to Backend (David and Alex)
