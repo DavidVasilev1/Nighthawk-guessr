@@ -6,8 +6,8 @@
 
 - These are the setters and getters for the values: username, pointsEasy, pointsMedium, and pointsHard
     - ![](https://user-images.githubusercontent.com/58792082/233268298-a2643fd3-9b52-40fc-81a3-e0cb4de9d89b.png)
-
-    - This is for the password and it also has a function to check if the password matches and a function to encrypt the password ![](https://user-images.githubusercontent.com/69410126/232369674-a6719a7a-1b44-49e0-b3cb-afbf20f7f83f.png)
+    - This is for the password and it also has a function to check if the password matches and a function to encrypt the password 
+    - ![](https://user-images.githubusercontent.com/58792082/233268610-1bb0e439-e316-4a7f-b5da-3ee323ce2057.png)
 - These display the values of the Leaderboard in JSON values for analyzation, and CRUD functions later on
     - ![](https://user-images.githubusercontent.com/69410126/232369779-f10018e9-f7ce-43cc-a2f7-3c7ee761d9aa.png)
 - These CRUD functions allow us to test out the Create, Read, Update, and Delete
