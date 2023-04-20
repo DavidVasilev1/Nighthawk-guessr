@@ -2,7 +2,8 @@
 
 ## Leaderboard Database (Kaiden and Navan)
 - This is the Leaderboard Class and this part is declaring the keys for the data within the class 
-    - ![](https://user-images.githubusercontent.com/69410126/232369087-905a0d82-4bc9-44c8-8f34-1a40543b5783.png)
+    - ![](https://user-images.githubusercontent.com/58792082/233266574-d205a5ce-da6e-4050-84d7-154da8f85670.png)
+
 - These are the setters and getters for the values: username, pointsEasy, pointsMedium, and pointsHard
     - ![](https://user-images.githubusercontent.com/69410126/232369492-e04cf294-5805-468c-8414-402db8b85739.png)
     - This is for the password and it also has a function to check if the password matches and a function to encrypt the password ![](https://user-images.githubusercontent.com/69410126/232369674-a6719a7a-1b44-49e0-b3cb-afbf20f7f83f.png)
