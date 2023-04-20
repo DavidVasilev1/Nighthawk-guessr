@@ -13,7 +13,7 @@
 - These CRUD functions allow us to test out the Create, Read, Update, and Delete
     - ![](https://user-images.githubusercontent.com/58792082/233269089-7c0c5115-45a5-49b1-ab89-978ccd6d74db.png)
 - This is the tester data that would populate the database in order to test the data 
-    - ![](https://user-images.githubusercontent.com/69410126/232370169-b2632e88-459b-4a06-87b7-cf6b5e0d2c26.png)
+    - ![](https://user-images.githubusercontent.com/58792082/233269462-5797df24-7d99-48fa-829d-d98a71dd5fbe.png)
     - The try and except allows the code to continue to function even if there is an error, if there is an error, it is reported but the init_leaderboards() still initializes all of the leaderboards after the error
 
 ## Connection of Databases from Frontend to Backend (David and Alex)
