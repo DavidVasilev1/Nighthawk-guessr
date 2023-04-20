@@ -9,7 +9,7 @@
     - This is for the password and it also has a function to check if the password matches and a function to encrypt the password 
     - ![](https://user-images.githubusercontent.com/58792082/233268610-1bb0e439-e316-4a7f-b5da-3ee323ce2057.png)
 - These display the values of the Leaderboard in JSON values for analyzation, and CRUD functions later on
-    - ![](https://user-images.githubusercontent.com/69410126/232369779-f10018e9-f7ce-43cc-a2f7-3c7ee761d9aa.png)
+    - ![](https://user-images.githubusercontent.com/58792082/233268790-7b16a05c-47b9-4177-8ba7-984fd9145553.png)
 - These CRUD functions allow us to test out the Create, Read, Update, and Delete
     - ![](https://user-images.githubusercontent.com/69410126/232370060-6d36173d-414e-47f0-ace6-86880603dfc7.png)
     - This is the tester data that would populate the database in order to test the data ![](https://user-images.githubusercontent.com/69410126/232370169-b2632e88-459b-4a06-87b7-cf6b5e0d2c26.png)
