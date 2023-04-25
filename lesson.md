@@ -158,6 +158,7 @@ These classes are used to create and validate registration and login forms in a 
 
 
 ## Picture Database (Ethan T.)
+- We have the image database because we need a method of storing image metadata such as the correct coordinates of the location of the photos and the relative path to the images stored in our backend
 - ![image](https://user-images.githubusercontent.com/111910633/233181629-36a561c0-8ba5-4644-ac43-274c74a55dff.png)
 - Used CRUD methods which have create, read, update, and delete rows in the table.  There is a function     called initEasyImages which populates the 'Images' table with data.
 ![image](https://user-images.githubusercontent.com/111910633/233180602-c81c1931-85a4-4d8e-b738-a091eb803d60.png)
@@ -172,6 +173,11 @@ These classes are used to create and validate registration and login forms in a 
 - Creates a list of all the image objects containing the iamge metadata
 - Tries to create the image
 
+# Popcorn Hacks
+- The __init__ method initializes a new Images object with the following parameters: imagePath, xCoord, yCoord, and __________.
+- In the Images class, the __tablename__ attribute specifies the name of the ________.
+- The update method updates the values of the object's attributes imagePath, xCoord, yCoord, and difficulty based on the input parameters, and then uses the db.session.commit method to __________ the changes to the database.
+- The db module used in this code is part of a larger library called ____________, which provides a set of tools for working with databases in Python.
 
 ### Picture (Alex)
 
