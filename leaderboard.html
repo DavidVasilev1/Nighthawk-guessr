@@ -242,7 +242,7 @@
       }
 
       const getList = async () => {
-        const list = await fetch(api + "/leaderboardTop10").then((r) => r.json());
+        const list = await fetch(api + "/leaderboardList").then((r) => r.json());
         let users = Object.entries(list);
         console.log(users)
         return list
@@ -250,13 +250,13 @@
 
       getList().then(list => {
         list.forEach(cls => {
-          addTask(cls.key, cls.value)
+          addTask(cls.username, cls.pointsEasy, cls.pointsMedium, cls.pointsHard)
         })
       })
 
-      function addTask(key, value) {
+      function addTask(username, pointsEasy, pointsMedium, pointsHard) {
   
-        var tableCells = [key, value]
+        var tableCells = [username, pointsEasy, pointsMedium, pointsHard]
         var row = document.createElement('tr')
         for (var i = 0; i < tableCells.length; i++) {
           var tableCell = document.createElement('th')
