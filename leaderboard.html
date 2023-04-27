@@ -243,8 +243,6 @@
 
       const getList = async () => {
         const list = await fetch(api + "/leaderboardList").then((r) => r.json());
-        let users = Object.entries(list);
-        console.log(users)
         return list
       };
 
