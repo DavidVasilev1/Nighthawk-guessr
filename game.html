@@ -7,22 +7,13 @@
     <title>Nighthawk Guessr</title>
     <link rel="stylesheet" href="./assets/style.css">
 </head>
-<body onload = "resize()">
-    <img src = "./assets/img/guess.jpg" style="background-repeat: no-repeat; background-attachment: fixed; background-size: cover; blur(4px);">
-    <img src = "./assets/svg/home.svg" id="home" onclick = "leave('prompt')" width = "60" height = "60" class = "topbarButtons" style="top: 32px; left: 0px; opacity: 0.75;pointer-events: all;filter: blur(0px);">
+<body style="background-image: url('./assets/img/guess.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: cover;" onload = "resize()">
     <img src = "./assets/svg/bar.svg" id = "bar" width = "800" height = "104" class = "topbar" style="top: 10px; left: 370px; opacity: 0.75;pointer-events: all;filter: blur(0px);">
     <img src = "./assets/svg/help.svg" id="help" onclick = "//prompt window with information" width = "60" height = "60" class = "topbarButtons" style="top: 32px; right: 0px; opacity: 0.75;pointer-events: all;filter: blur(0px);">
+    <img src = "./assets/svg/home.svg" id="home" onclick = "leave('prompt')" width = "60" height = "60" class = "topbarButtons" style="top: 32px; left: 0px; opacity: 0.75;pointer-events: all;filter: blur(0px);">
     <img src = "./assets/img/map.png" id="map" class = "map" onclick = "//placepin" width = "400" height = "400" class = "topbar" style="top: 375px; left: 1120px; border-radius:50px;pointer-events: all;filter: blur(0px);">
     <img src = "./assets/svg/pin.svg" id="pin" width = "21" height = "35" class = "topbar" style="opacity: 0; pointer-events: all;filter: blur(0px);">
     <img src = "./assets/svg/submit.svg" id="submit" onclick = "sendPin()" width = "400" height = "47" class = "topbarButtons" style="top: 790px; left: 1120px; opacity: 0.5;pointer-events: all;filter: blur(0px);">
-
-    <div id="Help">
-
-    </div>
-    <div id="leavePrompt">
-        <img src = "./assets/svg/leavePrompt.svg" id="leavePromptBox" class="leave" width="500" height="250"  style="top:307px;left:518px;opacity:0;pointer-events:none;">
-        <img src = "./assets/svg/leavePromptNo.svg" id="leavePromptBoxNo" class="leaveOption" width="175" height="88"  style="top:450px;left:563px;opacity:0;pointer-events:none;" onclick="leave('no')">
-        <img src = "./assets/svg/leavePromptYes.svg" id="leavePromptBoxYes" class="leaveOption" width="175" height="88"  style="top:450px;left:798px;opacity:0;pointer-events:none;" onclick="document.location.href = './index.html';">
 
     </div>
     <div class = "barText" id="mapText" style="top:60px; left:393px;pointer-events: all;filter: blur(0px);">DEL NORTE</div>
@@ -186,5 +177,23 @@
                 sendPin()
             }
         }
+    </script>
+    <script>
+        
+      const isLocalhost = Boolean(
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "[::1]" ||
+        window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
+      )
+      const api = isLocalhost ? "http://localhost:8200" : "";
+
+      const getList = async () => {
+        const list = await fetch(api + "/api/images/GetEasyImage").then((r) => r.json());
+        return list
+      };
+
+      getList().then(list => {
+        document.getElementsByTagName("body")[0].style = "background-image: url('data:image/png;base64, " + list.bytes +"');"
+      })
     </script>
 </html>

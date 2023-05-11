@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+
+
+
+    <style>
+       body {
+  background-color: #f7f7f7;
+  font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-top: 5rem;
+  margin-bottom: 3rem;
+  color: #2d3e50;
+  position: absolute;
+  top:10%;
+  right:50%;
+  transform:translate(50% ,0)
+}
+
+a {
+  display: inline-block;
+  margin: 2rem 0;
+  padding: 1.5rem 3rem;
+  border: none;
+  border-radius: 30px;
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #fff;
+  background-color: #2ecc71;
+  box-shadow: 0 6px 20px rgba(46, 204, 113, 0.5);
+  transition: all 0.3s ease-in-out;
+}
+
+
+
+.loginhomepage {
+  background-color: grey;
+  position: absolute;
+  top:30%;
+  right:50%;
+  transform:translate(50% ,0)
+}
+
+.registerhomepage {
+  background-color: grey;
+  position: absolute;
+  top:50%;
+  right:50%;
+  transform:translate(50% ,0)
+}
+
+    </style>
+
+
+</head>
+
+<body>
+    <h1>Learn Today</h1>
+    <a class = "loginhomepage" href="{{ url_for('login') }}">Login </a><br>
+    <a class = "registerhomepage" href="{{ url_for('register') }}">Register </a><br>
+
+
+    
+</body>
+
+
+</html>
