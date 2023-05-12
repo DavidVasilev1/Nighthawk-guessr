@@ -77,6 +77,7 @@
         <td>Easy Points</td>
         <td>Medium Points</td>
         <td>Hard Points</td>
+        <td>Total Points</td>
       </thead>
     </tr>
   </table>
@@ -204,29 +205,6 @@
       )
       const api = isLocalhost ? "http://localhost:8200" : "";
 
-      function addData(username, password, pointsEasy, pointsMedium, pointsHard){
-
-      let data = {
-        "username": username,
-        "password": password,
-        "pointsEasy": pointsEasy,
-        "pointsMedium": pointsMedium,
-        "pointsHard": pointsHard
-      }
-
-      fetch(api + '/api/leaderboard', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-        .then((response) => response.json())
-        .catch((error) => {
-          console.error('Error:', error);
-        });
-      }
-
       const getList = async () => {
         const list = await fetch(api + "/api/leaderboard/leaderboardTop10").then((r) => r.json());
         console.log(list);
@@ -235,29 +213,18 @@
 
       getList().then(list => {
         list.forEach(cls => {
-          addTask(cls.username, cls.pointsEasy, cls.pointsMedium, cls.pointsHard)
+          addTask(cls.username, cls.total, cls.Easy, cls.Medium, cls.Hard)
         })
       })
 
-      function addTask(username, pointsEasy, pointsMedium, pointsHard) {
+      function addTask(username, total, pointsEasy, pointsMedium, pointsHard) {
   
-        var tableCells = [username, pointsEasy, pointsMedium, pointsHard]
+        var tableCells = [username, pointsEasy, pointsMedium, pointsHard, total]
         var row = document.createElement('tr')
         for (var i = 0; i < tableCells.length; i++) {
           var tableCell = document.createElement('td')
           tableCell.textContent = tableCells[i]
           tableCell.className = 'cell'
-          if (i === 0) {
-            tableCell.id = 'period'
-          } else if (i === 1) {
-            tableCell.id = 'class'
-          } else if (i === 2) {
-            tableCell.id = 'classNum'
-          } else if (i === 3) {
-            tableCell.id = 'classStart'
-          } else if (i === 4) {
-            tableCell.id = 'classEnd'
-          }
           row.appendChild(tableCell)
         }
         schedule.appendChild(row)
