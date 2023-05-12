@@ -1,100 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-
-
-
-    <style>
-        body {
-  background-color: #ecf0f1;
-  font-family: 'Open Sans', sans-serif;
-}
-
-h1 {
-  margin-top: 5rem;
-  margin-bottom: 2rem;
-  text-align: center;
-  font-size: 3rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #2c3e50;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 3rem auto;
-  padding: 3rem;
-  border-radius: 5px;
-  
-}
-
-input[type="text"], input[type="password"] {
-  width: 80%;
-  max-width: 400px;
-  margin: 1rem 0;
-  padding: 1rem 2rem;
-  font-size: 1.2rem;
-  border: none;
-  border-radius: 5px;
-  background-color: #dcdde1;
-  color: #2c3e50;
-}
-
-input[type="submit"] {
-  width: 80%;
-  max-width: 400px;
-  margin: 2rem 0 1rem 0;
-  padding: 1rem;
-  font-size: 1.2rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #fff;
-  background-color: #2c3e50;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-input[type="submit"]:hover {
-  background-color: #34495e;
-}
-
-a {
-  display: block;
-  margin-top: 2rem;
-  text-align: center;
-  font-size: 1.2rem;
-  color: #2c3e50;
-  text-decoration: none;
-}
-
-a:hover {
-  color: #34495e;
-}
-
-    </style>
+    <link rel="stylesheet" type="text/css" href="assets/css/login.css">
 </head>
-
 <body>
-    <h1>Login Page</h1>
+    <form id="loginForm">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required>
 
-    <form method="POST" action="">
-        {{ form.hidden_tag() }}
-        {{ form.username }}
-        {{ form.password }}
-        {{ form.submit }}
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit">Login</button>
     </form>
-
-    <a href="{{ url_for('register') }}">Don't have an account? Sign Up</a>
+    <script src="assets/js/login.js"></script>
 </body>
+<script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
 
+    let username = document.getElementById('username').value;
+    let password = document.getElementById('password').value;
+
+    fetch('http://localhost:8200/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            username: username,
+            password: password
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.token) {
+            // Store the JWT token in localStorage
+            localStorage.setItem('token', data.token);
+            window.location.href = '/index.html';
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+});
+
+</script>
 </html>
