@@ -7,16 +7,18 @@
     <title>Nighthawk Guessr</title>
     <link rel="stylesheet" href="./assets/style.css">
 </head>
-<body style = "background-repeat: no-repeat; background-attachment: fixed; background-size: cover;" onload = "resize()">
-    <img src = "./assets/svg/home.svg" id="home" onclick = "home()" width = "60" height = "60" class = "topbar" style="top: 32px; left: 0px; opacity: 0.75;">
-    <img src = "./assets/svg/bar.svg" id = "bar" width = "800" height = "104" class = "topbar" style="top: 10px; left: 370px; opacity: 0.75;">
-    <img src = "./assets/svg/help.svg" id="help" onclick = "//prompt window with information" width = "60" height = "60" class = "topbar" style="top: 32px; right: 0px; opacity: 0.75;">
-    <img src = "./assets/img/map.png" id="map" class = "map" onclick = "//placepin" width = "400" height = "400" class = "topbar" style="top: 375px; left: 1120px; border-radius:50px">
-    <img src = "./assets/svg/submit.svg" id="submit" onclick = "//placepin" width = "400" height = "47" class = "topbar" style="top: 790px; left: 1120px; opacity: 0.5;">
+<body style="background-image: url('./assets/img/guess.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: cover;" onload = "resize()">
+    <img src = "./assets/svg/bar.svg" id = "bar" width = "800" height = "104" class = "topbar" style="top: 10px; left: 370px; opacity: 0.75;pointer-events: all;filter: blur(0px);">
+    <img src = "./assets/svg/help.svg" id="help" onclick = "//prompt window with information" width = "60" height = "60" class = "topbarButtons" style="top: 32px; right: 0px; opacity: 0.75;pointer-events: all;filter: blur(0px);">
+    <img src = "./assets/svg/home.svg" id="home" onclick = "leave('prompt')" width = "60" height = "60" class = "topbarButtons" style="top: 32px; left: 0px; opacity: 0.75;pointer-events: all;filter: blur(0px);">
+    <img src = "./assets/img/map.png" id="map" class = "map" onclick = "//placepin" width = "400" height = "400" class = "topbar" style="top: 375px; left: 1120px; border-radius:50px;pointer-events: all;filter: blur(0px);">
+    <img src = "./assets/svg/pin.svg" id="pin" width = "21" height = "35" class = "topbar" style="opacity: 0; pointer-events: all;filter: blur(0px);">
+    <img src = "./assets/svg/submit.svg" id="submit" onclick = "sendPin()" width = "400" height = "47" class = "topbarButtons" style="top: 790px; left: 1120px; opacity: 0.5;pointer-events: all;filter: blur(0px);">
 
-    <div class = "barText" id="mapText" style="top:60px; left:393px;">DEL NORTE</div>
-    <div class = "barText" id="round" style="top:60px; left:746px;">1/5</div>
-    <div class = "barText" id="score" style="top:60px; left:1070px;">00,000</div>
+    </div>
+    <div class = "barText" id="mapText" style="top:60px; left:393px;pointer-events: all;filter: blur(0px);">DEL NORTE</div>
+    <div class = "barText" id="round" style="top:60px; left:746px;pointer-events: all;filter: blur(0px);">1/5</div>
+    <div class = "barText" id="score" style="top:60px; left:1070px;pointer-events: all;filter: blur(0px);">00,000</div>
 </body>
     <script>
     function dynamic_Positioning(idName, origionalTop, origionalLeft, size) {
@@ -75,26 +77,19 @@
         // MENU BUTTONS RESIZE
 
         // MAP RESIZE
+        dynamic_imgSize('pin', 21, 35, 0, 0, size)
         dynamic_imgSize('map', 400, 400, 375, 1120, size)
         dynamic_imgSize('submit', 400, 47, 790, 1120, size)
-        // MENU RESIZE
-    }
-    </script>
-    <script>
-    window.addEventListener('mousemove', mouseCoordinates);
-    function mouseCoordinates(event){
-        x = event.pageX
-        y = event.pageY
-        clix = event.clientX
-        cliy = event.clientY
-    }
-    </script>
-    <script>
-        function home() {
-            alert("Are you sure you want to leave?")
-            window.location.href = '/index.html'
-        }
+        // MAP RESIZE
 
+        // LEAVE RESIZE
+        dynamic_imgSize('leavePromptBox', 500, 250, 307, 518, size)
+        dynamic_imgSize('leavePromptBoxNo', 175, 88, 450, 563, size)
+        dynamic_imgSize('leavePromptBoxYes', 175, 88, 450, 798, size)
+        // LEAVE RESIZE
+    }
+    </script>
+    <script>
         document.getElementById("map").addEventListener('click', function (event) {
             bounds=this.getBoundingClientRect();
             var left=bounds.left;
@@ -105,8 +100,83 @@
             var ch=this.clientHeight
             var iw=this.naturalWidth
             var ih=this.naturalHeight
-            console.log("mouse pos ("+x+", " +y+ ") | client image size: "+cw+" x "+ch+" | natural image size: "+iw+" x "+ih );
+            var pinY=(y + (window.innerWidth/1536)*375 - (window.innerWidth/1536)*35)
+            var pinX=(x + (window.innerWidth/1536)*1120 - (window.innerWidth/1536)*10)
+            pinLeft=x
+            pinTop=y
+            document.getElementById("pin").style.opacity = "1";
+            document.getElementById("pin").style.top = pinY + "px";
+            document.getElementById("pin").style.left = pinX + "px";
         });
+        function sendPin() {
+            console.log("pin pos ("+pinLeft+", " +pinTop+ ")");
+            // display points screen
+        }
+        function leave(option) {
+            if (option == "prompt") {
+                document.getElementById("leavePromptBox").style.opacity = "0.75";
+                document.getElementById("leavePromptBox").style.pointerEvents = "all";
+                document.getElementById("leavePromptBoxNo").style.opacity = "0.75";
+                document.getElementById("leavePromptBoxNo").style.pointerEvents = "all";
+                document.getElementById("leavePromptBoxYes").style.opacity = "0.75";
+                document.getElementById("leavePromptBoxYes").style.pointerEvents = "all";
+
+                document.getElementById("home").style.pointerEvents = "none";
+                document.getElementById("bar").style.pointerEvents = "none";
+                document.getElementById("help").style.pointerEvents = "none";
+                document.getElementById("map").style.pointerEvents = "none";
+                document.getElementById("pin").style.pointerEvents = "none";
+                document.getElementById("submit").style.pointerEvents = "none";
+                document.getElementById("mapText").style.pointerEvents = "none";
+                document.getElementById("round").style.pointerEvents = "none";
+                document.getElementById("score").style.pointerEvents = "none";
+
+                document.getElementById("home").style.filter = "blur(4px)";
+                document.getElementById("bar").style.filter = "blur(4px)";
+                document.getElementById("help").style.filter = "blur(4px)";
+                document.getElementById("map").style.filter = "blur(4px)";
+                document.getElementById("pin").style.filter = "blur(4px)";
+                document.getElementById("submit").style.filter = "blur(4px)";
+                document.getElementById("mapText").style.filter = "blur(4px)";
+                document.getElementById("round").style.filter = "blur(4px)";
+                document.getElementById("score").style.filter = "blur(4px)";
+            } else if (option == "no") {
+                document.getElementById("leavePromptBox").style.opacity = "0";
+                document.getElementById("leavePromptBox").style.pointerEvents = "none";
+                document.getElementById("leavePromptBoxNo").style.opacity = "0";
+                document.getElementById("leavePromptBoxNo").style.pointerEvents = "none";
+                document.getElementById("leavePromptBoxYes").style.opacity = "0";
+                document.getElementById("leavePromptBoxYes").style.pointerEvents = "none";
+                
+                document.getElementById("home").style.pointerEvents = "all";
+                document.getElementById("bar").style.pointerEvents = "all";
+                document.getElementById("help").style.pointerEvents = "all";
+                document.getElementById("map").style.pointerEvents = "all";
+                document.getElementById("pin").style.pointerEvents = "all";
+                document.getElementById("submit").style.pointerEvents = "all";
+                document.getElementById("mapText").style.pointerEvents = "all";
+                document.getElementById("round").style.pointerEvents = "all";
+                document.getElementById("score").style.pointerEvents = "all";
+                
+                document.getElementById("home").style.filter = "blur(0px)";
+                document.getElementById("bar").style.filter = "blur(0px)";
+                document.getElementById("help").style.filter = "blur(0px)";
+                document.getElementById("map").style.filter = "blur(0px)";
+                document.getElementById("pin").style.filter = "blur(0px)";
+                document.getElementById("submit").style.filter = "blur(0px)";
+                document.getElementById("mapText").style.filter = "blur(0px)";
+                document.getElementById("round").style.filter = "blur(0px)";
+                document.getElementById("score").style.filter = "blur(0px)";
+            }
+        }
+        document.body.onkeyup = function(e) {
+            if (e.key == " " ||
+                e.code == "Space" ||      
+                e.keyCode == 32      
+            ) {
+                sendPin()
+            }
+        }
     </script>
     <script>
         
