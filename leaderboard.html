@@ -214,7 +214,7 @@
         "pointsHard": pointsHard
       }
 
-      fetch(api + '/leaderboard', {
+      fetch(api + '/api/leaderboard', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -228,7 +228,8 @@
       }
 
       const getList = async () => {
-        const list = await fetch(api + "/leaderboardList").then((r) => r.json());
+        const list = await fetch(api + "/api/leaderboard/leaderboardTop10").then((r) => r.json());
+        console.log(list);
         return list
       };
 
