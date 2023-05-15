@@ -63,6 +63,10 @@
         var element_Right = size * origionalRight;
         element.style.right = element_Right + "px";
     }
+    window.onscroll = function() {
+        window.scrollTo(0, 0)
+        console.log("Scrolling")
+    };
     window.onresize = resize;
     function resize () {
         var current = window.innerWidth;
