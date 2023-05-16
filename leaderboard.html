@@ -25,14 +25,13 @@
     border-collapse: collapse;
     margin: 25px 0;
     margin-top: 40px;
-    width: 90%;
-    height: 50%;
+    width: 50%;
   }
   .board thead tr {
     font-size: 17pt;
     font-weight: bold;
-    background-color: #f1cc0c;
-    color: #000000;
+    background-color: #246186;
+    color: #ffffff;
     text-align: left;
   }
   .board td {
@@ -41,31 +40,18 @@
     border: none;
     height: 50px;
   }
-  .board tbody tr {
+  .board tr {
+    font-weight: bold;
     border: none;
     transition-duration: 0.3s;
+    color: #0a2f47;
+    background-color: #58a4d3;
+    border-bottom: 4px solid #2b8bc6;
+    width: 50%;
   }
-  .board tbody tr:nth-of-type(even) {
-    background-color: #333333;
-  }
-  .board tbody tr:nth-child(1) {
-    background-color: #ffb300;
-    color: black;
-  }
-  .board tbody tr:nth-child(2) {
-    background-color: #c0c0c0;
-    color: black;
-  }
-  .board tbody tr:nth-child(3) {
-    background-color: #cd7f32;
-    color: white;
-  }
-  .board tbody tr:last-of-type {
-    border-bottom: 5px solid #f1cc0c;
-  }
-  .board tbody tr:hover {
-    color: #f1cc0c;
-    background-color: #5c5c5c;
+  .board tr:hover {
+    color: #ffffff;
+    background-color: #246186;
   }
   #container {
     display: flex;
@@ -84,13 +70,14 @@
   
  <div id="container">
   <h1>NIGHTHAWKGUESSR Leaderboard</h1>
-  <table class="board" id="schedule" style="width: 100%; margin-left: auto; margin-right: auto;">
+  <table class="board" id="schedule" style="margin-left: auto; margin-right: auto;">
     <tr>
       <thead>
         <td>Name</td>
         <td>Easy Points</td>
         <td>Medium Points</td>
         <td>Hard Points</td>
+        <td>Total Points</td>
       </thead>
     </tr>
   </table>
@@ -218,61 +205,26 @@
       )
       const api = isLocalhost ? "http://localhost:8200" : "";
 
-      function addData(username, password, pointsEasy, pointsMedium, pointsHard){
-
-      let data = {
-        "username": username,
-        "password": password,
-        "pointsEasy": pointsEasy,
-        "pointsMedium": pointsMedium,
-        "pointsHard": pointsHard
-      }
-
-      fetch(api + '/leaderboard', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-        .then((response) => response.json())
-        .catch((error) => {
-          console.error('Error:', error);
-        });
-      }
-
       const getList = async () => {
-        const list = await fetch(api + "/leaderboardList").then((r) => r.json());
-        let users = Object.entries(list);
-        console.log(users)
+        const list = await fetch(api + "/api/leaderboard/leaderboardTop10").then((r) => r.json());
+        console.log(list);
         return list
       };
 
       getList().then(list => {
         list.forEach(cls => {
-          addTask(cls.username, cls.pointsEasy, cls.pointsMedium, cls.pointsHard)
+          addTask(cls.username, cls.total, cls.Easy, cls.Medium, cls.Hard)
         })
       })
 
-      function addTask(username, pointsEasy, pointsMedium, pointsHard) {
+      function addTask(username, total, pointsEasy, pointsMedium, pointsHard) {
   
-        var tableCells = [username, pointsEasy, pointsMedium, pointsHard]
+        var tableCells = [username, pointsEasy, pointsMedium, pointsHard, total]
         var row = document.createElement('tr')
         for (var i = 0; i < tableCells.length; i++) {
-          var tableCell = document.createElement('th')
+          var tableCell = document.createElement('td')
           tableCell.textContent = tableCells[i]
           tableCell.className = 'cell'
-          if (i === 0) {
-            tableCell.id = 'period'
-          } else if (i === 1) {
-            tableCell.id = 'class'
-          } else if (i === 2) {
-            tableCell.id = 'classNum'
-          } else if (i === 3) {
-            tableCell.id = 'classStart'
-          } else if (i === 4) {
-            tableCell.id = 'classEnd'
-          }
           row.appendChild(tableCell)
         }
         schedule.appendChild(row)

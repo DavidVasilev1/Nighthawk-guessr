@@ -1,0 +1,52 @@
+%%html
+<head>
+    <!-- load jQuery and DataTables syle and scripts -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+    <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+</head>
+<table id="fTable" class="table" style="width:100%">
+    <thead id="fHead">
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>pointsEasy</th>
+            <th>pointsMedium</th>
+            <th>pointsHard</th>
+        </tr>
+    </thead>
+    <tbody id="fBody"></tbody>
+</table>
+
+<script>
+
+  // Get the Stats data from the Database
+  $(document).ready(function() {
+    fetch('http://localhost:8200//leaderboard', {mode: 'cors'})
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('API response failed');
+      }
+      // Parse the JSON response of Plants data, this is returned as JSON array
+      return response.json(); 
+    })
+    .then(data => {
+      for (const row of data) {
+        // loop through each JRON array to build a Leaderboard Stats row. 
+        // Append the row to the table body
+        $('#fBody').append('<tr><td>' + 
+            row.id + '</td><td>' + 
+            row.username + '</td><td>' + 
+            row.pointsEasy + '</td><td>' + 
+            row.pointsMedium + '</td><td>' + 
+            row.pointsHard + '</td></tr>');
+      }
+      
+      // Display the table
+      $("#fTable").DataTable();
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  });
+</script>
