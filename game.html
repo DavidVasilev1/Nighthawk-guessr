@@ -126,4 +126,22 @@
         document.getElementsByTagName("body")[0].style = "background-image: url('data:image/png;base64, " + list.bytes +"');"
       })
     </script>
+    <script>
+        var countdown = 30;
+        var countdownDisplay = document.getElementById('timer');
+
+        var countdownInterval = setInterval(function() {
+            countdown--;
+            countdownDisplay.textContent = countdown;
+
+            if (countdown <= 0) {
+                clearInterval(countdownInterval);
+                countdownDisplay.textContent = "Time's up!";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
+
+    </script>
 </html>
