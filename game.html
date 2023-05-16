@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./assets/style.css">
 </head>
 <body style="" onload = "resize()">
-    <img src = "./assets/img/guess.jpg" id = "guess" width = "1767" height = "994" class = "topbar" style="top: 0px; left: 0px; opacity: 1;pointer-events: all;filter: blur(0px);">
+    <img src = "assets/img/guess.jpg" id = "guess" width = "1767" height = "994" class = "topbar" style="top: 0px; left: 0px; opacity: 1;pointer-events: all;filter: blur(0px);">
     
     <img src = "./assets/svg/bar.svg" id = "bar" width = "800" height = "104" class = "topbar" style="top: 10px; left: 370px; opacity: 0.75;pointer-events: all;filter: blur(0px);">
     <img src = "./assets/svg/help.svg" id="help" onclick = "//prompt window with information" width = "60" height = "60" class = "topbarButtons" style="top: 32px; right: 0px; opacity: 0.75;pointer-events: all;filter: blur(0px);">
@@ -206,7 +206,7 @@
       };
 
       getList().then(list => {
-        document.getElementsByTagName("body")[0].style = "background-image: url('data:image/png;base64, " + list.bytes +"');"
+        document.getElementById("guess").src = "data:image/png;base64," + list.bytes
       })
     </script>
 </html>
