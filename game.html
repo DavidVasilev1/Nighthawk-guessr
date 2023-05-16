@@ -63,6 +63,10 @@
         var element_Right = size * origionalRight;
         element.style.right = element_Right + "px";
     }
+    window.onscroll = function() {
+        window.scrollTo(0, 0)
+        console.log("Scrolling")
+    };
     window.onresize = resize;
     function resize () {
         var current = window.innerWidth;
@@ -208,5 +212,23 @@
       getList().then(list => {
         document.getElementById("guess").src = "data:image/png;base64," + list.bytes
       })
+    </script>
+    <script>
+        var countdown = 30;
+        var countdownDisplay = document.getElementById('timer');
+
+        var countdownInterval = setInterval(function() {
+            countdown--;
+            countdownDisplay.textContent = countdown;
+
+            if (countdown <= 0) {
+                clearInterval(countdownInterval);
+                countdownDisplay.textContent = "Time's up!";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
+
     </script>
 </html>

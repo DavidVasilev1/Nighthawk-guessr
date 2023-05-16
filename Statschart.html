@@ -1,0 +1,68 @@
+%%html
+<head>
+    <!-- load jQuery and Charts syle and scripts -->
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script> 
+<script type="text/javascript" src="https://cdn.canvasjs.com/jquery.canvasjs.min.js"></script> 
+</head>
+
+<script>
+
+  // Get the Stats data from the Database
+  $(document).ready(function() {
+    fetch('http://localhost:8200//leaderboard', {mode: 'cors'})
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('API response failed');
+      }
+      // Parse the JSON response of Plants data, this is returned as JSON array
+      return response.json(); 
+    })
+    .then(data => {
+      for (const row of data) {
+        // loop through each JRON array to build a Leaderboard Stats row. 
+        // Append the row to the table body
+        $('#fBody').append('<tr><td>' + 
+            row.id + '</td><td>' + 
+            row.username + '</td><td>' + 
+            row.pointsEasy + '</td><td>' + 
+            row.pointsMedium + '</td><td>' + 
+            row.pointsHard + '</td></tr>');
+      }
+      
+    $("#chartContainer").CanvasJSChart({ 
+		title: { 
+			text: "Nighthawk-guessr Stats Chart",
+			fontSize: 24
+		}, 
+		axisY: { 
+			title: "Users in %" 
+		}, 
+		legend :{ 
+			verticalAlign: "center", 
+			horizontalAlign: "right" 
+		}, 
+		data: [ 
+		{ 
+			type: "pie", 
+			showInLegend: true, 
+			toolTipContent: "{label} <br/> {y} %", 
+			indexLabel: "{y} %", 
+			dataPoints: [ 
+				{ label: "ID",  y: row.id, legendText: "ID"}, 
+				{ label: "username",    y: row.username, legendText: "username"  }, 
+				{ label: "pointsEasy",   y: row.pointsEasy,  legendText: "pointsEasy" }, 
+				{ label: "pointsMedium",       y: row.pointsMedium,  legendText: "pointsMedium"}, 
+				{ label: "pointsHard",   y: row.pointsHard,  legendText: "pointsHard" }, 
+			] 
+		} 
+		] 
+	}); 
+      
+      // Display the Chart
+      //TBD
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  });
+</script>
