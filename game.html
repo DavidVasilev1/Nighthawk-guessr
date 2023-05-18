@@ -214,15 +214,15 @@
       })
     </script>
     <script>
-  var difficulty = 'easy'; // Change this value to 'medium', 'hard', or 'easy' to adjust the difficulty
+  var difficulty = 'easy'; 
 
     var countdown; 
 if (difficulty === 'easy') {
-    countdown = 60; 
-} else if (difficulty === 'medium') {
-    countdown = 45; 
-} else if (difficulty === 'hard') {
     countdown = 30; 
+} else if (difficulty === 'medium') {
+    countdown = 20; 
+} else if (difficulty === 'hard') {
+    countdown = 10; 
 } else {
     console.log
     return; 
