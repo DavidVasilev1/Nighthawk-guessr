@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./assets/style.css">
 </head>
 <body style="" onload = "resize()">
-    <img src = "./assets/img/guess.jpg" id = "guess" width = "1767" height = "994" class = "topbar" style="top: 0px; left: 0px; opacity: 1;pointer-events: all;filter: blur(0px);">
+    <img src = "assets/img/guess.jpg" id = "guess" width = "1767" height = "994" class = "topbar" style="top: 0px; left: 0px; opacity: 1;pointer-events: all;filter: blur(0px);">
     
     <img src = "./assets/svg/bar.svg" id = "bar" width = "800" height = "104" class = "topbar" style="top: 10px; left: 370px; opacity: 0.75;pointer-events: all;filter: blur(0px);">
     <img src = "./assets/svg/help.svg" id="help" onclick = "//prompt window with information" width = "60" height = "60" class = "topbarButtons" style="top: 32px; right: 0px; opacity: 0.75;pointer-events: all;filter: blur(0px);">
@@ -63,6 +63,10 @@
         var element_Right = size * origionalRight;
         element.style.right = element_Right + "px";
     }
+    window.onscroll = function() {
+        window.scrollTo(0, 0)
+        console.log("Scrolling")
+    };
     window.onresize = resize;
     function resize () {
         var current = window.innerWidth;
@@ -206,7 +210,38 @@
       };
 
       getList().then(list => {
-        document.getElementsByTagName("body")[0].style = "background-image: url('data:image/png;base64, " + list.bytes +"');"
+        document.getElementById("guess").src = "data:image/png;base64," + list.bytes
       })
+    </script>
+    <script>
+  var difficulty = 'easy'; 
+
+    var countdown; 
+if (difficulty === 'easy') {
+    countdown = 30; 
+} else if (difficulty === 'medium') {
+    countdown = 20; 
+} else if (difficulty === 'hard') {
+    countdown = 10; 
+} else {
+    console.log
+    return; 
+}
+
+var countdownDisplay = document.getElementById('timer');
+
+var countdownInterval = setInterval(function() {
+    countdown--;
+    countdownDisplay.textContent = countdown;
+
+    if (countdown <= 0) {
+        clearInterval(countdownInterval);
+        countdownDisplay.textContent = "Time's up!";
+    }
+}, 1000);
+    </script>
+</body>
+</html>
+
     </script>
 </html>
