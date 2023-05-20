@@ -7,6 +7,34 @@
     <title>Nighthawk Guessr</title>
     <link rel="stylesheet" href="./assets/style.css">
 </head>
+<script>
+
+    window.onload = function() {
+    var token = getCookie('token');
+    if (!token) {
+        window.location.href = '/login.html';
+    }
+    
+}
+
+function getCookie(name) {
+    let cookieArr = document.cookie.split("; ");
+    
+    for(let i = 0; i < cookieArr.length; i++) {
+        let cookiePair = cookieArr[i].split("=");
+        
+        if(name == cookiePair[0]) {
+            return decodeURIComponent(cookiePair[1]);
+        }
+    }
+    return null;
+}
+//function signOut() {
+//    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+//    window.location.href = '/login.html';
+//}
+
+</script>
 <body style="background-color: #f4faf8;">
     <div class="menuText bounce" style="top: 235px;" onclick="window.location = './game.html'">PLAY</div>
     <div class="menuText bounce" style="top: 340px;">STATS</div>
@@ -17,6 +45,6 @@
     <div class="menuText bounce" style="top: 40px; left: 1175px;" onclick="window.location = './register.html'">SIGN IN</div>
     <img src = "./assets/svg/indexPhotos.svg" id="photos" width = "640" height = "640" class = "home" style="top: 112px; left: 775px; opacity: 1;">
     <img src = "./assets/svg/exit.svg" id="photos" width = "40" height = "40" class = "home" style="top: 801px; left: 1472px; opacity: 1;">
-    <div class="home" style="top: 799px; left: 1278px;">SIGN OUT</div>
+    <div class="home" style="top: 799px; left: 1278px;" onclick="signOut()">SIGN OUT</div>
 </body>
 </html>
