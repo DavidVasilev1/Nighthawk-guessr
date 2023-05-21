@@ -214,18 +214,31 @@
       })
     </script>
     <script>
-        var countdown = 30;
-        var countdownDisplay = document.getElementById('timer');
+  var difficulty = 'easy'; 
 
-        var countdownInterval = setInterval(function() {
-            countdown--;
-            countdownDisplay.textContent = countdown;
+    var countdown; 
+if (difficulty === 'easy') {
+    countdown = 30; 
+} else if (difficulty === 'medium') {
+    countdown = 20; 
+} else if (difficulty === 'hard') {
+    countdown = 10; 
+} else {
+    console.log
+    return; 
+}
 
-            if (countdown <= 0) {
-                clearInterval(countdownInterval);
-                countdownDisplay.textContent = "Time's up!";
-            }
-        }, 1000);
+var countdownDisplay = document.getElementById('timer');
+
+var countdownInterval = setInterval(function() {
+    countdown--;
+    countdownDisplay.textContent = countdown;
+
+    if (countdown <= 0) {
+        clearInterval(countdownInterval);
+        countdownDisplay.textContent = "Time's up!";
+    }
+}, 1000);
     </script>
 </body>
 </html>
