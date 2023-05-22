@@ -207,7 +207,7 @@
 
       const getList = async () => {
         const list = await fetch(api + "/api/leaderboard/leaderboardTop10").then((r) => r.json());
-        console.log(list);
+        console.log("ap",list);
         return list
       };
 

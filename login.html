@@ -2,7 +2,6 @@
 <html>
 <head>
     <title>Login</title>
-    <link rel="stylesheet" type="text/css" href="assets/css/login.css">
 </head>
 <body>
     <form id="loginForm">
@@ -14,10 +13,9 @@
 
         <button type="submit">Login</button>
     </form>
-    <script src="assets/js/login.js"></script>
 </body>
 <script>
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
+document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
     let username = document.getElementById('username').value;
@@ -31,22 +29,22 @@
         body: JSON.stringify({
             username: username,
             password: password
-        })
+        }),
+        credentials: 'include' // Here is the added line
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.token) {
-            // Store the JWT token in localStorage
-            localStorage.setItem('token', data.token);
+    .then(response => {
+        if (response.ok) {
+            // If the status code is within the success range, redirect the user to 'index.html'
+            alert("hi");
             window.location.href = '/index.html';
         } else {
-            alert(data.message);
+            // If the status code is not within the success range, convert the response to JSON and display an alert with the message from the response
+            response.json().then(data => alert(data.message));
         }
     })
     .catch((error) => {
         console.error('Error:', error);
     });
 });
-
 </script>
 </html>
