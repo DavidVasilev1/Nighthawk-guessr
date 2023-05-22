@@ -1,235 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nighthawk Guessr</title>
-    <link rel="stylesheet" href="./assets/style.css">
+    <!-- Load jQuery and DataTables styles and scripts -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>var define = null;</script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 </head>
-<body style="background-image: url('./assets/img/guess.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: cover;" onload = "resize()">
-    <img src = "./assets/svg/home.svg" id="home"onclick = "home()" width = "60" height = "60" class = "topbar" style="top: 32px; left: 0px; opacity: 0.75;">
-    <img src = "./assets/svg/help.svg" id="help" onclick = "//prompt window with information" width = "60" height = "60" class = "topbar" style="top: 32px; right: 0px; opacity: 0.75;">
+<body>
+    <table id="flaskTable" class="table" style="width:100%">
+        <thead id="flaskHead">
+            <tr>
+                <th>Username</th>
+                <th>Total Points</th>
+                <th>Easy Points</th>
+                <th>Medium Points</th>
+                <th>Hard Points</th>
+            </tr>
+        </thead>
+        <tbody id="flaskBody"></tbody>
+    </table>
 
-  <style>
-  * {
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  }
-  h1 {
-    font-size: 32pt;
-    text-align: center;
-    margin-top: 40px;
-  }
-  table.board {
-    font-size: 13pt;
-    border-collapse: collapse;
-    margin: 25px 0;
-    margin-top: 40px;
-    width: 50%;
-  }
-  .board thead tr {
-    font-size: 17pt;
-    font-weight: bold;
-    background-color: #246186;
-    color: #ffffff;
-    text-align: left;
-  }
-  .board td {
-    text-align: center;
-    padding: 12px 15px;
-    border: none;
-    height: 50px;
-  }
-  .board tr {
-    font-weight: bold;
-    border: none;
-    transition-duration: 0.3s;
-    color: #0a2f47;
-    background-color: #58a4d3;
-    border-bottom: 4px solid #2b8bc6;
-    width: 50%;
-  }
-  .board tr:hover {
-    color: #ffffff;
-    background-color: #246186;
-  }
-  #container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  #dots {
-    margin-top: -60px;
-    margin-bottom: -35px;
-    font-size: 60pt;
-    color: #f1cc0c;
-    opacity: 0.5;
-  }
-</style>
-  
- <div id="container">
-  <h1>NIGHTHAWKGUESSR Leaderboard</h1>
-  <table class="board" id="schedule" style="margin-left: auto; margin-right: auto;">
-    <tr>
-      <thead>
-        <td>Name</td>
-        <td>Easy Points</td>
-        <td>Medium Points</td>
-        <td>Hard Points</td>
-        <td>Total Points: E+2M+3H</td>
-      </thead>
-    </tr>
-  </table>
-  <!-- <table class="board">
-    <thead>
-      <td>Name</td>
-      <td>Easy Points</td>
-      <td>Medium Points</td>
-      <td>Hard Points</td>
-    </thead>
-  <tr>
-    
-    <td>Alex</td>
-     <td>500</td>
-     <td>300</td> 
-     <td>1</td>
-      
-  </tr>
-  <tr>    
-    <td>David</td>
-    <td>450</td>
-    <td>350</td>
-    <td>2</td>
-  </tr>
-  <tr>
-    
-    <td>Kaiden</td>
-    <td>300</td>
-      <td>370</td>
-      <td>3</td>
-  </tr>
-  <tr>
-    
-    <td>Kalani</td>
-    <td>250</td>
-    <td>49</td>  
-    <td>5</td>
-  </tr>
-  <tr>
-    
-    <td>Navan</td>
-    <td>160</td>
-     <td>25</td> 
-      <td>5</td>
-  </tr>
-      
-    <tbody id='tbody'></tbody>
-  </table> -->
-</div>
-    
+    <script>
+        $(document).ready(function() {
+            const isLocalhost = Boolean(
+                window.location.hostname === "localhost" ||
+                window.location.hostname === "[::1]" ||
+                window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
+            );
+
+            const api = isLocalhost ? "http://localhost:8200" : "";
+
+            fetch(api + "/api/leaderboard/leaderboardTop10", { mode: 'cors' })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('API response failed');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data)
+                    const table = $('#flaskTable').DataTable(); // Initialize DataTable
+                    for (const row of data) {
+                        table.row.add([
+                            row.username,
+                            row.total,
+                            row.Easy,
+                            row.Medium,
+                            row.Hard
+                        ]).draw(); // Add data row to the table
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+    </script>
 </body>
-    <script>
-    function dynamic_Positioning(idName, origionalTop, origionalLeft, size) {
-        var element = document.getElementById(idName);
-        var element_Top = size * origionalTop;
-        element.style.top = element_Top + "px";
-        var element_Left = size * origionalLeft;
-        element.style.left = element_Left + "px";
-    }
-    function dynamic_TextSize(className, origionalSize, size) {
-        var element_Font = size * origionalSize;
-        var elements = document.getElementsByClassName(className);
-        for (var i = 0; i < elements.length; i++) {
-            var element = elements[i];
-            element.style.fontSize = element_Font + "px";
-        }
-    }
-    function dynamic_imgSize(idName, origionalHeight, origionalWidth, origionalTop, origionalLeft, size) {
-        var element = document.getElementById(idName);
-        var element_Height = size * origionalHeight;
-        element.style.width = element_Height + "px";
-        var element_Width = size * origionalWidth;
-        element.style.height = element_Width + "px";
-        var element_Top = size * origionalTop;
-        element.style.top = element_Top + "px";
-        var element_Left = size * origionalLeft;
-        element.style.left = element_Left + "px";
-    }
-    function dynamic_imgSizeRight(idName, origionalHeight, origionalWidth, origionalTop, origionalRight, size) {
-        var element = document.getElementById(idName);
-        var element_Height = size * origionalHeight;
-        element.style.width = element_Height + "px";
-        var element_Width = size * origionalWidth;
-        element.style.height = element_Width + "px";
-        var element_Top = size * origionalTop;
-        element.style.top = element_Top + "px";
-        var element_Right = size * origionalRight;
-        element.style.right = element_Right + "px";
-    }
-    window.onresize = resize;
-    function resize () {
-        var current = window.innerWidth;
-        var size = window.innerWidth/1536;
-
-        // TOP BAR RESIZE
-        //dynamic_TextSize('barText', 26, size)
-        //dynamic_Positioning('mapText', 60, 393, size)
-        //dynamic_Positioning('round', 60, 746, size)
-        //dynamic_Positioning('score', 60, 1070, size)
-        //dynamic_imgSize('bar', 800, 104, 10, 375, size)
-        // TOP BAR RESIZE
-
-        // MENU BUTTONS RESIZE
-        dynamic_imgSize('home', 60, 60, 32, 0, size)
-        dynamic_imgSizeRight('help', 60, 60, 32, 0, size)
-        // MENU BUTTONS RESIZE
-
-        // MAP RESIZE
-        //dynamic_imgSize('map', 400, 400, 375, 1120, size)
-        dynamic_imgSize('submit', 400, 47, 790, 1120, size)
-        // MENU RESIZE
-    }
-    </script>
-    <script>
-      function home() {
-          window.location.href = '/index.html'
-      }
-    </script>
-    <script>
-      
-      const isLocalhost = Boolean(
-        window.location.hostname === "localhost" ||
-        window.location.hostname === "[::1]" ||
-        window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
-      )
-      const api = isLocalhost ? "http://localhost:8200" : "";
-
-      const getList = async () => {
-        const list = await fetch(api + "/api/leaderboard/leaderboardTop10").then((r) => r.json());
-        console.log("ap",list);
-        return list
-      };
-
-      getList().then(list => {
-        list.forEach(cls => {
-          addTask(cls.username, cls.total, cls.Easy, cls.Medium, cls.Hard)
-        })
-      })
-
-      function addTask(username, total, pointsEasy, pointsMedium, pointsHard) {
-  
-        var tableCells = [username, pointsEasy, pointsMedium, pointsHard, total]
-        var row = document.createElement('tr')
-        for (var i = 0; i < tableCells.length; i++) {
-          var tableCell = document.createElement('td')
-          tableCell.textContent = tableCells[i]
-          tableCell.className = 'cell'
-          row.appendChild(tableCell)
-        }
-        schedule.appendChild(row)
-      }
-
-      getList()
-    </script>
-</html>
