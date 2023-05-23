@@ -1,0 +1,68 @@
+%%html
+<head>
+    <!-- load jQuery and Charts syle and scripts -->
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script> 
+<script type="text/javascript" src="https://cdn.canvasjs.com/jquery.canvasjs.min.js"></script> 
+</head>
+
+<script>
+
+  // Get the Stats data from the Database
+  $(document).ready(function() {
+    fetch('http://localhost:4001/', {mode: 'cors'})
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Data not available');
+      }
+      // Parse the JSON response of Plants data, this is returned as JSON array
+      return response.json(); 
+    })
+    .then(data => {
+      for (const row of data) {
+        // loop through each JRON array to build a Leaderboard Stats row. 
+        // Append the row to the table body
+        $('#fBody').append('<tr><td>' + 
+            row.id + '</td><td>' + 
+            row.username + '</td><td>' + 
+            row.timeEasy + '</td><td>' + 
+            row.timeMedium + '</td><td>' + 
+            row.timeHard + '</td></tr>');
+      }
+      
+    $("#chartContainer").CanvasJSChart({ 
+		title: { 
+			text: "Nighthawk-guessr Time Stats Chart",
+			fontSize: 24
+		}, 
+		axisY: { 
+			title: "Users in %" 
+		}, 
+		legend :{ 
+			verticalAlign: "center", 
+			horizontalAlign: "right" 
+		}, 
+		data: [ 
+		{ 
+			type: "pie", 
+			showInLegend: true, 
+			toolTipContent: "{label} <br/> {y} %", 
+			indexLabel: "{y} %", 
+			dataPoints: [ 
+				{ label: "ID",  y: row.id, legendText: "ID"}, 
+				{ label: "username",    y: row.username, legendText: "username"  }, 
+				{ label: "timeEasy",   y: row.pointsEasy,  legendText: "timeEasy" }, 
+				{ label: "timeMedium",       y: row.pointsMedium,  legendText: "timeMedium"}, 
+				{ label: "timeHard",   y: row.pointsHard,  legendText: "timeHard" }, 
+			] 
+		} 
+		] 
+	}); 
+      
+      // Display the Chart
+      //TBD
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  });
+</script>
