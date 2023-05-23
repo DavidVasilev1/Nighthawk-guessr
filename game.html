@@ -115,8 +115,8 @@
             var ih=this.naturalHeight
             var pinY=(y + (window.innerWidth/1536)*375 - (window.innerWidth/1536)*35)
             var pinX=(x + (window.innerWidth/1536)*1120 - (window.innerWidth/1536)*10)
-            pinLeft=x
-            pinTop=y
+            pinLeft=x*1536/window.innerWidth
+            pinTop=y*1536/window.innerWidth
             document.getElementById("pin").style.opacity = "1";
             document.getElementById("pin").style.top = pinY + "px";
             document.getElementById("pin").style.left = pinX + "px";
