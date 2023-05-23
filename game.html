@@ -103,6 +103,7 @@
     }
     </script>
     <script>
+        var total = 0;
         document.getElementById("map").addEventListener('click', function (event) {
             bounds=this.getBoundingClientRect();
             var left=bounds.left;
@@ -128,17 +129,46 @@
                 window.location.hostname === "[::1]" ||
                 window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
             )
+
+            const body = {
+                "userXCoord": pinLeft, 
+                "userYCoord": pinTop, 
+                "XCoord": xCoord, 
+                "YCoord": yCoord
+            }
+
+            const headers = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(body)
+            }
+
             const api = isLocalhost ? "http://localhost:8200" : "";
 
             const getList = async () => {
-                const list = await fetch(api + "/api/images/GetEasyImage").then((r) => r.json());
-                return list
+                const list = await fetch(api + "/api/images/CalculatePoints", headers).then((r) => r.json());
+                console.log(headers);
+                return list;
             };
 
             getList().then(list => {
-                document.getElementById("guess").src = "data:image/png;base64," + list.bytes
+                console.log(list);
+                total = total + list;
+                document.getElementById("score").innerHTML = convertScoreToString();
+                console.log(total);
             })
         }
+
+        function convertScoreToString() {
+            if (typeof total !== 'number') {
+                throw new Error('Input must be a number');
+            }
+
+            return total.toLocaleString();
+        }
+
         function leave(option) {
             if (option == "prompt") {
                 document.getElementById("leavePromptBox").style.opacity = "1";
@@ -210,7 +240,7 @@
         }
     </script>
     <script>
-        
+      var xCoord = 0; var yCoord = 0;
       const isLocalhost = Boolean(
         window.location.hostname === "localhost" ||
         window.location.hostname === "[::1]" ||
@@ -224,9 +254,10 @@
       };
 
       getList().then(list => {
-        var xCoord = list.xCoord;
-        var yCoord = list.yCoord;
+        xCoord = list.xCoord;
+        yCoord = list.yCoord;
         document.getElementById("guess").src = "data:image/png;base64," + list.bytes
+        console.log(list.xCoord);
       })
     </script>
     <script>
