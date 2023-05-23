@@ -155,7 +155,7 @@
 
             getList().then(list => {
                 console.log(list);
-                total = total + list;
+                updateScoreCookie(list);
                 document.getElementById("score").innerHTML = convertScoreToString();
                 console.log(total);
             })
@@ -166,8 +166,8 @@
             if (typeof total !== 'number') {
                 throw new Error('Input must be a number');
             }
-
-            return total.toLocaleString();
+            console.log("Total Score " + total_score);
+            return total_score.toLocaleString();
         }
 
         function getTotal() {
@@ -187,9 +187,9 @@
         }
 
         function updateScoreCookie(score) {
-            let total = getCookie("total");
+            let total = getTotal();
             if (total != "") {
-                document.cookie = "total=" + parseInt(getTotal()) + score + ";"
+                document.cookie = "total=" + (parseInt(total) + parseInt(score)) + ";"
             } else {
                 document.cookie = "total=" + score + ";"
             }
@@ -283,7 +283,6 @@
         xCoord = list.xCoord;
         yCoord = list.yCoord;
         document.getElementById("guess").src = "data:image/png;base64," + list.bytes
-        console.log(list.xCoord);
       })
     </script>
     <script>
@@ -297,7 +296,6 @@ if (difficulty === 'easy') {
 } else if (difficulty === 'hard') {
     countdown = 15; 
 } else {
-    console.log
     return; 
 }
 
