@@ -123,7 +123,21 @@
         });
         function sendPin() {
             console.log("pin pos ("+pinLeft+", " +pinTop+ ")");
-            // display points screen
+            const isLocalhost = Boolean(
+                window.location.hostname === "localhost" ||
+                window.location.hostname === "[::1]" ||
+                window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
+            )
+            const api = isLocalhost ? "http://localhost:8200" : "";
+
+            const getList = async () => {
+                const list = await fetch(api + "/api/images/GetEasyImage").then((r) => r.json());
+                return list
+            };
+
+            getList().then(list => {
+                document.getElementById("guess").src = "data:image/png;base64," + list.bytes
+            })
         }
         function leave(option) {
             if (option == "prompt") {
@@ -210,6 +224,8 @@
       };
 
       getList().then(list => {
+        var xCoord = list.xCoord;
+        var yCoord = list.yCoord;
         document.getElementById("guess").src = "data:image/png;base64," + list.bytes
       })
     </script>
