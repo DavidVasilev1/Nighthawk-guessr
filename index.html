@@ -7,34 +7,7 @@
     <title>Nighthawk Guessr</title>
     <link rel="stylesheet" href="./assets/style.css">
 </head>
-<script>
 
-    window.onload = function() {
-    var token = getCookie('token');
-    if (!token) {
-        window.location.href = '/login.html';
-    }
-    
-}
-
-function getCookie(name) {
-    let cookieArr = document.cookie.split("; ");
-    
-    for(let i = 0; i < cookieArr.length; i++) {
-        let cookiePair = cookieArr[i].split("=");
-        
-        if(name == cookiePair[0]) {
-            return decodeURIComponent(cookiePair[1]);
-        }
-    }
-    return null;
-}
-//function signOut() {
-//    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-//    window.location.href = '/login.html';
-//}
-
-</script>
 <body style="background-color: #f4faf8;">
     <div class="menuText bounce" style="top: 235px;" onclick="window.location = './game.html'">PLAY</div>
     <div class="menuText bounce" style="top: 340px;">STATS</div>
@@ -47,4 +20,24 @@ function getCookie(name) {
     <img src = "./assets/svg/exit.svg" id="photos" width = "40" height = "40" class = "home" style="top: 801px; left: 1472px; opacity: 1;">
     <div class="home" style="top: 799px; left: 1278px;" onclick="signOut()">SIGN OUT</div>
 </body>
+<script>
+    fetch('https://http://127.0.0.1:8200', {
+    method: 'GET',
+    credentials: 'include', // include cookies in the request
+})
+.then(response => response.json())
+.then(data => {
+    if (data.authenticated) {
+        // if the user is authenticated, redirect to index.html
+        window.location.href = './index.html';
+    } else {
+        // if the user is not authenticated, redirect to login.html (or wherever your login page is)
+        window.location.href = './login.html';
+    }
+})
+.catch(error => {
+    console.error('Error:', error);
+});
+
+</script>
 </html>
