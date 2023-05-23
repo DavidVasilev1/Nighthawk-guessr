@@ -108,10 +108,12 @@
             document.getElementById("pin").style.top = pinY + "px";
             document.getElementById("pin").style.left = pinX + "px";
         });
+
         function sendPin() {
             console.log("pin pos ("+pinLeft+", " +pinTop+ ")");
             // display points screen
         }
+        
         function leave(option) {
             if (option == "prompt") {
                 document.getElementById("leavePromptBox").style.opacity = "0.75";
