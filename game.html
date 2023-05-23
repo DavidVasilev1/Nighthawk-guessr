@@ -162,11 +162,37 @@
         }
 
         function convertScoreToString() {
+            let total_score = parseInt(getTotal())
             if (typeof total !== 'number') {
                 throw new Error('Input must be a number');
             }
 
             return total.toLocaleString();
+        }
+
+        function getTotal() {
+            let name = "total=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for(let i = 0; i <ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function updateScoreCookie(score) {
+            let total = getCookie("total");
+            if (total != "") {
+                document.cookie = "total=" + parseInt(getTotal()) + score + ";"
+            } else {
+                document.cookie = "total=" + score + ";"
+            }
         }
 
         function leave(option) {
