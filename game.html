@@ -103,6 +103,7 @@
     }
     </script>
     <script>
+        var total = 0;
         document.getElementById("map").addEventListener('click', function (event) {
             bounds=this.getBoundingClientRect();
             var left=bounds.left;
@@ -124,9 +125,77 @@
 
         function sendPin() {
             console.log("pin pos ("+pinLeft+", " +pinTop+ ")");
-            // display points screen
+            const isLocalhost = Boolean(
+                window.location.hostname === "localhost" ||
+                window.location.hostname === "[::1]" ||
+                window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
+            )
+
+            const body = {
+                "userXCoord": pinLeft, 
+                "userYCoord": pinTop, 
+                "XCoord": xCoord, 
+                "YCoord": yCoord
+            }
+
+            const headers = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(body)
+            }
+
+            const api = isLocalhost ? "http://localhost:8200" : "";
+
+            const getList = async () => {
+                const list = await fetch(api + "/api/images/CalculatePoints", headers).then((r) => r.json());
+                console.log(headers);
+                return list;
+            };
+
+            getList().then(list => {
+                console.log(list);
+                updateScoreCookie(list);
+                document.getElementById("score").innerHTML = convertScoreToString();
+                console.log(total);
+            })
         }
-        
+
+        function convertScoreToString() {
+            let total_score = parseInt(getTotal())
+            if (typeof total !== 'number') {
+                throw new Error('Input must be a number');
+            }
+            console.log("Total Score " + total_score);
+            return total_score.toLocaleString();
+        }
+      
+        function getTotal() {
+            let name = "total=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for(let i = 0; i <ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function updateScoreCookie(score) {
+            let total = getTotal();
+            if (total != "") {
+                document.cookie = "total=" + (parseInt(total) + parseInt(score)) + ";"
+            } else {
+                document.cookie = "total=" + score + ";"
+            }
+        }
+      
         function leave(option) {
             if (option == "prompt") {
                 document.getElementById("leavePromptBox").style.opacity = "1";
@@ -198,7 +267,7 @@
         }
     </script>
     <script>
-        
+      var xCoord = 0; var yCoord = 0;
       const isLocalhost = Boolean(
         window.location.hostname === "localhost" ||
         window.location.hostname === "[::1]" ||
@@ -212,10 +281,12 @@
       };
 
       getList().then(list => {
+        xCoord = list.xCoord;
+        yCoord = list.yCoord;
         document.getElementById("guess").src = "data:image/png;base64," + list.bytes
       })
     </script>
-    <script>
+    <!-- <script>
   var difficulty = 'easy'; 
 
     var countdown; 
@@ -226,7 +297,6 @@ if (difficulty === 'easy') {
 } else if (difficulty === 'hard') {
     countdown = 15; 
 } else {
-    console.log
     return; 
 }
 
@@ -241,7 +311,7 @@ var countdownInterval = setInterval(function() {
         countdownDisplay.textContent = "Time's up!";
     }
 }, 1000);
-    </script>
+    </script> -->
 </body>
 </html>
 
