@@ -144,6 +144,7 @@
             document.getElementById("pin").style.left = pinX + "px";
         });
 
+        // sending pin location for distance calculations
         function sendPin() {
             console.log("pin pos ("+pinLeft+", " +pinTop+ ")");
             const isLocalhost = Boolean(
@@ -168,7 +169,8 @@
             }
 
             const api = isLocalhost ? "http://localhost:8200" : "";
-
+            
+            //calculating points in backend
             const getList = async () => {
                 const list = await fetch(api + "/api/images/CalculatePoints", headers).then((r) => r.json());
                 console.log(headers);
@@ -182,7 +184,7 @@
                 document.getElementById("score").innerHTML = total;
             })
         }
-
+        
         function convertScoreToString() {
             console.log(getTotal())
             let total_score = parseInt(getTotal())
@@ -405,7 +407,9 @@
         
             if (countdown <= 0) {
                 clearInterval(countdownInterval);
-                document.getElementById('timer').innerHTML = "Time's up!";
+                // stop the game somehow
+                // ex popup?
+                // but tehn I have to use more javascript
             }
         }, 1000);
     }
