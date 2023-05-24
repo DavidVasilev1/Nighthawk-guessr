@@ -1,3 +1,6 @@
+<!--Dude sorry-->
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,15 +10,19 @@
     <title>Nighthawk Guessr</title>
     <link rel="stylesheet" href="./assets/style.css">
 </head>
-<body style="" onload = "resize()">
-    <img src = "" id = "guess" class = "topbar" style="top: 0px; left: 0px; opacity: 1;pointer-events: all;filter: blur(0px);">
+<body style="" onload = "resize();count();resetScoreCookie()">
+    <img src = "" id = "guess" class = "topbar" style="top: 0px; left: 0px; opacity: 1;pointer-events: none;filter: blur(0px);">
     
-    <img src = "./assets/svg/bar.svg" id = "bar" width = "800" height = "104" class = "topbar" style="top: 10px; left: 370px; opacity: 0.75;pointer-events: all;filter: blur(0px);">
+    <img src = "./assets/svg/bar.svg" id = "bar" width = "800" height = "104" class = "topbar" style="top: 10px; left: 370px; opacity: 0.75;pointer-events: none;filter: blur(0px);">
     <img src = "./assets/svg/help.svg" id="help" onclick = "//prompt window with information" width = "60" height = "60" class = "topbarButtons" style="top: 32px; right: 0px; opacity: 0.75;pointer-events: all;filter: blur(0px);">
     <img src = "./assets/svg/home.svg" id="home" onclick = "leave('prompt')" width = "60" height = "60" class = "topbarButtons" style="top: 32px; left: 0px; opacity: 0.75;pointer-events: all;filter: blur(0px);">
     <img src = "./assets/img/map.png" id="map" class = "map" width = "400" height = "400" class = "topbar" style="top: 375px; left: 1120px; border-radius:50px;pointer-events: all;filter: blur(0px);z-index: 2;">
-    <img src = "./assets/svg/pin.svg" id="pin" width = "21" height = "35" class = "topbar" style="opacity: 0; pointer-events: all;filter: blur(0px);z-index: 3;">
+    <img src = "./assets/svg/pin.svg" id="pin" width = "21" height = "35" class = "topbar" style="opacity: 0; pointer-events: none;filter: blur(0px);z-index: 3;">
     <img src = "./assets/svg/submit.svg" id="submit" onclick = "sendPin()" width = "400" height = "47" class = "topbarButtons" style="top: 790px; left: 1120px; opacity: 0.5;pointer-events: all;filter: blur(0px);">
+    <img src = "./assets/svg/timerDropdown.svg" id="timerDropdown" width = "150" height = "88" class = "topbarButtons" style="top: 122px; left: 695px; opacity: 1;pointer-events: none;filter: blur(0px);z-index: 1;">
+    <img src = "./assets/svg/scoreflag.svg" id="scoreFlag" width = "150" height = "89" class = "topbarButtons" style="top: 15px; left: 1175px; opacity: 1;pointer-events: none;filter: blur(0px);z-index: 1;">
+    <div id = "scoreFlagText" class = "barText" style="top: 40px; left: 1221px; pointer-events: none;filter: blur(0px);z-index: 2;"></div>
+    <div id = "timer" class = "timerText" style="opacity:1;top: 125px; left: 723px; pointer-events: none;filter: blur(0px);z-index: 2;"></div>
 
     <img src = "./assets/svg/leavePrompt.svg" id="leavePromptBox" onclick = "" width = "250" height = "500" class = "" style="position: absolute; top: 790px; left: 1120px; opacity: 0;pointer-events: none;z-index: 2;">
     <img src = "./assets/svg/leavePromptYes.svg" id="leavePromptBoxYes" onclick = "window.location.href = './index.html';" width = "88" height = "175" class = "leaveOption" style="top: 790px; left: 1120px; opacity: 0;pointer-events: none;filter: blur(0px);z-index: 2;">
@@ -23,9 +30,11 @@
     
     <div class = "barText" id="mapText" style="top:60px; left:393px;pointer-events: all;filter: blur(0px);">DEL NORTE</div>
     <div class = "barText" id="round" style="top:60px; left:746px;pointer-events: all;filter: blur(0px);">1/5</div>
-    <div class = "barText" id="score" style="top:60px; left:1070px;pointer-events: all;filter: blur(0px);">00,000</div>
+    <div class = "barText" id="score" style="top:60px; left:1070px;pointer-events: all;filter: blur(0px);">0</div>
 </body>
     <script>
+    var round = 1;
+    // resizes position
     function dynamic_Positioning(idName, origionalTop, origionalLeft, size) {
         var element = document.getElementById(idName);
         var element_Top = size * origionalTop;
@@ -33,6 +42,8 @@
         var element_Left = size * origionalLeft;
         element.style.left = element_Left + "px";
     }
+
+    // resizes text
     function dynamic_TextSize(className, origionalSize, size) {
         var element_Font = size * origionalSize;
         var elements = document.getElementsByClassName(className);
@@ -41,6 +52,7 @@
             element.style.fontSize = element_Font + "px";
         }
     }
+    //resizes image display
     function dynamic_imgSize(idName, origionalHeight, origionalWidth, origionalTop, origionalLeft, size) {
         var element = document.getElementById(idName);
         var element_Height = size * origionalHeight;
@@ -52,6 +64,7 @@
         var element_Left = size * origionalLeft;
         element.style.left = element_Left + "px";
     }
+    //resizes image size
     function dynamic_imgSizeRight(idName, origionalHeight, origionalWidth, origionalTop, origionalRight, size) {
         var element = document.getElementById(idName);
         var element_Height = size * origionalHeight;
@@ -65,7 +78,6 @@
     }
     window.onscroll = function() {
         window.scrollTo(0, 0)
-        console.log("Scrolling")
     };
     window.onresize = resize;
     function resize () {
@@ -78,6 +90,11 @@
         dynamic_Positioning('round', 60, 746, size)
         dynamic_Positioning('score', 60, 1070, size)
         dynamic_imgSize('bar', 800, 104, 10, 375, size)
+        dynamic_imgSize('timerDropdown', 150, 88, 122, 695, size)
+        dynamic_TextSize('timerText', 24, size)
+        dynamic_Positioning('timer', 141, 742, size)
+        dynamic_imgSize('scoreFlag', 150, 89, 15, 1175, size)
+        dynamic_Positioning('scoreFlagText', 40, 1221, size)
         // TOP BAR RESIZE
 
         // MENU BUTTONS RESIZE
@@ -124,9 +141,113 @@
 
         function sendPin() {
             console.log("pin pos ("+pinLeft+", " +pinTop+ ")");
-            // display points screen
+            const isLocalhost = Boolean(
+                window.location.hostname === "localhost" ||
+                window.location.hostname === "[::1]" ||
+                window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
+            )
+
+            const body = {
+                "userXCoord": pinLeft, 
+                "userYCoord": pinTop, 
+                "XCoord": xCoord, 
+                "YCoord": yCoord
+            }
+
+            const headers = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(body)
+            }
+
+            const api = isLocalhost ? "http://localhost:8200" : "";
+
+            const getList = async () => {
+                const list = await fetch(api + "/api/images/CalculatePoints", headers).then((r) => r.json());
+                console.log(headers);
+                return list;
+            };
+
+            getList().then(list => {
+                console.log(list);
+                updateScoreCookie(list);
+                let total = convertScoreToString();
+                document.getElementById("score").innerHTML = total;
+            })
         }
-        
+
+        function convertScoreToString() {
+            console.log(getTotal())
+            let total_score = parseInt(getTotal())
+            console.log("Total Score " + total_score);
+            return total_score.toLocaleString();
+        }
+      
+        function getTotal() {
+            let name = "total=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for(let i = 0; i <ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function getDifficulty() {
+            let name = "difficulty=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for(let i = 0; i <ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function updateScoreCookie(score) {
+            document.getElementById("scoreFlagText").innerHTML = "+" + score; 
+            let total = getTotal();
+            if (total != "") {
+                document.cookie = "total=" + (parseInt(total) + parseInt(score)) + ";"
+            } else {
+                document.cookie = "total=" + score + ";"
+            }
+        }
+
+
+        function resetScoreCookie() {
+            document.cookie = "total=0;"
+        }
+
+        function getDifficulty() {
+            let name = "difficulty=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for(let i = 0; i <ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+      
         function leave(option) {
             if (option == "prompt") {
                 document.getElementById("leavePromptBox").style.opacity = "1";
@@ -198,49 +319,67 @@
         }
     </script>
     <script>
+    var xCoord = 0; var yCoord = 0; var round = 1;
+    function initGame() {
         
-      const isLocalhost = Boolean(
-        window.location.hostname === "localhost" ||
-        window.location.hostname === "[::1]" ||
-        window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
-      )
-      const api = isLocalhost ? "http://localhost:8200" : "";
+    }
 
-      const getList = async () => {
-        const list = await fetch(api + "/api/images/GetEasyImage").then((r) => r.json());
-        return list
-      };
+    function retrieveImage() {
+        const isLocalhost = Boolean(
+            window.location.hostname === "localhost" ||
+            window.location.hostname === "[::1]" ||
+            window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
+        )
+        const api = isLocalhost ? "http://localhost:8200" : "";
 
-      getList().then(list => {
-        document.getElementById("guess").src = "data:image/png;base64," + list.bytes
-      })
+        var endpoint = "/api/images/GetEasyImage"
+
+        
+
+        const getList = async () => {
+            const list = await fetch(api + endpoint).then((r) => r.json());
+            return list;
+        };
+
+        getList().then(list => {
+            xCoord = list.xCoord;
+            yCoord = list.yCoord;
+            document.getElementById("guess").src = "data:image/png;base64," + list.bytes;
+        })
+    }
+    retrieveImage();
     </script>
     <script>
-  var difficulty = 'easy'; 
-
-    var countdown; 
-if (difficulty === 'easy') {
-    countdown = 25; 
-} else if (difficulty === 'medium') {
-    countdown = 20; 
-} else if (difficulty === 'hard') {
-    countdown = 15; 
-} else {
-    console.log
-    return; 
-}
-
-var countdownDisplay = document.getElementById('timer');
-
-var countdownInterval = setInterval(function() {
-    countdown--;
-    countdownDisplay.textContent = countdown;
-
-    if (countdown <= 0) {
-        clearInterval(countdownInterval);
-        countdownDisplay.textContent = "Time's up!";
+    function count() {
+        difficulty = getDifficulty();
+        if (difficulty === 'easy') {
+            countdown = 180; 
+        } else if (difficulty === 'medium') {
+            countdown = 240; 
+        } else if (difficulty === 'hard') {
+            countdown = 300; 
+        } else {
+            throw new Error('Unable to retrieve difficulty');
+        }
+    
+        var countdownInterval = setInterval(function() {
+            countdown--;
+            let minutes = Math.floor(countdown/60);
+            let seconds = countdown % 60;
+            if (seconds < 10) {
+                seconds = "0"+seconds
+            }
+            let time = minutes + ":" + seconds;
+            console.log(time);
+            console.log(countdown);
+            document.getElementById('timer').innerHTML = time;
+        
+            if (countdown <= 0) {
+                clearInterval(countdownInterval);
+                document.getElementById('timer').innerHTML = "Time's up!";
+            }
+        }, 1000);
     }
-}, 1000);
     </script>
 </body>
 </html>
