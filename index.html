@@ -45,16 +45,18 @@ function getCookie(name) {
     <img src = "./assets/svg/indexPhotos.svg" id="photos1" width = "640" height = "640" class = "home" style="top: 112px; left: 775px; opacity: 1;">
     <img src = "./assets/svg/exit.svg" id="photos2" width = "40" height = "40" class = "home" style="top: 801px; left: 1472px; opacity: 1;">
     <div id="home" class="home" style="top: 799px; left: 1278px;" onclick="signOut()">SIGN OUT</div>
+
+    
 </body>
 <script>
 function leave(option) {
     if (option == "prompt") {
-        // document.getElementById("leavePromptBox").style.opacity = "1";
-        // document.getElementById("leavePromptBox").style.pointerEvents = "all";
-        // document.getElementById("leavePromptBoxNo").style.opacity = "0.75";
-        // document.getElementById("leavePromptBoxNo").style.pointerEvents = "all";
-        // document.getElementById("leavePromptBoxYes").style.opacity = "0.75";
-        // document.getElementById("leavePromptBoxYes").style.pointerEvents = "all";
+        document.getElementById("difficultyBox").style.opacity = "1";
+        document.getElementById("difficultyBox").style.pointerEvents = "all";
+        document.getElementById("difficultyBoxNo").style.opacity = "0.75";
+        document.getElementById("difficultyBoxNo").style.pointerEvents = "all";
+        document.getElementById("difficultyBoxYes").style.opacity = "0.75";
+        document.getElementById("difficultyBoxYes").style.pointerEvents = "all";
         document.getElementById("logo").style.pointerEvents = "none";
         document.getElementById("profile").style.pointerEvents = "none";
         document.getElementById("photos1").style.pointerEvents = "none";
@@ -66,23 +68,23 @@ function leave(option) {
         document.getElementById("photos2").style.filter = "blur(4px)";
         document.getElementById("home").style.filter = "blur(4px)";
     } else if (option == "no") {
-        document.getElementById("leavePromptBox").style.opacity = "0";
-        document.getElementById("leavePromptBox").style.pointerEvents = "none";
-        document.getElementById("leavePromptBoxNo").style.opacity = "0";
-        document.getElementById("leavePromptBoxNo").style.pointerEvents = "none";
-        document.getElementById("leavePromptBoxYes").style.opacity = "0";
-        document.getElementById("leavePromptBoxYes").style.pointerEvents = "none";
-        
-        document.getElementById("logo").style.pointerEvents = "none";
-        document.getElementById("profile").style.pointerEvents = "none";
-        document.getElementById("photos1").style.pointerEvents = "none";
-        document.getElementById("photos2").style.pointerEvents = "none";
-        document.getElementById("home").style.pointerEvents = "none";
-        document.getElementById("logo").style.filter = "blur(4px)";
-        document.getElementById("profile").style.filter = "blur(4px)";
-        document.getElementById("photos1").style.filter = "blur(4px)";
-        document.getElementById("photos2").style.filter = "blur(4px)";
-        document.getElementById("home").style.filter = "blur(4px)";
+        document.getElementById("difficultyBox").style.opacity = "0";
+        document.getElementById("difficultyBox").style.pointerEvents = "none";
+        document.getElementById("difficultyBoxNo").style.opacity = "0";
+        document.getElementById("difficultyBoxNo").style.pointerEvents = "none";
+        document.getElementById("difficultyBoxYes").style.opacity = "0";
+        document.getElementById("difficultyBoxYes").style.pointerEvents = "none";
+
+        document.getElementById("logo").style.pointerEvents = "all";
+        document.getElementById("profile").style.pointerEvents = "all";
+        document.getElementById("photos1").style.pointerEvents = "all";
+        document.getElementById("photos2").style.pointerEvents = "all";
+        document.getElementById("home").style.pointerEvents = "all";
+        document.getElementById("logo").style.filter = "blur(0px)";
+        document.getElementById("profile").style.filter = "blur(0px)";
+        document.getElementById("photos1").style.filter = "blur(0px)";
+        document.getElementById("photos2").style.filter = "blur(0px)";
+        document.getElementById("home").style.filter = "blur(0px)";
     }
 }
 </script>
