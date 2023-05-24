@@ -10,7 +10,7 @@
     <title>Nighthawk Guessr</title>
     <link rel="stylesheet" href="./assets/style.css">
 </head>
-<body style="" onload = "resize();count();resetScoreCookie()">
+<body style="overflow: hidden;" onload = "resize();count();resetScoreCookie()">
     <img src = "" id = "guess" class = "topbar" style="top: 0px; left: 0px; opacity: 1;pointer-events: none;filter: blur(0px);">
     
     <img src = "./assets/svg/bar.svg" id = "bar" width = "800" height = "104" class = "topbar" style="top: 10px; left: 370px; opacity: 0.75;pointer-events: none;filter: blur(0px);">
@@ -258,6 +258,8 @@
             }
             return "";
         }
+
+        
       
         function leave(option) {
             if (option == "prompt") {
