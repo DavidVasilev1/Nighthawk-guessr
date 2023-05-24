@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Login</title>
+    <link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
     <!-- <form id="loginForm">
@@ -62,5 +63,62 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
         console.error('Error:', error);
     });
 });
+</script>
+<script>
+function dynamic_TextPositioning(idName, originalLeft, originalTop, size) {
+    var element = document.getElementById(idName);
+    var element_Top = size * originalTop;
+    element.style.top = element_Top + "px";
+    var element_Left = size * originalLeft;
+    element.style.left = element_Left + "px";
+}
+function dynamic_TextSize(className, originalSize, size) {
+    var element_Font = size * originalSize;
+    var elements = document.getElementsByClassName(className);
+    for (var i = 0; i < elements.length; i++) {
+        var element = elements[i];
+        element.style.fontSize = element_Font + "px";
+    }
+}
+function dynamic_TextSizeByID(idName, originalSize, size) {
+    var element_Font = size * originalSize;
+    var element = document.getElementById(idName);
+    element.style.fontSize = element_Font + "px";
+}
+function dynamic_imgSize(idName, originalWidth, originalHeight, originalLeft, originalTop, size) {
+    var element = document.getElementById(idName);
+    var element_Height = size * originalHeight;
+    element.style.height = element_Height + "px";
+    var element_Width = size * originalWidth;
+    element.style.width = element_Width + "px";
+    var element_Top = size * originalTop;
+    element.style.top = element_Top + "px";
+    var element_Left = size * originalLeft;
+    element.style.left = element_Left + "px";
+}
+window.onresize = resize;
+function resize () {
+    var current = window.innerWidth;
+    var size = window.innerWidth/1920;
+    //login
+    dynamic_imgSize("loginbox", 600, 729, 660, 175, size);
+    
+    dynamic_TextPositioning('loginUsernameText', 712, 363, size);
+    dynamic_imgSize('loginUsernameIcon', 20, 24, 722, 393, size);
+    dynamic_TextPositioning('loginUsername', 753, 393, size);
+    dynamic_TextSizeByID('loginUsername', 20, size);
+    dynamic_imgSize('loginUsernameUnderbar', 496, 7, 712, 427, size);
+    
+    dynamic_TextPositioning('loginPasswordText', 712, 503, size);
+    dynamic_imgSize('loginPasswordIcon', 20, 24, 722, 533, size);
+    dynamic_TextPositioning('loginPassword', 753, 533, size);
+    dynamic_TextSizeByID('loginPassword', 20, size);
+    dynamic_imgSize('loginPasswordUnderbar', 496, 7, 712, 567, size);
+    
+    dynamic_imgSize('loginButton', 448, 50, 736, 644, size);
+    
+    dynamic_TextPositioning('goToSignupText', 880, 763, size);
+    dynamic_TextPositioning('goToSignUp', 919, 807, size);
+}
 </script>
 </html>
