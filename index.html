@@ -42,9 +42,9 @@ function getCookie(name) {
     <img src = "./assets/svg/logo.svg" id="logo" width = "392" class = "home" style="top: 13px; left: 40px; opacity: 1;">
     <img src = "./assets/svg/profile.svg" id="profile" width = "80" height = "80" class = "home" style="top: 20px; left: 1436px; opacity: 1;">
     <div class="menuText bounce" style="top: 40px; left: 1175px;" onclick="window.location = './register.html'">SIGN IN</div>
-    <img src = "./assets/svg/indexPhotos.svg" id="photos" width = "640" height = "640" class = "home" style="top: 112px; left: 775px; opacity: 1;">
-    <img src = "./assets/svg/exit.svg" id="photos" width = "40" height = "40" class = "home" style="top: 801px; left: 1472px; opacity: 1;">
-    <div class="home" style="top: 799px; left: 1278px;" onclick="signOut()">SIGN OUT</div>
+    <img src = "./assets/svg/indexPhotos.svg" id="photos1" width = "640" height = "640" class = "home" style="top: 112px; left: 775px; opacity: 1;">
+    <img src = "./assets/svg/exit.svg" id="photos2" width = "40" height = "40" class = "home" style="top: 801px; left: 1472px; opacity: 1;">
+    <div id="home" class="home" style="top: 799px; left: 1278px;" onclick="signOut()">SIGN OUT</div>
 </body>
 <script>
 function leave(option) {
@@ -57,8 +57,8 @@ function leave(option) {
         // document.getElementById("leavePromptBoxYes").style.pointerEvents = "all";
         document.getElementById("logo").style.pointerEvents = "none";
         document.getElementById("profile").style.pointerEvents = "none";
-        document.getElementById("bar").style.pointerEvents = "none";
-        document.getElementById("help").style.pointerEvents = "none";
+        document.getElementById("photos1").style.pointerEvents = "none";
+        document.getElementById("photos2").style.pointerEvents = "none";
         document.getElementById("map").style.pointerEvents = "none";
         document.getElementById("pin").style.pointerEvents = "none";
         document.getElementById("submit").style.pointerEvents = "none";
@@ -67,8 +67,8 @@ function leave(option) {
         document.getElementById("score").style.pointerEvents = "none";
         document.getElementById("logo").style.filter = "blur(4px)";
         document.getElementById("profile").style.filter = "blur(4px)";
-        document.getElementById("bar").style.filter = "blur(4px)";
-        document.getElementById("help").style.filter = "blur(4px)";
+        document.getElementById("photos1").style.filter = "blur(4px)";
+        document.getElementById("photos2").style.filter = "blur(4px)";
         document.getElementById("map").style.filter = "blur(4px)";
         document.getElementById("pin").style.filter = "blur(4px)";
         document.getElementById("submit").style.filter = "blur(4px)";
