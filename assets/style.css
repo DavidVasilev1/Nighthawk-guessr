@@ -121,6 +121,7 @@ input[type="password"] {
     border: none;
     outline: none;
     opacity: 0.5;
+}
 .difficultyOption {
     position: absolute;
     font-family: "FuturaBoldItalic";

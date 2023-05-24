@@ -19,10 +19,10 @@
     <img src = "./assets/img/map.png" id="map" class = "map" width = "400" height = "400" class = "topbar" style="top: 375px; left: 1120px; border-radius:50px;pointer-events: all;filter: blur(0px);z-index: 2;">
     <img src = "./assets/svg/pin.svg" id="pin" width = "21" height = "35" class = "topbar" style="opacity: 0; pointer-events: none;filter: blur(0px);z-index: 3;">
     <img src = "./assets/svg/submit.svg" id="submit" onclick = "sendPin()" width = "400" height = "47" class = "topbarButtons" style="top: 790px; left: 1120px; opacity: 0.5;pointer-events: all;filter: blur(0px);">
-    <img src = "./assets/svg/timerDropdown.svg" id="timerDropdown" width = "150" height = "88" class = "topbarButtons" style="top: 122px; left: 695px; opacity: 1;pointer-events: none;filter: blur(0px);z-index: 1;">
-    <img src = "./assets/svg/scoreflag.svg" id="scoreFlag" width = "150" height = "89" class = "topbarButtons" style="top: 15px; left: 1175px; opacity: 1;pointer-events: none;filter: blur(0px);z-index: 1;">
-    <div id = "scoreFlagText" class = "barText" style="top: 40px; left: 1221px; pointer-events: none;filter: blur(0px);z-index: 2;"></div>
-    <div id = "timer" class = "timerText" style="opacity:1;top: 125px; left: 723px; pointer-events: none;filter: blur(0px);z-index: 2;"></div>
+    <img src = "./assets/svg/timerDropdown.svg" id="timerDropdown" width = "150" height = "88" class = "topbarButtons" style="top: 102px; left: 695px; opacity: 1;pointer-events: none;filter: blur(0px);z-index: 1;">
+    <img src = "./assets/svg/scoreflag.svg" id="scoreFlag" width = "150" height = "89" class = "topbarButtons" style="top: 15px; left: 1175px; opacity: 0;pointer-events: none;filter: blur(0px);z-index: 1;">
+    <div id = "scoreFlagText" class = "barText" style="opacity:0;top: 40px; left: 1221px; pointer-events: none;filter: blur(0px);z-index: 2;"></div>
+    <div id = "timer" class = "timerText" style="opacity:1;top: 122px; left: 723px; pointer-events: none;filter: blur(0px);z-index: 2;"></div>
 
     <img src = "./assets/svg/leavePrompt.svg" id="leavePromptBox" onclick = "" width = "250" height = "500" class = "" style="position: absolute; top: 790px; left: 1120px; opacity: 0;pointer-events: none;z-index: 2;">
     <img src = "./assets/svg/leavePromptYes.svg" id="leavePromptBoxYes" onclick = "window.location.href = './index.html';" width = "88" height = "175" class = "leaveOption" style="top: 790px; left: 1120px; opacity: 0;pointer-events: none;filter: blur(0px);z-index: 2;">
@@ -90,9 +90,9 @@
         dynamic_Positioning('round', 60, 746, size)
         dynamic_Positioning('score', 60, 1070, size)
         dynamic_imgSize('bar', 800, 104, 10, 375, size)
-        dynamic_imgSize('timerDropdown', 150, 88, 122, 695, size)
+        dynamic_imgSize('timerDropdown', 150, 88, 102, 695, size)
         dynamic_TextSize('timerText', 24, size)
-        dynamic_Positioning('timer', 141, 742, size)
+        dynamic_Positioning('timer', 122, 742, size)
         dynamic_imgSize('scoreFlag', 150, 89, 15, 1175, size)
         dynamic_Positioning('scoreFlagText', 40, 1221, size)
         // TOP BAR RESIZE
@@ -117,6 +117,11 @@
         dynamic_imgSize('leavePromptBoxNo', 175, 88, 450, 563, size)
         dynamic_imgSize('leavePromptBoxYes', 175, 88, 450, 798, size)
         // LEAVE RESIZE
+    }
+    </script>
+    <script> // util
+    async function sleep(seconds) {
+        return new Promise((resolve) =>setTimeout(resolve, seconds * 1000));
     }
     </script>
     <script>
@@ -218,13 +223,19 @@
         }
 
         function updateScoreCookie(score) {
-            document.getElementById("scoreFlagText").innerHTML = "+" + score; 
+            document.getElementById("scoreFlagText").innerHTML = "+" + score;
+            document.getElementById("scoreFlag").style.opacity = "1";
+            document.getElementById("scoreFlagText").style.opacity = "1";
             let total = getTotal();
             if (total != "") {
                 document.cookie = "total=" + (parseInt(total) + parseInt(score)) + ";"
             } else {
                 document.cookie = "total=" + score + ";"
             }
+            sleep(2).then(() => {
+                document.getElementById("scoreFlag").style.opacity = "0";
+                document.getElementById("scoreFlagText").style.opacity = "0";
+            });
         }
 
 
@@ -267,6 +278,10 @@
                 document.getElementById("mapText").style.pointerEvents = "none";
                 document.getElementById("round").style.pointerEvents = "none";
                 document.getElementById("score").style.pointerEvents = "none";
+                document.getElementById("timer").style.pointerEvents = "none";
+                document.getElementById("timerDropdown").style.pointerEvents = "none";
+                document.getElementById("scoreFlag").style.pointerEvents = "none";
+                document.getElementById("scoreFlagText").style.pointerEvents = "none";
 
                 document.getElementById("guess").style.filter = "blur(4px)";
                 document.getElementById("home").style.filter = "blur(4px)";
@@ -278,6 +293,10 @@
                 document.getElementById("mapText").style.filter = "blur(4px)";
                 document.getElementById("round").style.filter = "blur(4px)";
                 document.getElementById("score").style.filter = "blur(4px)";
+                document.getElementById("timer").style.filter = "blur(4px)";
+                document.getElementById("timerDropdown").style.filter = "blur(4px)";
+                document.getElementById("scoreFlag").style.filter = "blur(4px)";
+                document.getElementById("scoreFlagText").style.filter = "blur(4px)";
             } else if (option == "no") {
                 document.getElementById("leavePromptBox").style.opacity = "0";
                 document.getElementById("leavePromptBox").style.pointerEvents = "none";
@@ -296,6 +315,10 @@
                 document.getElementById("mapText").style.pointerEvents = "all";
                 document.getElementById("round").style.pointerEvents = "all";
                 document.getElementById("score").style.pointerEvents = "all";
+                document.getElementById("timer").style.pointerEvents = "all";
+                document.getElementById("timerDropdown").style.pointerEvents = "all";
+                document.getElementById("scoreFlag").style.pointerEvents = "all";
+                document.getElementById("scoreFlagText").style.pointerEvents = "all";
                 
                 document.getElementById("guess").style.filter = "blur(0px)";
                 document.getElementById("home").style.filter = "blur(0px)";
@@ -307,6 +330,10 @@
                 document.getElementById("mapText").style.filter = "blur(0px)";
                 document.getElementById("round").style.filter = "blur(0px)";
                 document.getElementById("score").style.filter = "blur(0px)";
+                document.getElementById("timer").style.filter = "blur(0px)";
+                document.getElementById("timerDropdown").style.filter = "blur(0px)";
+                document.getElementById("scoreFlag").style.filter = "blur(0px)";
+                document.getElementById("scoreFlagText").style.filter = "blur(0px)";
             }
         }
         document.body.onkeyup = function(e) {
