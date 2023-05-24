@@ -26,6 +26,7 @@
     <div class = "barText" id="score" style="top:60px; left:1070px;pointer-events: all;filter: blur(0px);">00,000</div>
 </body>
     <script>
+    // resizes position
     function dynamic_Positioning(idName, origionalTop, origionalLeft, size) {
         var element = document.getElementById(idName);
         var element_Top = size * origionalTop;
@@ -33,6 +34,8 @@
         var element_Left = size * origionalLeft;
         element.style.left = element_Left + "px";
     }
+
+    // resizes text
     function dynamic_TextSize(className, origionalSize, size) {
         var element_Font = size * origionalSize;
         var elements = document.getElementsByClassName(className);
@@ -41,6 +44,7 @@
             element.style.fontSize = element_Font + "px";
         }
     }
+    //resizes image display
     function dynamic_imgSize(idName, origionalHeight, origionalWidth, origionalTop, origionalLeft, size) {
         var element = document.getElementById(idName);
         var element_Height = size * origionalHeight;
@@ -52,6 +56,7 @@
         var element_Left = size * origionalLeft;
         element.style.left = element_Left + "px";
     }
+    //resizes image size
     function dynamic_imgSizeRight(idName, origionalHeight, origionalWidth, origionalTop, origionalRight, size) {
         var element = document.getElementById(idName);
         var element_Height = size * origionalHeight;
