@@ -10,15 +10,19 @@
     <title>Nighthawk Guessr</title>
     <link rel="stylesheet" href="./assets/style.css">
 </head>
-<body style="" onload = "resize()">
-    <img src = "" id = "guess" class = "topbar" style="top: 0px; left: 0px; opacity: 1;pointer-events: all;filter: blur(0px);">
+<body style="" onload = "resize();count();">
+    <img src = "" id = "guess" class = "topbar" style="top: 0px; left: 0px; opacity: 1;pointer-events: none;filter: blur(0px);">
     
-    <img src = "./assets/svg/bar.svg" id = "bar" width = "800" height = "104" class = "topbar" style="top: 10px; left: 370px; opacity: 0.75;pointer-events: all;filter: blur(0px);">
+    <img src = "./assets/svg/bar.svg" id = "bar" width = "800" height = "104" class = "topbar" style="top: 10px; left: 370px; opacity: 0.75;pointer-events: none;filter: blur(0px);">
     <img src = "./assets/svg/help.svg" id="help" onclick = "//prompt window with information" width = "60" height = "60" class = "topbarButtons" style="top: 32px; right: 0px; opacity: 0.75;pointer-events: all;filter: blur(0px);">
     <img src = "./assets/svg/home.svg" id="home" onclick = "leave('prompt')" width = "60" height = "60" class = "topbarButtons" style="top: 32px; left: 0px; opacity: 0.75;pointer-events: all;filter: blur(0px);">
     <img src = "./assets/img/map.png" id="map" class = "map" width = "400" height = "400" class = "topbar" style="top: 375px; left: 1120px; border-radius:50px;pointer-events: all;filter: blur(0px);z-index: 2;">
-    <img src = "./assets/svg/pin.svg" id="pin" width = "21" height = "35" class = "topbar" style="opacity: 0; pointer-events: all;filter: blur(0px);z-index: 3;">
+    <img src = "./assets/svg/pin.svg" id="pin" width = "21" height = "35" class = "topbar" style="opacity: 0; pointer-events: none;filter: blur(0px);z-index: 3;">
     <img src = "./assets/svg/submit.svg" id="submit" onclick = "sendPin()" width = "400" height = "47" class = "topbarButtons" style="top: 790px; left: 1120px; opacity: 0.5;pointer-events: all;filter: blur(0px);">
+    <img src = "./assets/svg/timerDropdown.svg" id="timerDropdown" width = "150" height = "88" class = "topbarButtons" style="top: 122px; left: 695px; opacity: 1;pointer-events: none;filter: blur(0px);z-index: 1;">
+    <img src = "./assets/svg/scoreflag.svg" id="scoreFlag" width = "150" height = "89" class = "topbarButtons" style="top: 15px; left: 1175px; opacity: 1;pointer-events: none;filter: blur(0px);z-index: 1;">
+    <div id = "scoreFlag" class = "scoreFlag" style="top: 125px; left: 723px; pointer-events: none;filter: blur(0px);z-index: 2;"></div>
+    <div id = "timer" class = "timerText" style="top: 125px; left: 723px; pointer-events: none;filter: blur(0px);z-index: 2;"></div>
 
     <img src = "./assets/svg/leavePrompt.svg" id="leavePromptBox" onclick = "" width = "250" height = "500" class = "" style="position: absolute; top: 790px; left: 1120px; opacity: 0;pointer-events: none;z-index: 2;">
     <img src = "./assets/svg/leavePromptYes.svg" id="leavePromptBoxYes" onclick = "window.location.href = './index.html';" width = "88" height = "175" class = "leaveOption" style="top: 790px; left: 1120px; opacity: 0;pointer-events: none;filter: blur(0px);z-index: 2;">
@@ -29,6 +33,7 @@
     <div class = "barText" id="score" style="top:60px; left:1070px;pointer-events: all;filter: blur(0px);">00,000</div>
 </body>
     <script>
+    var round = 1;
     function dynamic_Positioning(idName, origionalTop, origionalLeft, size) {
         var element = document.getElementById(idName);
         var element_Top = size * origionalTop;
@@ -68,7 +73,6 @@
     }
     window.onscroll = function() {
         window.scrollTo(0, 0)
-        console.log("Scrolling")
     };
     window.onresize = resize;
     function resize () {
@@ -81,6 +85,10 @@
         dynamic_Positioning('round', 60, 746, size)
         dynamic_Positioning('score', 60, 1070, size)
         dynamic_imgSize('bar', 800, 104, 10, 375, size)
+        dynamic_imgSize('timerDropdown', 150, 88, 122, 695, size)
+        dynamic_TextSize('timer', 24, size)
+        dynamic_Positioning('timer', 141, 742, size)
+        dynamic_imgSize('scoreFlag', 150, 89, 15, 1175, size)
         // TOP BAR RESIZE
 
         // MENU BUTTONS RESIZE
@@ -106,7 +114,6 @@
     }
     </script>
     <script>
-        var total = 0;
         document.getElementById("map").addEventListener('click', function (event) {
             bounds=this.getBoundingClientRect();
             var left=bounds.left;
@@ -159,22 +166,36 @@
             getList().then(list => {
                 console.log(list);
                 updateScoreCookie(list);
-                document.getElementById("score").innerHTML = convertScoreToString();
-                console.log(total);
+                let total = convertScoreToString();
+                document.getElementById("score").innerHTML = total;
             })
         }
 
         function convertScoreToString() {
+            console.log(getTotal())
             let total_score = parseInt(getTotal())
-            if (typeof total !== 'number') {
-                throw new Error('Input must be a number');
-            }
             console.log("Total Score " + total_score);
             return total_score.toLocaleString();
         }
 
         function getTotal() {
             let name = "total=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for(let i = 0; i <ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function getDifficulty() {
+            let name = "difficulty=";
             let decodedCookie = decodeURIComponent(document.cookie);
             let ca = decodedCookie.split(';');
             for(let i = 0; i <ca.length; i++) {
@@ -214,22 +235,6 @@
             return "";
         }
 
-        function updateDifficulty(score) {
-            document.cookie = "total=" + score + ";" // replace "score" with an input function that retrieves difficulty
-        }
-
-        var time = 300
-        
-        function timer(time, display_element) {
-            setInterval(function () {
-                seconds = parseInt(time % 60)
-                seconds = seconds < 10 ? "0" + seconds : seconds;
-                display_element.textContent = seconds;
-                if (timer -- < 0 ){
-                        return;
-                }
-            }, 1000)
-        }
 
         function leave(option) {
             if (option == "prompt") {
@@ -332,32 +337,38 @@
     }
     retrieveImage();
     </script>
-    <!-- <script>
-  var difficulty = 'easy'; 
-
-    var countdown; 
-if (difficulty === 'easy') {
-    countdown = 25; 
-} else if (difficulty === 'medium') {
-    countdown = 20; 
-} else if (difficulty === 'hard') {
-    countdown = 15; 
-} else {
-    return; 
-}
-
-var countdownDisplay = document.getElementById('timer');
-
-var countdownInterval = setInterval(function() {
-    countdown--;
-    countdownDisplay.textContent = countdown;
-
-    if (countdown <= 0) {
-        clearInterval(countdownInterval);
-        countdownDisplay.textContent = "Time's up!";
+    <script>
+    function count() {
+        difficulty = getDifficulty();
+        if (difficulty === 'easy') {
+            countdown = 180; 
+        } else if (difficulty === 'medium') {
+            countdown = 240; 
+        } else if (difficulty === 'hard') {
+            countdown = 300; 
+        } else {
+            throw new Error('Unable to retrieve difficulty');
+        }
+    
+        var countdownInterval = setInterval(function() {
+            countdown--;
+            let minutes = Math.floor(countdown/60);
+            let seconds = countdown % 60;
+            if (seconds < 10) {
+                seconds = "0"+seconds
+            }
+            let time = minutes + ":" + seconds;
+            console.log(time);
+            console.log(countdown);
+            document.getElementById('timer').innerHTML = time;
+        
+            if (countdown <= 0) {
+                clearInterval(countdownInterval);
+                document.getElementById('timer').innerHTML = "Time's up!";
+            }
+        }, 1000);
     }
-}, 1000);
-    </script> -->
+    </script>
 </body>
 </html>
 
