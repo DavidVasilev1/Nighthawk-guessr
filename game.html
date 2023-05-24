@@ -1,3 +1,6 @@
+<!--Dude sorry-->
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -195,6 +198,39 @@
             }
         }
 
+        function getDifficulty() {
+            let name = "difficulty=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for(let i = 0; i <ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function updateDifficulty(score) {
+            document.cookie = "total=" + score + ";" // replace "score" with an input function that retrieves difficulty
+        }
+
+        var time = 300
+        
+        function timer(time, display_element) {
+            setInterval(function () {
+                seconds = parseInt(time % 60)
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+                display_element.textContent = seconds;
+                if (timer -- < 0 ){
+                        return;
+                }
+            }, 1000)
+        }
+
         function leave(option) {
             if (option == "prompt") {
                 document.getElementById("leavePromptBox").style.opacity = "1";
@@ -266,24 +302,35 @@
         }
     </script>
     <script>
-      var xCoord = 0; var yCoord = 0;
-      const isLocalhost = Boolean(
-        window.location.hostname === "localhost" ||
-        window.location.hostname === "[::1]" ||
-        window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
-      )
-      const api = isLocalhost ? "http://localhost:8200" : "";
+    var xCoord = 0; var yCoord = 0; var round = 1;
+    function initGame() {
+        
+    }
 
-      const getList = async () => {
-        const list = await fetch(api + "/api/images/GetEasyImage").then((r) => r.json());
-        return list
-      };
+    function retrieveImage() {
+        const isLocalhost = Boolean(
+            window.location.hostname === "localhost" ||
+            window.location.hostname === "[::1]" ||
+            window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
+        )
+        const api = isLocalhost ? "http://localhost:8200" : "";
 
-      getList().then(list => {
-        xCoord = list.xCoord;
-        yCoord = list.yCoord;
-        document.getElementById("guess").src = "data:image/png;base64," + list.bytes
-      })
+        var endpoint = "/api/images/GetEasyImage"
+
+        
+
+        const getList = async () => {
+            const list = await fetch(api + endpoint).then((r) => r.json());
+            return list;
+        };
+
+        getList().then(list => {
+            xCoord = list.xCoord;
+            yCoord = list.yCoord;
+            document.getElementById("guess").src = "data:image/png;base64," + list.bytes;
+        })
+    }
+    retrieveImage();
     </script>
     <!-- <script>
   var difficulty = 'easy'; 
