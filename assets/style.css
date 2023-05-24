@@ -2,6 +2,14 @@
     font-family: "FuturaBoldItalic";
     src: url("./font/futura/Futura Bold Italic font.ttf");
 }
+@font-face {
+    font-family: "Inter";
+    src: url("./Inter/Inter-Regular.ttf");
+}
+@font-face {
+    font-family: "Inter-Bold";
+    src: url("./Inter/Inter-Bold.ttf");
+}
 
 .menuText {
     font-family: "FuturaBoldItalic";

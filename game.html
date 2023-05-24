@@ -127,12 +127,13 @@
             var ih=this.naturalHeight
             var pinY=(y + (window.innerWidth/1536)*375 - (window.innerWidth/1536)*35)
             var pinX=(x + (window.innerWidth/1536)*1120 - (window.innerWidth/1536)*10)
-            pinLeft=x
-            pinTop=y
+            pinLeft=x*1536/window.innerWidth
+            pinTop=y*1536/window.innerWidth
             document.getElementById("pin").style.opacity = "1";
             document.getElementById("pin").style.top = pinY + "px";
             document.getElementById("pin").style.left = pinX + "px";
         });
+
         function sendPin() {
             console.log("pin pos ("+pinLeft+", " +pinTop+ ")");
             const isLocalhost = Boolean(
@@ -178,7 +179,7 @@
             console.log("Total Score " + total_score);
             return total_score.toLocaleString();
         }
-
+      
         function getTotal() {
             let name = "total=";
             let decodedCookie = decodeURIComponent(document.cookie);
@@ -221,6 +222,7 @@
             }
         }
 
+
         function resetScoreCookie() {
             document.cookie = "total=0;"
         }
@@ -240,8 +242,7 @@
             }
             return "";
         }
-
-
+      
         function leave(option) {
             if (option == "prompt") {
                 document.getElementById("leavePromptBox").style.opacity = "1";
