@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nighthawk Guessr</title>
+    <link rel="stylesheet" href="./assets/style.css">
+</head>
+<body style="background-image: url('./assets/img/guess.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: cover;" onload = "resize()">
+    <img src = "./assets/svg/home.svg" id="home"onclick = "home()" width = "60" height = "60" class = "topbar" style="top: 32px; left: 0px; opacity: 0.75;">
+    <img src = "./assets/svg/help.svg" id="help" onclick = "//TBD" width = "60" height = "60" class = "topbar" style="top: 32px; right: 0px; opacity: 0.75;">
+
+  <style>
+  * {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  }
+  h1 {
+    font-size: 32pt;
+    text-align: center;
+    margin-top: 40px;
+  }
+  table.board {
+    font-size: 13pt;
+    border-collapse: collapse;
+    margin: 25px 0;
+    margin-top: 40px;
+    width: 50%;
+  }
+  .board thead tr {
+    font-size: 17pt;
+    font-weight: bold;
+    background-color: #246186;
+    color: #ffffff;
+    text-align: left;
+  }
+  .board td {
+    text-align: center;
+    padding: 12px 15px;
+    border: none;
+    height: 50px;
+  }
+  .board tr {
+    font-weight: bold;
+    border: none;
+    transition-duration: 0.3s;
+    color: #0a2f47;
+    background-color: #58a4d3;
+    border-bottom: 4px solid #2b8bc6;
+    width: 50%;
+  }
+  .board tr:hover {
+    color: #ffffff;
+    background-color: #246186;
+  }
+  #container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  #dots {
+    margin-top: -60px;
+    margin-bottom: -35px;
+    font-size: 60pt;
+    color: #f1cc0c;
+    opacity: 0.5;
+  }
+</style>
+  
+ <div id="container">
+  <h1>NIGHTHAWKGUESSR Stats</h1>
+  <h2><u>Unsorted Standings</u></h2>
+  
+  <!-- Display Unsorted Standings Table with headers -->
+  <table class="board" id="schedule" style="margin-left: auto; margin-right: auto;">
+    <tr>
+      <thead>
+        <td>Name</td>
+        <td>Easy Points</td>
+        <td>Medium Points</td>
+        <td>Hard Points</td>
+        <td>Total Points: E+2M+3H</td>
+      </thead>
+    </tr>
+  </table>
+
+  <br/> <br/> 
+  <h2><u>Leading Hardpoints Players - Stats</u></h2>
+  <!-- Display Sorted Standings Table with headers -->
+  <table class="board" id="hardpoints" style="margin-left: auto; margin-right: auto;">
+    <tr>
+      <thead>
+        <td>Name</td>
+        <td>Easy Points</td>
+        <td>Medium Points</td>
+        <td>Hard Points</td>
+        <td>Total Points: E+2M+3H</td>
+      </thead>
+    </tr>
+  </table>
+
+
+ </div>
+    
+ </body>
+ <script>
+    window.onresize = resize;
+    function resize () {
+        var current = window.innerWidth;
+        var size = window.innerWidth/1536;
+    }
+ </script>
+ 
+ <script>
+      function home() {
+          window.location.href = '/index.html'
+      }
+ </script>
+ 
+ <script>
+      
+      // Server URL
+      const api = "http://localhost:8200";
+      
+      /**
+       * Get the Leaderboard data from Server 
+       */
+      const getList = async () => {
+        const list = await fetch(api + "/api/leaderboard/leaderboardTop10").then((r) => r.json());
+
+        // List Array has the Leaderboard data 
+        return list
+      };
+
+      /**
+       * Build the unsorted and sorted Leaderboard data from Server list 
+       */
+      getList().then(list => {
+        list.forEach(cls => {
+          // Add each row  unsorted data
+          addTask(cls.username, cls.total, cls.Easy, cls.Medium, cls.Hard, schedule)
+        })
+
+        // Sort based on Hardpoints
+        list = bubbleSort(list);
+
+        // Show Hardpoints sorted data
+        showHardpoints(list);
+      })
+
+      /**
+       * Builds the sorted Leaderboard data rows to add to the table 
+       */
+      function showHardpoints(list) {
+        for (let i = 0; i < list.length; i++) {
+          addTask(list[i].username, list[i].total, list[i].Easy, 
+          list[i].Medium, list[i].Hard, hardpoints)
+        }
+      }
+
+      /**
+       * Add row data to the table. The tableID has the sorted or unsorted table  
+       */
+      function addTask(username, total, pointsEasy, pointsMedium, pointsHard, tableID) {
+  
+        var tableCells = [username, pointsEasy, pointsMedium, pointsHard, total]
+        // create a row
+        var row = document.createElement('tr')
+
+        // Add each row data
+        for (var i = 0; i < tableCells.length; i++) {
+          //Add table cell data
+          var tableCell = document.createElement('td')
+          tableCell.textContent = tableCells[i]
+          tableCell.className = 'cell'
+          //Append cell to the row
+          row.appendChild(tableCell)
+        }
+
+        // Add to the table
+        tableID.appendChild(row)
+      }
+
+      /**
+       * Implement bubble sort based on Hardpoints
+       */
+      function bubbleSort(array) {
+        // loop for each element
+        for (let i = 0; i < array.length - 1; i++) {
+
+          // loop for each element, till one lesser than max
+          for (let j = 0; j < array.length - i - 1; j++) {
+
+            // compare current element value with the next element
+            if (array[j].Hard > array[j + 1].Hard) {
+
+              // current element value > next element, then swap values
+              [array[j], array[j + 1]] = [array[j + 1], array[j]];
+            }
+          }
+        }      
+
+        // return sorted array
+        return array;
+      }
+      
+      // build list
+      getList()
+
+  </script>
+</html>

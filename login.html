@@ -1,100 +1,124 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-
-
-
-    <style>
-        body {
-  background-color: #ecf0f1;
-  font-family: 'Open Sans', sans-serif;
-}
-
-h1 {
-  margin-top: 5rem;
-  margin-bottom: 2rem;
-  text-align: center;
-  font-size: 3rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #2c3e50;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 3rem auto;
-  padding: 3rem;
-  border-radius: 5px;
-  
-}
-
-input[type="text"], input[type="password"] {
-  width: 80%;
-  max-width: 400px;
-  margin: 1rem 0;
-  padding: 1rem 2rem;
-  font-size: 1.2rem;
-  border: none;
-  border-radius: 5px;
-  background-color: #dcdde1;
-  color: #2c3e50;
-}
-
-input[type="submit"] {
-  width: 80%;
-  max-width: 400px;
-  margin: 2rem 0 1rem 0;
-  padding: 1rem;
-  font-size: 1.2rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #fff;
-  background-color: #2c3e50;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-input[type="submit"]:hover {
-  background-color: #34495e;
-}
-
-a {
-  display: block;
-  margin-top: 2rem;
-  text-align: center;
-  font-size: 1.2rem;
-  color: #2c3e50;
-  text-decoration: none;
-}
-
-a:hover {
-  color: #34495e;
-}
-
-    </style>
+    <link rel="stylesheet" href="./assets/style.css">
 </head>
-
 <body>
-    <h1>Login Page</h1>
+    <!-- <form id="loginForm">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required>
 
-    <form method="POST" action="">
-        {{ form.hidden_tag() }}
-        {{ form.username }}
-        {{ form.password }}
-        {{ form.submit }}
-    </form>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
 
-    <a href="{{ url_for('register') }}">Don't have an account? Sign Up</a>
+        <button type="submit">Login</button>
+    </form> -->
+    <img    id="loginbox"               src="./assets/svg/loginbox.svg" alt="loginbox" class = "loginbox" width="600" height="729" style="position:absolute;left:660px;top:175px;">
+        
+        <div    id="loginUsernameText"      class="logintext" style="position:absolute;left:712px;top:363px;">Username</div>
+        <img    id="loginUsernameIcon"      src="./assets/svg/usernameicon.svg" alt="unicon" class = "unicon" width="20" height="24" style="position:absolute;left:722px;top:393px;">
+        <input  id="loginUsername"          type="text" placeholder="Type your username" style="position:absolute;left:753px;top:393px;">
+        <img    id="loginUsernameUnderbar"  src="./assets/svg/underbar.svg" alt="underbar" class = "underbar" width="496" height="7" style="position:absolute;left:712px;top:427px;">
+
+        <div    id="loginPasswordText"      class="logintext" style="position:absolute;left:712px;top:503px;">Password</div>
+        <img    id="loginPasswordIcon"      src="./assets/svg/passwordicon.svg" alt="pwicon" class = "pwicon" width="20" height="24" style="position:absolute;left:722px;top:533px;">
+        <input  id = "loginPassword"        type="password" placeholder="Type your password" style="position:absolute;left:753px;top:533px;">
+        <img    id="loginPasswordUnderbar"  src="./assets/svg/underbar.svg" alt="underbar" class = "underbar" width="496" height="7" style="position:absolute;left:712px;top:567px;">
+
+        <img    id="loginButton"            src="./assets/svg/loginbutton.svg" alt="loginbutton" class = "loginbutton" width="448" height="50" style="position:absolute;left:736px;top:644px;" onclick="auth('loginUsername', 'loginPassword')">
+
+        <div    id="goToSignupText"         class="using" style="position:absolute;left:880px;top:763px;opacity:0.75;">Or sign up using</div>
+        <div    id="goToSignUp"             class="using" style="position:absolute;left:919px;top:807px;" onclick="switchPage('login','signup')">SIGN UP</div>
 </body>
+<script>
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
 
+    let username = document.getElementById('username').value;
+    let password = document.getElementById('password').value;
+
+    fetch('http://localhost:5500/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            username: username,
+            password: password
+        }),
+        credentials: 'include' // Here is the added line
+    })
+    .then(response => {
+        if (response.ok) {
+            // If the status code is within the success range, redirect the user to 'index.html'
+            alert("hi");
+            window.location.href = '/index.html';
+        } else {
+            // If the status code is not within the success range, convert the response to JSON and display an alert with the message from the response
+            response.json().then(data => alert(data.message));
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+});
+</script>
+<script>
+function dynamic_TextPositioning(idName, originalLeft, originalTop, size) {
+    var element = document.getElementById(idName);
+    var element_Top = size * originalTop;
+    element.style.top = element_Top + "px";
+    var element_Left = size * originalLeft;
+    element.style.left = element_Left + "px";
+}
+function dynamic_TextSize(className, originalSize, size) {
+    var element_Font = size * originalSize;
+    var elements = document.getElementsByClassName(className);
+    for (var i = 0; i < elements.length; i++) {
+        var element = elements[i];
+        element.style.fontSize = element_Font + "px";
+    }
+}
+function dynamic_TextSizeByID(idName, originalSize, size) {
+    var element_Font = size * originalSize;
+    var element = document.getElementById(idName);
+    element.style.fontSize = element_Font + "px";
+}
+function dynamic_imgSize(idName, originalWidth, originalHeight, originalLeft, originalTop, size) {
+    var element = document.getElementById(idName);
+    var element_Height = size * originalHeight;
+    element.style.height = element_Height + "px";
+    var element_Width = size * originalWidth;
+    element.style.width = element_Width + "px";
+    var element_Top = size * originalTop;
+    element.style.top = element_Top + "px";
+    var element_Left = size * originalLeft;
+    element.style.left = element_Left + "px";
+}
+window.onresize = resize;
+function resize () {
+    var current = window.innerWidth;
+    var size = window.innerWidth/1920;
+    //login
+    dynamic_imgSize("loginbox", 600, 729, 660, 175, size);
+    
+    dynamic_TextPositioning('loginUsernameText', 712, 363, size);
+    dynamic_imgSize('loginUsernameIcon', 20, 24, 722, 393, size);
+    dynamic_TextPositioning('loginUsername', 753, 393, size);
+    dynamic_TextSizeByID('loginUsername', 20, size);
+    dynamic_imgSize('loginUsernameUnderbar', 496, 7, 712, 427, size);
+    
+    dynamic_TextPositioning('loginPasswordText', 712, 503, size);
+    dynamic_imgSize('loginPasswordIcon', 20, 24, 722, 533, size);
+    dynamic_TextPositioning('loginPassword', 753, 533, size);
+    dynamic_TextSizeByID('loginPassword', 20, size);
+    dynamic_imgSize('loginPasswordUnderbar', 496, 7, 712, 567, size);
+    
+    dynamic_imgSize('loginButton', 448, 50, 736, 644, size);
+    
+    dynamic_TextPositioning('goToSignupText', 880, 763, size);
+    dynamic_TextPositioning('goToSignUp', 919, 807, size);
+}
+</script>
 </html>
