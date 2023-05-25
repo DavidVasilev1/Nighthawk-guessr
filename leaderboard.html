@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./assets/style.css">
 </head>
 <body style="background-image: url('./assets/img/guess.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: cover;" onload = "resize()">
-    <img src = "./assets/svg/home.svg" id="home"onclick = "home()" width = "60" height = "60" class = "topbar" style="top: 32px; left: 0px; opacity: 0.75;">
+    <img src = "./assets/svg/home.svg" id="home"onclick = "home()" width = "60" height = "60" class = "topbarButtons" style="top: 32px; left: 0px; opacity: 0.75;">
     <img src = "./assets/svg/help.svg" id="help" onclick = "//prompt window with information" width = "60" height = "60" class = "topbar" style="top: 32px; right: 0px; opacity: 0.75;">
 
   <style>
@@ -25,7 +25,8 @@
     border-collapse: collapse;
     margin: 25px 0;
     margin-top: 40px;
-    width: 75%;
+    width: 80%;
+
   }
   .board thead tr {
     font-size: 17pt;
@@ -38,6 +39,7 @@
     text-align: center;
     padding: 12px 15px;
     border: none;
+    width: 200px;
     height: 50px;
   }
   .board tr {
@@ -50,8 +52,8 @@
     width: 50%;
   }
   .board tr:hover {
-    color: #ffffff;
-    background-color: #246186;
+    color: #ffffff !important;
+    background-color: #246186 !important;
   }
   #container {
     display: flex;
@@ -66,11 +68,17 @@
     color: #f1cc0c;
     opacity: 0.5;
   }
+  .whiteColor {
+    color:#fff;
+  }
+  .normalColor {
+    color:#0a2f47;
+  }
 </style>
   
  <div id="container">
   <h1>NIGHTHAWKGUESSR Leaderboard</h1>
-  <table class="board" id="total" style="margin-left: auto; margin-right: auto;">
+  <table class="board" hidden id="total" style="margin-left: auto; margin-right: auto;">
     <tr>
       <thead>
         <td bgcolor="#3478a2" >Name</td>
@@ -222,29 +230,30 @@
 
       getList().then(list => {
         list["TotalSort"].forEach(cls => {
-          addTask(cls.username, cls.total, cls.Easy, cls.Medium, cls.Hard,total)
+          addTask(cls.username, cls.total, cls.Easy, cls.Medium, cls.Hard,total,4)
         })
       })
 
       getList().then(list => {
         list["EasySort"].forEach(cls => {
-          addTask(cls.username, cls.total, cls.Easy, cls.Medium, cls.Hard,easy)
+          addTask(cls.username, cls.total, cls.Easy, cls.Medium, cls.Hard,easy,1)
         })
       })
 
       getList().then(list => {
         list["MediumSort"].forEach(cls => {
-          addTask(cls.username, cls.total, cls.Easy, cls.Medium, cls.Hard,medium)
+          addTask(cls.username, cls.total, cls.Easy, cls.Medium, cls.Hard,medium,2)
         })
       })
 
       getList().then(list => {
         list["HardSort"].forEach(cls => {
-          addTask(cls.username, cls.total, cls.Easy, cls.Medium, cls.Hard,hard)
+          addTask(cls.username, cls.total, cls.Easy, cls.Medium, cls.Hard,hard,3)
         })
       })
-
-      function addTask(username, total, pointsEasy, pointsMedium, pointsHard,table) {
+      x=document.getElementById("total")
+      x.style.display = "block";
+      function addTask(username, total, pointsEasy, pointsMedium, pointsHard,table,rownum) {
   
         var tableCells = [username, pointsEasy, pointsMedium, pointsHard, total]
         var row = document.createElement('tr')
@@ -252,6 +261,13 @@
           var tableCell = document.createElement('td')
           tableCell.textContent = tableCells[i]
           tableCell.className = 'cell'
+          tableCell.bgColor = "#3478a2"
+          tableCell.classList.add("normalColor")
+          if (i == rownum){
+            tableCell.bgColor = "#246186"
+            tableCell.classList.remove("normalColor")
+            tableCell.classList.add("whiteColor")
+          }
           row.appendChild(tableCell)
         }
         table.appendChild(row)
