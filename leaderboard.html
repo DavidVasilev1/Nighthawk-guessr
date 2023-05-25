@@ -70,14 +70,50 @@
   
  <div id="container">
   <h1>NIGHTHAWKGUESSR Leaderboard</h1>
-  <table class="board" id="schedule" style="margin-left: auto; margin-right: auto;">
+  <table class="board" id="total" style="margin-left: auto; margin-right: auto;">
     <tr>
       <thead>
-        <td onclick="sort(Name)">Name</td>
-        <td onclick="sort(Easy)">Easy Points</td>
-        <td onclick="sort(Medium)">Medium Points</td>
-        <td onclick="sort(Hard)">Hard Points</td>
-        <td onclick="sort(Total)">Total Points: E+2M+3H</td>
+        <td bgcolor="#3478a2" >Name</td>
+        <td bgcolor="#3478a2" onclick="sort(0)">Easy Points</td>
+        <td bgcolor="#3478a2" onclick="sort(1)">Medium Points</td>
+        <td bgcolor="#3478a2" onclick="sort(2)">Hard Points</td>
+        <td bgcolor="#246186" onclick="sort(3)">Total Points: E+2M+3H</td>
+      </thead>
+    </tr>
+  </table>
+
+  <table class="board" id="easy" hidden style="margin-left: auto; margin-right: auto;">
+    <tr>
+      <thead>
+        <td bgcolor="#3478a2">Name</td>
+        <td bgcolor="#246186" onclick="sort(0)">Easy Points</td>
+        <td bgcolor="#3478a2" onclick="sort(1)">Medium Points</td>
+        <td bgcolor="#3478a2" onclick="sort(2)">Hard Points</td>
+        <td bgcolor="#3478a2" onclick="sort(3)">Total Points: E+2M+3H</td>
+      </thead>
+    </tr>
+  </table>
+
+  <table class="board" id="medium" hidden style="margin-left: auto; margin-right: auto;">
+    <tr>
+      <thead>
+        <td bgcolor="#3478a2">Name</td>
+        <td bgcolor="#3478a2" onclick="sort(0)">Easy Points</td>
+        <td bgcolor="#246186" onclick="sort(1)">Medium Points</td>
+        <td bgcolor="#3478a2" onclick="sort(2)">Hard Points</td>
+        <td bgcolor="#3478a2" onclick="sort(3)">Total Points: E+2M+3H</td>
+      </thead>
+    </tr>
+  </table>
+
+  <table class="board" id="hard" hidden style="margin-left: auto; margin-right: auto;">
+    <tr>
+      <thead>
+        <td bgcolor="#3478a2">Name</td>
+        <td bgcolor="#3478a2" onclick="sort(0)">Easy Points</td>
+        <td bgcolor="#3478a2" onclick="sort(1)">Medium Points</td>
+        <td bgcolor="#246186" onclick="sort(2)">Hard Points</td>
+        <td bgcolor="#3478a2" onclick="sort(3)">Total Points: E+2M+3H</td>
       </thead>
     </tr>
   </table>
@@ -85,6 +121,24 @@
     
 </body>
     <script>
+
+    
+      easyBoard = document.getElementById("easy");
+      
+      mediumBoard = document.getElementById("medium");
+      
+      hardBoard = document.getElementById("hard");
+      
+      totalBoard = document.getElementById("total");
+    function sort(Sort){
+      easyBoard.style.display = "none"
+      mediumBoard.style.display = "none"
+      hardBoard.style.display = "none"
+      totalBoard.style.display = "none"
+      sortDiff = ["easy", "medium","hard","total"]
+      x=document.getElementById(sortDiff[Sort])
+      x.style.display = "block";
+    }
     function dynamic_Positioning(idName, origionalTop, origionalLeft, size) {
         var element = document.getElementById(idName);
         var element_Top = size * origionalTop;
@@ -167,12 +221,30 @@
       };
 
       getList().then(list => {
-        list.forEach(cls => {
-          addTask(cls.username, cls.total, cls.Easy, cls.Medium, cls.Hard)
+        list["TotalSort"].forEach(cls => {
+          addTask(cls.username, cls.total, cls.Easy, cls.Medium, cls.Hard,total)
         })
       })
 
-      function addTask(username, total, pointsEasy, pointsMedium, pointsHard) {
+      getList().then(list => {
+        list["EasySort"].forEach(cls => {
+          addTask(cls.username, cls.total, cls.Easy, cls.Medium, cls.Hard,easy)
+        })
+      })
+
+      getList().then(list => {
+        list["MediumSort"].forEach(cls => {
+          addTask(cls.username, cls.total, cls.Easy, cls.Medium, cls.Hard,medium)
+        })
+      })
+
+      getList().then(list => {
+        list["HardSort"].forEach(cls => {
+          addTask(cls.username, cls.total, cls.Easy, cls.Medium, cls.Hard,hard)
+        })
+      })
+
+      function addTask(username, total, pointsEasy, pointsMedium, pointsHard,table) {
   
         var tableCells = [username, pointsEasy, pointsMedium, pointsHard, total]
         var row = document.createElement('tr')
@@ -182,9 +254,7 @@
           tableCell.className = 'cell'
           row.appendChild(tableCell)
         }
-        schedule.appendChild(row)
+        table.appendChild(row)
       }
-
-      getList()
     </script>
 </html>
