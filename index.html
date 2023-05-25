@@ -1,30 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <style>
-    body {
-        background-color: #222;
-        animation-name: color;
-        animation-duration: 10s;
-        animation-iteration-count: infinite;
+    /* body {
+        animation-name: fadeIn;
+        animation-iteration-count: 1;
+        animation-timing-function: ease-in-out;
+        animation-duration: 1s;
+        animation-fill-mode:forwards;
     }
 
-        @keyframes color {
+    @keyframes fadeIn {
         0% {
-            background-color: #ffffff;
-        }
-        25% {
-            background-color: #00e1ff;
-        }
-        50% {
-            background-color: #4285f4;
-        }
-        75% {
-            background-color: #00e1ff;
+            opacity: 0;
         }
         100% {
-            background-color: #ffffff;
+            opacity: 1;
+        }
+    } */
+
+    body {
+        animation-name: color;
+        animation-duration: 5s;
+        animation-iteration-count: infinite;
+    }
+    
+    @keyframes color {
+        0% {
+            background-color: #7bccfe;
+        }
+        50% {
+            background-color: #498fba;
+        }
+        100% {
+            background-color: #7bccfe;
         }
     }
+
 </style>
 <head>
     <meta charset="UTF-8">
@@ -61,23 +72,24 @@ function getCookie(name) {
 
 </script>
 <body style="background-color: #f4faf8;">
-    <div id="text1" class="menuText bounce" style="top: 235px;" onclick="difficulty('prompt')">PLAY</div>
-    <div id="text2" class="menuText bounce" style="top: 340px;" onclick="window.location = './Stats.html'">STATS</div>
-    <div id="text3" class="menuText bounce" style="top: 445px;" onclick="window.location = ''">TUTORIAL</div>
-    <div id="text4" class="menuText bounce" style="top: 550px;" onclick="window.location = './leaderboard.html'">LEADERBOARD</div>
-    <img src = "./assets/svg/logo.svg" id="logo" width = "392" class = "home" style="top: 13px; left: 40px; opacity: 1;">
-    <img src = "./assets/svg/profile.svg" id="profile" width = "80" height = "80" class = "home" style="top: 20px; left: 1436px; opacity: 1;">
-    <div id="text5" class="menuText bounce" style="top: 40px; left: 1175px;" onclick="window.location = './register.html'">SIGN IN</div>
-    <img src = "./assets/svg/indexPhotos.svg" id="photos1" width = "640" height = "640" class = "home" style="top: 112px; left: 775px; opacity: 1;">
-    <img src = "./assets/svg/exit.svg" id="photos2" width = "40" height = "40" class = "home" style="top: 801px; left: 1472px; opacity: 1;">
-    <div id="home" class="home" style="top: 799px; left: 1278px;" onclick="signOut()">SIGN OUT</div>
+    <div class="bg" id="bg">
+        <div id="text1" class="menuText bounce" style="top: 235px;" onclick="difficulty('prompt')">PLAY</div>
+        <div id="text2" class="menuText bounce" style="top: 340px;" onclick="window.location = './Stats.html'">STATS</div>
+        <div id="text3" class="menuText bounce" style="top: 445px;" onclick="window.location = ''">TUTORIAL</div>
+        <div id="text4" class="menuText bounce" style="top: 550px;" onclick="window.location = './leaderboard.html'">LEADERBOARD</div>
+        <img src = "./assets/svg/logo.svg" id="logo" width = "392" class = "home" style="top: 13px; left: 40px; opacity: 1;">
+        <img src = "./assets/svg/profile.svg" id="profile" width = "80" height = "80" class = "home" style="top: 20px; left: 1436px; opacity: 1;">
+        <div id="text5" class="menuText bounce" style="top: 40px; left: 1175px;" onclick="window.location = './register.html'">SIGN IN</div>
+        <img src = "./assets/svg/indexPhotos.svg" id="photos1" width = "640" height = "640" class = "home" style="top: 112px; left: 775px; opacity: 1;">
+        <img src = "./assets/svg/exit.svg" id="photos2" width = "40" height = "40" class = "home" style="top: 801px; left: 1472px; opacity: 1;">
+        <div id="home" class="home" style="top: 799px; left: 1278px;" onclick="signOut()">SIGN OUT</div>
 
-    <img src = "./assets/svg/difficultyPrompt.svg" id="difficultyPrompt" onclick = "" width = "734" height = "250" class = "" style="position: absolute; top: 307px; left: 401px; opacity: 0;pointer-events: none;z-index: 2;">
-    <img src = "./assets/svg/difficultyEasy.svg" id="difficultyEasy" onclick = "gameRedirect('easy')" width = "175" height = "88" class = "difficultyOption" style="top: 450px; left: 446px; opacity: 0;pointer-events: none;filter: blur(0px);z-index: 2;">
-    <img src = "./assets/svg/difficultyMedium.svg" id="difficultyMedium" onclick = "gameRedirect('medium')" width = "175" height = "88" class = "difficultyOption" style="top: 450px; left: 681px; opacity: 0;pointer-events: none;filter: blur(0px);z-index: 2;">
-    <img src = "./assets/svg/difficultyHard.svg" id="difficultyHard" onclick = "gameRedirect('hard')" width = "175" height = "88" class = "difficultyOption" style="top: 450px; left: 915px; opacity: 0;pointer-events: none;filter: blur(0px);z-index: 2;">
-    <img src = "./assets/svg/difficultyClose.svg" id="difficultyClose" onclick = "difficulty('no');" width = "21" height = "21" class = "difficultyOption" style="top: 336px; left: 1084px; opacity: 0;pointer-events: none;filter: blur(0px);z-index: 2;">
-
+        <img src = "./assets/svg/difficultyPrompt.svg" id="difficultyPrompt" onclick = "" width = "734" height = "250" class = "" style="position: absolute; top: 307px; left: 401px; opacity: 0;pointer-events: none;z-index: 2;">
+        <img src = "./assets/svg/difficultyEasy.svg" id="difficultyEasy" onclick = "gameRedirect('easy')" width = "175" height = "88" class = "difficultyOption" style="top: 450px; left: 446px; opacity: 0;pointer-events: none;filter: blur(0px);z-index: 2;">
+        <img src = "./assets/svg/difficultyMedium.svg" id="difficultyMedium" onclick = "gameRedirect('medium')" width = "175" height = "88" class = "difficultyOption" style="top: 450px; left: 681px; opacity: 0;pointer-events: none;filter: blur(0px);z-index: 2;">
+        <img src = "./assets/svg/difficultyHard.svg" id="difficultyHard" onclick = "gameRedirect('hard')" width = "175" height = "88" class = "difficultyOption" style="top: 450px; left: 915px; opacity: 0;pointer-events: none;filter: blur(0px);z-index: 2;">
+        <img src = "./assets/svg/difficultyClose.svg" id="difficultyClose" onclick = "difficulty('no');" width = "21" height = "21" class = "difficultyOption" style="top: 336px; left: 1084px; opacity: 0;pointer-events: none;filter: blur(0px);z-index: 2;">
+    </div>
 </body>
 
 <script>
