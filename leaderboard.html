@@ -52,8 +52,8 @@
     width: 50%;
   }
   .board tr:hover {
-    color: #ffffff !important;
-    background-color: #246186 !important;
+    color: #ffffff;
+    background-color: #246186;
   }
   #container {
     display: flex;
@@ -74,6 +74,15 @@
   .normalColor {
     color:#0a2f47;
   }
+  .topBox {
+    background-color: #3478A2;
+  }
+  .darkBox {
+    background-color: #246186;
+  }
+  .normalBox {
+    background-color: #58a4d3;
+  }
 </style>
   
  <div id="container">
@@ -81,11 +90,11 @@
   <table class="board" hidden id="total" style="margin-left: auto; margin-right: auto;">
     <tr>
       <thead>
-        <td bgcolor="#3478a2" >Name</td>
-        <td bgcolor="#3478a2" onclick="sort(0)">Easy Points</td>
-        <td bgcolor="#3478a2" onclick="sort(1)">Medium Points</td>
-        <td bgcolor="#3478a2" onclick="sort(2)">Hard Points</td>
-        <td bgcolor="#246186" onclick="sort(3)">Total Points: E+2M+3H</td>
+        <td class="topBox" >Name</td>
+        <td class="topBox" onclick="sort(0)">Easy Points</td>
+        <td class="topBox" onclick="sort(1)">Medium Points</td>
+        <td class="topBox" onclick="sort(2)">Hard Points</td>
+        <td class="darkBox" onclick="sort(3)">Total Points: E+2M+3H</td>
       </thead>
     </tr>
   </table>
@@ -93,11 +102,11 @@
   <table class="board" id="easy" hidden style="margin-left: auto; margin-right: auto;">
     <tr>
       <thead>
-        <td bgcolor="#3478a2">Name</td>
-        <td bgcolor="#246186" onclick="sort(0)">Easy Points</td>
-        <td bgcolor="#3478a2" onclick="sort(1)">Medium Points</td>
-        <td bgcolor="#3478a2" onclick="sort(2)">Hard Points</td>
-        <td bgcolor="#3478a2" onclick="sort(3)">Total Points: E+2M+3H</td>
+        <td class="topBox">Name</td>
+        <td class="darkBox" onclick="sort(0)">Easy Points</td>
+        <td class="topBox" onclick="sort(1)">Medium Points</td>
+        <td class="topBox" onclick="sort(2)">Hard Points</td>
+        <td class="topBox" onclick="sort(3)">Total Points: E+2M+3H</td>
       </thead>
     </tr>
   </table>
@@ -105,11 +114,11 @@
   <table class="board" id="medium" hidden style="margin-left: auto; margin-right: auto;">
     <tr>
       <thead>
-        <td bgcolor="#3478a2">Name</td>
-        <td bgcolor="#3478a2" onclick="sort(0)">Easy Points</td>
-        <td bgcolor="#246186" onclick="sort(1)">Medium Points</td>
-        <td bgcolor="#3478a2" onclick="sort(2)">Hard Points</td>
-        <td bgcolor="#3478a2" onclick="sort(3)">Total Points: E+2M+3H</td>
+        <td class="topBox">Name</td>
+        <td class="topBox" onclick="sort(0)">Easy Points</td>
+        <td class="darkBox" onclick="sort(1)">Medium Points</td>
+        <td class="topBox" onclick="sort(2)">Hard Points</td>
+        <td class="topBox" onclick="sort(3)">Total Points: E+2M+3H</td>
       </thead>
     </tr>
   </table>
@@ -117,11 +126,11 @@
   <table class="board" id="hard" hidden style="margin-left: auto; margin-right: auto;">
     <tr>
       <thead>
-        <td bgcolor="#3478a2">Name</td>
-        <td bgcolor="#3478a2" onclick="sort(0)">Easy Points</td>
-        <td bgcolor="#3478a2" onclick="sort(1)">Medium Points</td>
-        <td bgcolor="#246186" onclick="sort(2)">Hard Points</td>
-        <td bgcolor="#3478a2" onclick="sort(3)">Total Points: E+2M+3H</td>
+        <td class="topBox">Name</td>
+        <td class="topBox" onclick="sort(0)">Easy Points</td>
+        <td class="topBox" onclick="sort(1)">Medium Points</td>
+        <td class="darkBox" onclick="sort(2)">Hard Points</td>
+        <td class="topBox" onclick="sort(3)">Total Points: E+2M+3H</td>
       </thead>
     </tr>
   </table>
@@ -261,12 +270,16 @@
           var tableCell = document.createElement('td')
           tableCell.textContent = tableCells[i]
           tableCell.className = 'cell'
-          tableCell.bgColor = "#3478a2"
-          tableCell.classList.add("normalColor")
+          //tableCell.bgColor = "#3478a2"
+          tableCell.classList.add("normalBox")
+          //tableCell.classList.add("normalColor")
           if (i == rownum){
-            tableCell.bgColor = "#246186"
+            console.log(rownum)
+            //tableCell.bgColor = "#246186"
             tableCell.classList.remove("normalColor")
             tableCell.classList.add("whiteColor")
+            tableCell.classList.remove("normalBox")
+            tableCell.classList.add("darkBox")
           }
           row.appendChild(tableCell)
         }
