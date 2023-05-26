@@ -20,8 +20,6 @@
     <img src = "./assets/svg/pin.svg" id="pin" width = "21" height = "35" class = "topbar" style="opacity: 0; pointer-events: none;filter: blur(0px);z-index: 3;">
     <img src = "./assets/svg/submit.svg" id="submit" onclick = "sendPin()" width = "400" height = "47" class = "topbarButtons" style="top: 790px; left: 1120px; opacity: 0.5;pointer-events: all;filter: blur(0px);">
     <img src = "./assets/svg/timerDropdown.svg" id="timerDropdown" width = "150" height = "88" class = "topbarButtons" style="top: 102px; left: 695px; opacity: 1;pointer-events: none;filter: blur(0px);z-index: 1;">
-    <img src = "./assets/svg/scoreflag.svg" id="scoreFlag" width = "150" height = "89" class = "topbarButtons" style="top: 15px; left: 1175px; opacity: 0;pointer-events: none;filter: blur(0px);z-index: 1;">
-    <div id = "scoreFlagText" class = "barText" style="opacity:0;top: 40px; left: 1221px; pointer-events: none;filter: blur(0px);z-index: 2;"></div>
     <div id = "timer" class = "timerText" style="owpacity:1;top: 122px; left: 723px; pointer-events: none;filter: blur(0px);z-index: 2;"></div>
 
     <img src = "./assets/svg/leavePrompt.svg" id="leavePromptBox" onclick = "" width = "250" height = "500" class = "" style="position: absolute; top: 790px; left: 1120px; opacity: 0;pointer-events: none;z-index: 2;">
@@ -32,8 +30,12 @@
     <div class = "barText" id="round" style="top:60px; left:746px;pointer-events: all;filter: blur(0px);">1/5</div>
     <div class = "barText" id="score" style="top:60px; left:1070px;pointer-events: all;filter: blur(0px);">0</div>
 
-    <img src = "./assets/svg/transitionPage.svg" id="transitionPage" onclick = "//next" width = "1383" height = "700" class = "topbar" style = "top:82px; left:69px; opacity:0;pointer-events:none;z-index:2;">
-    <img src = "./assets/svg/transitionNext.svg" id="transitionNext" onclick = "transitionBlur('unblur')" width = "175" height = "88" class = "leaveOption" style = "top:654px; left:1252px; opacity:0;pointer-events:none;z-index:2;">
+    <img src = "./assets/svg/transitionPage.svg" id="transitionPage" onclick = "//next" width = "1383" height = "700" class = "topbar" style = "top:82px; left:69px; opacity:0;pointer-events:none;z-index:3;">
+    <img src = "./assets/svg/transitionNext.svg" id="transitionNext" onclick = "transitionBlur('unblur')" width = "175" height = "88" class = "leaveOption" style = "top:654px; left:1252px; opacity:0;pointer-events:none;z-index:3;">
+    <div id = "transitionFeedback" width="1020" height="317" class = "transitionTextLarge" style="top:391px;left:635px;opacity:0;pointer-events: none;z-index:3;text-align:center;"></div>
+    <div id = "transitionRoundScore" width="267" height="80" class = "transitionTextMed" style="top:471px;left:629px;opacity:0;pointer-events: none;z-index:3;text-align:center;"></div>
+    <div id = "transitionTotalScore" width="1020" height="317" class = "transitionTextELarge" style="top:237px;left:629px;opacity:0;pointer-events: none;z-index:3;transform: rotate(-23deg);text-align:center;"></div>
+
 </body>
     <script>
     var round = 1;
@@ -96,8 +98,6 @@
         dynamic_imgSize('timerDropdown', 150, 88, 102, 695, size)
         dynamic_TextSize('timerText', 24, size)
         dynamic_Positioning('timer', 122, 742, size)
-        dynamic_imgSize('scoreFlag', 150, 89, 15, 1175, size)
-        dynamic_Positioning('scoreFlagText', 40, 1221, size)
         // TOP BAR RESIZE
 
         // MENU BUTTONS RESIZE
@@ -124,6 +124,12 @@
         // TRANSITION RESIZE
         dynamic_imgSize('transitionPage', 1383, 700, 82, 69, size)
         dynamic_imgSize('transitionNext', 175, 88, 654, 1252, size)
+        dynamic_TextSize('transitionTextELarge', 259, size)
+        dynamic_TextSize('transitionTextLarge', 65, size)
+        dynamic_TextSize('transitionTextMed', 39, size)
+        dynamic_Positioning('transitionTotalScore', 237, 385, size)
+        dynamic_Positioning('transitionRoundScore', 471, 629, size)
+        dynamic_Positioning('transitionFeedback', 391, 635, size)
         // TRANSITION RESIZE
     }
     </script>
@@ -176,7 +182,7 @@
                 body: JSON.stringify(body)
             }
 
-            const api = isLocalhost ? "http://localhost:1337" : "";
+            const api = isLocalhost ? "http://localhost:8200" : "";
             
             //calculating points in backend
             const getList = async () => {
@@ -235,21 +241,26 @@
         }
 
         function updateScoreCookie(score) {
-            document.getElementById("scoreFlagText").innerHTML = "+" + score;
-            document.getElementById("scoreFlag").style.opacity = "1";
-            document.getElementById("scoreFlagText").style.opacity = "1";
+            if (score > 4750) {
+                document.getElementById("transitionFeedback").innerHTML = "Perfect!";
+            } else if (score > 4000) {
+                document.getElementById("transitionFeedback").innerHTML = "Great job!";
+            } else if (score > 3000) {
+                document.getElementById("transitionFeedback").innerHTML = "Close...";
+            } else if (score > 1500) {
+                document.getElementById("transitionFeedback").innerHTML = "Could do better.";
+            } else
+                document.getElementById("transitionFeedback").innerHTML = "Do you need a map?";
+            }
+            document.getElementById("transitionRoundScore").innerHTML = "+" + score + " points";
             let total = getTotal();
             if (total != "") {
                 document.cookie = "total=" + (parseInt(total) + parseInt(score)) + ";"
             } else {
                 document.cookie = "total=" + score + ";"
             }
-            sleep(2).then(() => {
-                document.getElementById("scoreFlag").style.opacity = "0";
-                document.getElementById("scoreFlagText").style.opacity = "0";
-            });
-        }
-
+            let newTotal = getTotal();
+            document.getElementById("transitionTotalScore").innerHTML = newTotal;
 
         function resetScoreCookie() {
             document.cookie = "total=0;"
@@ -276,8 +287,14 @@
                 // INSERT DISPLAY FUNCTIONS HERE FOR SCORE POPUP
                 document.getElementById("transitionPage").style.pointerEvents = "all";
                 document.getElementById("transitionNext").style.pointerEvents = "all";
+                document.getElementById("transitionTotalScore").style.pointerEvents = "all";
+                document.getElementById("transitionRoundScore").style.pointerEvents = "all";
+                document.getElementById("transitionFeedback").style.pointerEvents = "all";
                 document.getElementById("transitionPage").style.opacity = "1";
                 document.getElementById("transitionNext").style.opacity = "1";
+                document.getElementById("transitionTotalScore").style.opacity = "0.25";
+                document.getElementById("transitionRoundScore").style.opacity = "0.75";
+                document.getElementById("transitionFeedback").style.opacity = "1";
                 
 
                 document.getElementById("guess").style.pointerEvents = "none";
@@ -313,8 +330,14 @@
                 // INSERT UNDISPLAY OPTIONS HERE
                 document.getElementById("transitionPage").style.pointerEvents = "none";
                 document.getElementById("transitionNext").style.pointerEvents = "none";
+                document.getElementById("transitionTotalScore").style.pointerEvents = "none";
+                document.getElementById("transitionRoundScore").style.pointerEvents = "none";
+                document.getElementById("transitionFeedback").style.pointerEvents = "none";
                 document.getElementById("transitionPage").style.opacity = "0";
                 document.getElementById("transitionNext").style.opacity = "0";
+                document.getElementById("transitionTotalScore").style.opacity = "0";
+                document.getElementById("transitionRoundScore").style.opacity = "0";
+                document.getElementById("transitionFeedback").style.opacity = "0";
 
                 document.getElementById("guess").style.pointerEvents = "all";
                 document.getElementById("home").style.pointerEvents = "all";
@@ -456,7 +479,6 @@
             window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
         )
         const api = isLocalhost ? "http://localhost:1337" : "";
-
         var endpoint = "/api/images/GetEasyImage"
 
         const getList = async () => {
