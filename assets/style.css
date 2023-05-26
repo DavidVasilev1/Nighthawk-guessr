@@ -26,6 +26,22 @@
     transform: scale(1.1);
 }
 
+.signOut {
+    font-family: "FuturaBoldItalic";
+    font-size: 35px;
+    position:absolute;
+    left: 91px;
+    color: #000000;
+    animation-duration: 0.05s;
+    animation-fill-mode: forwards;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.signOut:hover {
+    transform: scale(1.1);
+}
+
 .topbar {
     position: absolute;
     z-index: 1;
