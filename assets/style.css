@@ -61,6 +61,30 @@
     z-index: 2;
 }
 
+.transitionTextELarge {
+    font-family: "FuturaBoldItalic";
+    font-size: 259px;
+    position: absolute;
+    color: #F4FAF8;
+    z-index: 2;
+}
+
+.transitionTextLarge {
+    font-family: "FuturaBoldItalic";
+    font-size: 65px;
+    position: absolute;
+    color: #F4FAF8;
+    z-index: 2;
+}
+
+.transitionTextMed {
+    font-family: "FuturaBoldItalic";
+    font-size: 39px;
+    position: absolute;
+    color: #F4FAF8;
+    z-index: 2;
+}
+
 .home {
     position: absolute;
     font-family: "FuturaBoldItalic";

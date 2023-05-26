@@ -32,8 +32,12 @@
     <div class = "barText" id="round" style="top:60px; left:746px;pointer-events: all;filter: blur(0px);">1/5</div>
     <div class = "barText" id="score" style="top:60px; left:1070px;pointer-events: all;filter: blur(0px);">0</div>
 
-    <img src = "./assets/svg/transitionPage.svg" id="transitionPage" onclick = "//next" width = "1383" height = "700" class = "topbar" style = "top:82px; left:69px; opacity:0;pointer-events:none;z-index:2;">
-    <img src = "./assets/svg/transitionNext.svg" id="transitionNext" onclick = "transitionBlur('unblur')" width = "175" height = "88" class = "leaveOption" style = "top:654px; left:1252px; opacity:0;pointer-events:none;z-index:2;">
+    <img src = "./assets/svg/transitionPage.svg" id="transitionPage" onclick = "//next" width = "1383" height = "700" class = "topbar" style = "top:82px; left:69px; opacity:0;pointer-events:none;z-index:3;">
+    <img src = "./assets/svg/transitionNext.svg" id="transitionNext" onclick = "transitionBlur('unblur')" width = "175" height = "88" class = "leaveOption" style = "top:654px; left:1252px; opacity:0;pointer-events:none;z-index:3;">
+    <div id = "transitionFeedback" width="1020" height="317" class = "transitionTextLarge" style="top:391px;left:635px;opacity:0;pointer-events: none;z-index:3;text-align:center;">Perfect!</div>
+    <div id = "transitionRoundScore" width="267" height="80" class = "transitionTextMed" style="top:471px;left:629px;opacity:0;pointer-events: none;z-index:3;text-align:center;">+5000 points</div>
+    <div id = "transitionTotalScore" width="1020" height="317" class = "transitionTextELarge" style="top:237px;left:629px;opacity:0;pointer-events: none;z-index:3;transform: rotate(-23deg);text-align:center;">25000</div>
+
 </body>
     <script>
     var round = 1;
@@ -124,6 +128,12 @@
         // TRANSITION RESIZE
         dynamic_imgSize('transitionPage', 1383, 700, 82, 69, size)
         dynamic_imgSize('transitionNext', 175, 88, 654, 1252, size)
+        dynamic_TextSize('transitionTextELarge', 259, size)
+        dynamic_TextSize('transitionTextLarge', 65, size)
+        dynamic_TextSize('transitionTextMed', 39, size)
+        dynamic_Positioning('transitionTotalScore', 237, 385, size)
+        dynamic_Positioning('transitionRoundScore', 471, 629, size)
+        dynamic_Positioning('transitionFeedback', 391, 635, size)
         // TRANSITION RESIZE
     }
     </script>
@@ -276,8 +286,14 @@
                 // INSERT DISPLAY FUNCTIONS HERE FOR SCORE POPUP
                 document.getElementById("transitionPage").style.pointerEvents = "all";
                 document.getElementById("transitionNext").style.pointerEvents = "all";
+                document.getElementById("transitionTotalScore").style.pointerEvents = "all";
+                document.getElementById("transitionRoundScore").style.pointerEvents = "all";
+                document.getElementById("transitionFeedback").style.pointerEvents = "all";
                 document.getElementById("transitionPage").style.opacity = "1";
                 document.getElementById("transitionNext").style.opacity = "1";
+                document.getElementById("transitionTotalScore").style.opacity = "0.25";
+                document.getElementById("transitionRoundScore").style.opacity = "0.75";
+                document.getElementById("transitionFeedback").style.opacity = "1";
                 
 
                 document.getElementById("guess").style.pointerEvents = "none";
@@ -313,8 +329,14 @@
                 // INSERT UNDISPLAY OPTIONS HERE
                 document.getElementById("transitionPage").style.pointerEvents = "none";
                 document.getElementById("transitionNext").style.pointerEvents = "none";
+                document.getElementById("transitionTotalScore").style.pointerEvents = "none";
+                document.getElementById("transitionRoundScore").style.pointerEvents = "none";
+                document.getElementById("transitionFeedback").style.pointerEvents = "none";
                 document.getElementById("transitionPage").style.opacity = "0";
                 document.getElementById("transitionNext").style.opacity = "0";
+                document.getElementById("transitionTotalScore").style.opacity = "0";
+                document.getElementById("transitionRoundScore").style.opacity = "0";
+                document.getElementById("transitionFeedback").style.opacity = "0";
 
                 document.getElementById("guess").style.pointerEvents = "all";
                 document.getElementById("home").style.pointerEvents = "all";
