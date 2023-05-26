@@ -26,13 +26,13 @@
     
     @keyframes color {
         0% {
-            background-color: #7bccfe;
+            background-color: #8fd4ff;
         }
         50% {
-            background-color: #498fba;
+            background-color: #5cb8f1;
         }
         100% {
-            background-color: #7bccfe;
+            background-color: #8fd4ff;
         }
     }
 
@@ -71,7 +71,7 @@ function getCookie(name) {
 //}
 
 </script>
-<body style="background-color: #f4faf8;">
+<body style="background-color: #f4faf8;" onload="resize()">
     <div class="bg" id="bg">
         <div id="text1" class="menuText bounce" style="top: 235px;" onclick="difficulty('prompt')">PLAY</div>
         <div id="text2" class="menuText bounce" style="top: 340px;" onclick="window.location = './Stats.html'">STATS</div>
@@ -79,10 +79,10 @@ function getCookie(name) {
         <div id="text4" class="menuText bounce" style="top: 550px;" onclick="window.location = './leaderboard.html'">LEADERBOARD</div>
         <img src = "./assets/svg/logo.svg" id="logo" width = "392" class = "home" style="top: 13px; left: 40px; opacity: 1;">
         <img src = "./assets/svg/profile.svg" id="profile" width = "80" height = "80" class = "home" style="top: 20px; left: 1436px; opacity: 1;">
-        <div id="text5" class="menuText bounce" style="top: 40px; left: 1175px;" onclick="window.location = './register.html'">SIGN IN</div>
+        <div id="text5" class="menuText" style="top: 40px; left: 1175px;" onclick="window.location = './register.html'">SIGN IN</div>
         <img src = "./assets/svg/indexPhotos.svg" id="photos1" width = "640" height = "640" class = "home" style="top: 112px; left: 775px; opacity: 1;">
         <img src = "./assets/svg/exit.svg" id="photos2" width = "40" height = "40" class = "home" style="top: 801px; left: 1472px; opacity: 1;">
-        <div id="home" class="menuText bounce" style="top: 799px; left: 1278px; font-size: 35px;" onclick="signOut()">SIGN OUT</div>
+        <div id="home" class="signOut bounce" style="top: 799px; left: 1278px; font-size: 35px;" onclick="signOut()">SIGN OUT</div>
 
         <img src = "./assets/svg/difficultyPrompt.svg" id="difficultyPrompt" onclick = "" width = "734" height = "250" class = "" style="position: absolute; top: 307px; left: 401px; opacity: 0;pointer-events: none;z-index: 2;">
         <img src = "./assets/svg/difficultyEasy.svg" id="difficultyEasy" onclick = "gameRedirect('easy')" width = "175" height = "88" class = "difficultyOption" style="top: 450px; left: 446px; opacity: 0;pointer-events: none;filter: blur(0px);z-index: 2;">
@@ -162,6 +162,79 @@ function getCookie(name) {
             document.getElementById("text5").style.filter = "blur(0px)";
             document.getElementById("home").style.filter = "blur(0px)";
         }
+    }
+</script>
+<script>
+    var round = 1;
+    // resizes position
+    function dynamic_Positioning(idName, origionalTop, origionalLeft, size) {
+        var element = document.getElementById(idName);
+        var element_Top = size * origionalTop;
+        element.style.top = element_Top + "px";
+        var element_Left = size * origionalLeft;
+        element.style.left = element_Left + "px";
+    }
+
+    // resizes text
+    function dynamic_TextSize(className, origionalSize, size) {
+        var element_Font = size * origionalSize;
+        var elements = document.getElementsByClassName(className);
+        for (var i = 0; i < elements.length; i++) {
+            var element = elements[i];
+            element.style.fontSize = element_Font + "px";
+        }
+    }
+    //resizes image display
+    function dynamic_imgSize(idName, origionalHeight, origionalWidth, origionalTop, origionalLeft, size) {
+        var element = document.getElementById(idName);
+        var element_Height = size * origionalHeight;
+        element.style.width = element_Height + "px";
+        var element_Width = size * origionalWidth;
+        element.style.height = element_Width + "px";
+        var element_Top = size * origionalTop;
+        element.style.top = element_Top + "px";
+        var element_Left = size * origionalLeft;
+        element.style.left = element_Left + "px";
+    }
+    //resizes image size
+    function dynamic_imgSizeRight(idName, origionalHeight, origionalWidth, origionalTop, origionalRight, size) {
+        var element = document.getElementById(idName);
+        var element_Height = size * origionalHeight;
+        element.style.width = element_Height + "px";
+        var element_Width = size * origionalWidth;
+        element.style.height = element_Width + "px";
+        var element_Top = size * origionalTop;
+        element.style.top = element_Top + "px";
+        var element_Right = size * origionalRight;
+        element.style.right = element_Right + "px";
+    }
+    window.onscroll = function() {
+        window.scrollTo(0, 0)
+    };
+    window.onresize = resize;
+    function resize () {
+        var current = window.innerWidth;
+        var size = window.innerWidth/1536;
+
+        // LOGO RESIZE
+        dynamic_imgSize('logo', 392, 67, 13, 40, size)
+
+        // MENU RESIZE
+        dynamic_Positioning('text1', 235, 91, size)
+        dynamic_Positioning('text2', 340, 91, size)
+        dynamic_Positioning('text3', 445, 91, size)
+        dynamic_Positioning('text4', 550, 91, size)
+        dynamic_Positioning('text5', 40, 1175, size)
+        dynamic_TextSize('menuText', 63, size)
+        dynamic_Positioning('home', 803, 1278, size)
+        dynamic_TextSize('logOut', 35, size)
+
+        // SMALL IMAGE RESIZE
+        dynamic_imgSize('profile', 80, 80, 20, 1436, size)
+        dynamic_imgSize('photos2', 40, 40, 801, 1430, size)
+
+        // IMAGE RESIZE
+        dynamic_imgSize('photos1', 640, 640, 112, 775, size)
     }
 </script>
 
