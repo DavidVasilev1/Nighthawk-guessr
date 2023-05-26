@@ -32,7 +32,8 @@
     <div class = "barText" id="round" style="top:60px; left:746px;pointer-events: all;filter: blur(0px);">1/5</div>
     <div class = "barText" id="score" style="top:60px; left:1070px;pointer-events: all;filter: blur(0px);">0</div>
 
-    <img src = "./assets/svg/transitionNext.svg" id="transitionNext" onclick = "//next" width = "175" height = "88" class = "leaveOption" style = "top:654px; left:1252px; opacity:1;pointer-events:all;z-index:2;">
+    <img src = "./assets/svg/transitionPage.svg" id="transitionPage" onclick = "//next" width = "1383" height = "700" class = "topbar" style = "top:82px; left:69px; opacity:0;pointer-events:none;z-index:2;">
+    <img src = "./assets/svg/transitionNext.svg" id="transitionNext" onclick = "transitionBlur('unblur')" width = "175" height = "88" class = "leaveOption" style = "top:654px; left:1252px; opacity:0;pointer-events:none;z-index:2;">
 </body>
     <script>
     var round = 1;
@@ -119,6 +120,11 @@
         dynamic_imgSize('leavePromptBoxNo', 175, 88, 450, 563, size)
         dynamic_imgSize('leavePromptBoxYes', 175, 88, 450, 798, size)
         // LEAVE RESIZE
+
+        // TRANSITION RESIZE
+        dynamic_imgSize('transitionPage', 1383, 700, 82, 69, size)
+        dynamic_imgSize('transitionNext', 175, 88, 654, 1252, size)
+        // TRANSITION RESIZE
     }
     </script>
     <script> // util
@@ -183,6 +189,7 @@
                 console.log(list);
                 updateScoreCookie(list);
                 let total = convertScoreToString();
+                transitionBlur("blur");
                 document.getElementById("score").innerHTML = total;
             })
         }
@@ -267,6 +274,10 @@
         function transitionBlur(option) {
             if (option == "blur") {
                 // INSERT DISPLAY FUNCTIONS HERE FOR SCORE POPUP
+                document.getElementById("transitionPage").style.pointerEvents = "all";
+                document.getElementById("transitionNext").style.pointerEvents = "all";
+                document.getElementById("transitionPage").style.opacity = "1";
+                document.getElementById("transitionNext").style.opacity = "1";
                 
 
                 document.getElementById("guess").style.pointerEvents = "none";
@@ -300,6 +311,10 @@
             }
             else if (option == "unblur") {
                 // INSERT UNDISPLAY OPTIONS HERE
+                document.getElementById("transitionPage").style.pointerEvents = "none";
+                document.getElementById("transitionNext").style.pointerEvents = "none";
+                document.getElementById("transitionPage").style.opacity = "0";
+                document.getElementById("transitionNext").style.opacity = "0";
 
                 document.getElementById("guess").style.pointerEvents = "all";
                 document.getElementById("home").style.pointerEvents = "all";
