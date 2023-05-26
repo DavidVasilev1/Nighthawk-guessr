@@ -345,6 +345,15 @@
                 document.getElementById("timerDropdown").style.filter = "blur(0px)";
                 document.getElementById("scoreFlag").style.filter = "blur(0px)";
                 document.getElementById("scoreFlagText").style.filter = "blur(0px)";
+                
+                // round logic to continue after screen is closed
+                round++;
+                if (round == 5) {
+                    document.getElementById("round").innerHTML = round + "/5";
+                    alert("game done!")
+                } else {
+                    document.getElementById("round").innerHTML = round + "/5";
+                }
             }
             
         }
@@ -486,8 +495,6 @@
                 seconds = "0"+seconds
             }
             let time = minutes + ":" + seconds;
-            console.log(time);
-            console.log(countdown);
             document.getElementById('timer').innerHTML = time;
         
             if (countdown <= 0) {
