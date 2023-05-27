@@ -104,6 +104,7 @@
 
  </div>
 
+        <!-- This code creates three canvas elements, one for each type of chart. -->
         <canvas id="easyChart" style="width:100%;max-width:700px"></canvas>
         <canvas id="mediumChart" style="width:100%;max-width:700px"></canvas>
         <canvas id="hardChart" style="width:100%;max-width:700px"></canvas>
@@ -210,38 +211,57 @@
         return array;
       }
      
+        /**
+         * This function creates a charts of pie, bar, doughnut.
+         */
         function displayPieChart(data, canvas, type, points) {
+          
           // Create a new chart object.
           var chart = new Chart(canvas, {
-            type: type,
-            data: {
+            type: type,  // The type of chart to create.
+            data: { // The data for the chart.
+               // The labels for the chart.  
               labels: data.map(function(item) {
                 return item.name;
               }),
+              // The datasets for the chart.  
               datasets: [
                 {
+                  // The data for the dataset. 
                   data: data.map(function(item) {
                       ret = item.hard;
+                      // Get the value for the specified point type.
+                      // If the point type is "Easy", set the value to the "easy" property.
                       if(points === "Easy") {
                         ret = item.easy;    
+                          
+                      // If the point type is "Medium", set the value to the "medium" property.    
                       } else if (points === "Medium") {
                         ret = item.medium;      
                       }
                     return ret;
                   }),
+                  
+                  // The background color for the dataset  
                   backgroundColor: barColors,
                 }
               ]
             },
+            // The options for the chart.  
             options: {
+               // Display the title.
               title: {
                 display: true,
                 text:  points + " Point Propotions (" + type + " style)"
               },
+                
+               // Display the legend.  
               legend: {
                 display: ( type === "bar" ? false : true),
                 position: "left"
               },
+                
+               // Display the datalabels.  
               datalabels: {
                 enabled: true,
                 formatter: function(value, ctx) {
@@ -265,6 +285,7 @@
           {"name": "Ken2", "easy": 50, "medium": 506, "hard": 239},    
         ];
      
+        // This function generates a random color.
         var barColors = []
         function generateColors(dataLength) {
             for (var i = 0; i < dataLength; i++) {
@@ -281,6 +302,8 @@
 
      //generateColors(data.length);
      //displayPieChart(data, easyChart, "pie", "Hard");
+     //displayPieChart(data, mediumChart, "doughnut", "Easy");
+     //displayPieChart(data, hardChart, "bar", "Medium");
 
   </script>
 </html>
