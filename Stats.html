@@ -7,10 +7,11 @@
     <title>Nighthawk Guessr</title>
     <link rel="stylesheet" href="./assets/style.css">
 </head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <body style="background-image: url('./assets/img/guess.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: cover;" onload = "resize()">
     <img src = "./assets/svg/home.svg" id="home"onclick = "home()" width = "60" height = "60" class = "topbar" style="top: 32px; left: 0px; opacity: 0.75;">
     <img src = "./assets/svg/help.svg" id="help" onclick = "//TBD" width = "60" height = "60" class = "topbar" style="top: 32px; right: 0px; opacity: 0.75;">
-
+    
   <style>
   * {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -102,7 +103,11 @@
 
 
  </div>
-    
+
+        <canvas id="easyChart" style="width:100%;max-width:700px"></canvas>
+        <canvas id="mediumChart" style="width:100%;max-width:700px"></canvas>
+        <canvas id="hardChart" style="width:100%;max-width:700px"></canvas>
+
  </body>
  <script>
     window.onresize = resize;
@@ -204,9 +209,78 @@
         // return sorted array
         return array;
       }
+     
+        function displayPieChart(data, canvas, type, points) {
+          // Create a new chart object.
+          var chart = new Chart(canvas, {
+            type: type,
+            data: {
+              labels: data.map(function(item) {
+                return item.name;
+              }),
+              datasets: [
+                {
+                  data: data.map(function(item) {
+                      ret = item.hard;
+                      if(points === "Easy") {
+                        ret = item.easy;    
+                      } else if (points === "Medium") {
+                        ret = item.medium;      
+                      }
+                    return ret;
+                  }),
+                  backgroundColor: barColors,
+                }
+              ]
+            },
+            options: {
+              title: {
+                display: true,
+                text:  points + " Point Propotions (" + type + " style)"
+              },
+              legend: {
+                display: ( type === "bar" ? false : true),
+                position: "left"
+              },
+              datalabels: {
+                enabled: true,
+                formatter: function(value, ctx) {
+                  return value;
+                }
+              }      
+            }
+          });
+        }
+     
+
+        //Test data
+        data = [
+          {"name": "Tom", "easy": 20, "medium": 50, "hard": 330},
+          {"name": "Zen", "easy": 60, "medium": 150, "hard": 930},
+          {"name": "Bob", "easy": 40, "medium": 56, "hard": 39},
+          {"name": "Ken", "easy": 50, "medium": 506, "hard": 239},
+          {"name": "Bob1", "easy": 40, "medium": 56, "hard": 39},
+          {"name": "Ken1", "easy": 50, "medium": 506, "hard": 239},  
+          {"name": "Bob2", "easy": 40, "medium": 56, "hard": 39},
+          {"name": "Ken2", "easy": 50, "medium": 506, "hard": 239},    
+        ];
+     
+        var barColors = []
+        function generateColors(dataLength) {
+            for (var i = 0; i < dataLength; i++) {
+              var red = Math.floor(Math.random() * 255);
+              var green = Math.floor(Math.random() * 255);
+              var blue = Math.floor(Math.random() * 255);
+
+              barColors.push(`rgb(${red}, ${green}, ${blue})`);
+            }
+        }
       
       // build list
       getList()
+
+     //generateColors(data.length);
+     //displayPieChart(data, easyChart, "pie", "Hard");
 
   </script>
 </html>
