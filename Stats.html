@@ -7,10 +7,11 @@
     <title>Nighthawk Guessr</title>
     <link rel="stylesheet" href="./assets/style.css">
 </head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <body style="background-image: url('./assets/img/guess.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: cover;" onload = "resize()">
     <img src = "./assets/svg/home.svg" id="home"onclick = "home()" width = "60" height = "60" class = "topbar" style="top: 32px; left: 0px; opacity: 0.75;">
     <img src = "./assets/svg/help.svg" id="help" onclick = "//TBD" width = "60" height = "60" class = "topbar" style="top: 32px; right: 0px; opacity: 0.75;">
-
+    
   <style>
   * {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -70,6 +71,12 @@
   
  <div id="container">
   <h1>NIGHTHAWKGUESSR Stats</h1>
+
+  <!-- This code creates three canvas elements, one for each type of chart. -->
+  <canvas id="easyChart" style="width:100%;max-width:700px;padding:100px"></canvas>
+  <canvas id="mediumChart" style="width:100%;max-width:700px;padding:100px"></canvas>
+  <canvas id="hardChart" style="width:100%;max-width:700px;padding:100px"></canvas>
+
   <h2><u>Unsorted Standings</u></h2>
   
   <!-- Display Unsorted Standings Table with headers -->
@@ -102,7 +109,8 @@
 
 
  </div>
-    
+
+
  </body>
  <script>
     window.onresize = resize;
@@ -119,7 +127,6 @@
  </script>
  
  <script>
-      
       // Server URL
       const api = "http://localhost:8570";
       
@@ -127,7 +134,7 @@
        * Get the Leaderboard data from Server 
        */
       const getList = async () => {
-        const list = await fetch(api + "/api/leaderboard/leaderboardTop10").then((r) => r.json());
+        const list = await fetch(api + "/api/stats/statschart").then((r) => r.json());
 
         // List Array has the Leaderboard data 
         return list
@@ -147,6 +154,12 @@
 
         // Show Hardpoints sorted data
         showHardpoints(list);
+
+        generateColors(list.length);
+        displayPieChart(list, easyChart, "pie", "Hard");
+        displayPieChart(list, mediumChart, "doughnut", "Easy");
+        displayPieChart(list, hardChart, "bar", "Medium");
+
       })
 
       /**
@@ -204,9 +217,104 @@
         // return sorted array
         return array;
       }
+     
+        /**
+         * This function creates a charts of pie, bar, doughnut.
+         */
+        function displayPieChart(data, canvas, type, points) {
+          
+          // Create a new chart object.
+          var chart = new Chart(canvas, {
+            type: type,  // The type of chart to create.
+            data: { // The data for the chart.
+               // The labels for the chart.  
+              labels: data.map(function(item) {
+                return item.username;
+              }),
+              // The datasets for the chart.  
+              datasets: [
+                {
+                  // The data for the dataset. 
+                  data: data.map(function(item) {
+                      ret = item.Hard;
+                      // Get the value for the specified point type.
+                      // If the point type is "Easy", set the value to the "easy" property.
+                      if(points === "Easy") {
+                        ret = item.Easy;
+                          
+                      // If the point type is "Medium", set the value to the "medium" property.    
+                      } else if (points === "Medium") {
+                        ret = item.Medium;
+                      }
+                    return ret;
+                  }),
+                  
+                  // The background color for the dataset  
+                  backgroundColor: barColors,
+                }
+              ]
+            },
+            // The options for the chart.  
+            options: {
+               // Display the title.
+              title: {
+                display: true,
+                text:  points + " Point Propotions (" + type + " style)",
+                fontSize: 20
+              },
+                
+               // Display the legend.  
+              legend: {
+                display: ( type === "bar" ? false : true),
+                position: "left",
+                labels: {
+                  fontSize: 20
+                }   
+              },
+                
+               // Display the datalabels.  
+              datalabels: {
+                enabled: true,
+                formatter: function(value, ctx) {
+                  return value;
+                }
+              }
+            }
+          });
+        }
+     
+
+        //Test data
+        data = [
+          {"name": "Tom", "easy": 20, "medium": 50, "hard": 330},
+          {"name": "Zen", "easy": 60, "medium": 150, "hard": 930},
+          {"name": "Bob", "easy": 40, "medium": 56, "hard": 39},
+          {"name": "Ken", "easy": 50, "medium": 506, "hard": 239},
+          {"name": "Bob1", "easy": 40, "medium": 56, "hard": 39},
+          {"name": "Ken1", "easy": 50, "medium": 506, "hard": 239},  
+          {"name": "Bob2", "easy": 40, "medium": 56, "hard": 39},
+          {"name": "Ken2", "easy": 50, "medium": 506, "hard": 239},    
+        ];
+     
+        // This function generates a random color.
+        var barColors = []
+        function generateColors(dataLength) {
+            for (var i = 0; i < dataLength; i++) {
+              var red = Math.floor(Math.random() * 255);
+              var green = Math.floor(Math.random() * 255);
+              var blue = Math.floor(Math.random() * 255);
+
+              barColors.push(`rgb(${red}, ${green}, ${blue})`);
+            }
+        }
       
       // build list
       getList()
+
+     //generateColors(data.length);
+     //displayPieChart(data, easyChart, "pie", "Hard");
+     //displayPieChart(data, mediumChart, "doughnut", "Easy");
+     //displayPieChart(data, hardChart, "bar", "Medium");
 
   </script>
 </html>

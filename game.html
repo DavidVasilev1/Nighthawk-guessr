@@ -21,21 +21,21 @@
     <img src = "./assets/svg/submit.svg" id="submit" onclick = "sendPin()" width = "400" height = "47" class = "topbarButtons" style="top: 790px; left: 1120px; opacity: 0.5;pointer-events: all;filter: blur(0px);">
     <img src = "./assets/svg/timerDropdown.svg" id="timerDropdown" width = "150" height = "88" class = "topbarButtons" style="top: 102px; left: 695px; opacity: 1;pointer-events: none;filter: blur(0px);z-index: 1;">
     <div id = "timer" class = "timerText" style="owpacity:1;top: 122px; left: 723px; pointer-events: none;filter: blur(0px);z-index: 2;"></div>
-
-    <img src = "./assets/svg/leavePrompt.svg" id="leavePromptBox" onclick = "" width = "250" height = "500" class = "" style="position: absolute; top: 790px; left: 1120px; opacity: 0;pointer-events: none;z-index: 2;">
-    <img src = "./assets/svg/leavePromptYes.svg" id="leavePromptBoxYes" onclick = "window.location.href = './index.html';" width = "88" height = "175" class = "leaveOption" style="top: 790px; left: 1120px; opacity: 0;pointer-events: none;filter: blur(0px);z-index: 2;">
-    <img src = "./assets/svg/leavePromptNo.svg" id="leavePromptBoxNo" onclick = "leave('no')" width = "88" height = "175" class = "leaveOption" style="top: 790px; left: 1120px; opacity: 0;pointer-events: none;filter: blur(0px);z-index: 2;">
     
+    <img src = "./assets/svg/leavePrompt.svg" id="leavePromptBox" onclick = "" width = "250" height = "500" class = "" style="position: absolute; top: 790px; left: 1120px;z-index: 2;opacity:0;pointer-events:none;">
+    <img src = "./assets/svg/leavePromptYes.svg" id="leavePromptBoxYes" onclick = "window.location.href = './index.html';" width = "88" height = "175" class = "leaveOption" style="top: 790px; left: 1120px;z-index: 2;opacity:0;pointer-events:none;">
+    <img src = "./assets/svg/leavePromptNo.svg" id="leavePromptBoxNo" onclick = "leave('no')" width = "88" height = "175" class = "leaveOption" style="top: 790px; left: 1120px;z-index: 2;opacity:0;pointer-events:none;">
+
     <div class = "barText" id="mapText" style="top:60px; left:393px;pointer-events: all;filter: blur(0px);">DEL NORTE</div>
     <div class = "barText" id="round" style="top:60px; left:746px;pointer-events: all;filter: blur(0px);">1/5</div>
     <div class = "barText" id="score" style="top:60px; left:1070px;pointer-events: all;filter: blur(0px);">0</div>
 
     <img src = "./assets/svg/transitionPage.svg" id="transitionPage" onclick = "//next" width = "1383" height = "700" class = "topbar" style = "top:82px; left:69px; opacity:0;pointer-events:none;z-index:3;">
     <img src = "./assets/svg/transitionNext.svg" id="transitionNext" onclick = "transitionBlur('unblur')" width = "175" height = "88" class = "leaveOption" style = "top:654px; left:1252px; opacity:0;pointer-events:none;z-index:3;">
-    <div id = "transitionFeedback" width="1020" height="317" class = "transitionTextLarge" style="top:391px;left:635px;opacity:0;pointer-events: none;z-index:3;text-align:center;"></div>
+    <div id = "transitionFeedback" width="1020" height="317" class = "transitionTextLarge" style="top:391px;left:635px;opacity:0;pointer-events: none;z-index:3;text-align:center;display:flex;align-items:center;justify-content:center;"></div>
     <div id = "transitionRoundScore" width="267" height="80" class = "transitionTextMed" style="top:471px;left:629px;opacity:0;pointer-events: none;z-index:3;text-align:center;"></div>
     <div id = "transitionTotalScore" width="1020" height="317" class = "transitionTextELarge" style="top:237px;left:629px;opacity:0;pointer-events: none;z-index:3;transform: rotate(-23deg);text-align:center;"></div>
-
+    
 </body>
     <script>
     var round = 1;
@@ -137,6 +137,7 @@
     async function sleep(seconds) {
         return new Promise((resolve) =>setTimeout(resolve, seconds * 1000));
     }
+    transition=false
     </script>
     <script>
         document.getElementById("map").addEventListener('click', function (event) {
@@ -195,8 +196,8 @@
                 console.log(list);
                 updateScoreCookie(list);
                 let total = convertScoreToString();
-                transitionBlur("blur");
                 document.getElementById("score").innerHTML = total;
+                transitionBlur("blur");
             })
         }
 
@@ -241,18 +242,24 @@
         }
 
         function updateScoreCookie(score) {
-            if (score > 4750) {
-                document.getElementById("transitionFeedback").innerHTML = "Perfect!";
-            } else if (score > 4000) {
+            console.log("debug: updateScoreCookie")
+            if (score <= 1500) {
+                document.getElementById("transitionFeedback").innerHTML = "You can do better!";
+                console.log("debug: +" + score + " points")
+                document.getElementById("transitionRoundScore").innerHTML = "+" + score + " points";
+            } else if (score <= 3000) {
+                document.getElementById("transitionFeedback").innerHTML = "Close!";
+                console.log("debug: +" + score + " points")
+                document.getElementById("transitionRoundScore").innerHTML = "+" + score + " points";
+            } else if (score <= 4000) {
                 document.getElementById("transitionFeedback").innerHTML = "Great job!";
-            } else if (score > 3000) {
-                document.getElementById("transitionFeedback").innerHTML = "Close...";
-            } else if (score > 1500) {
-                document.getElementById("transitionFeedback").innerHTML = "Could do better.";
-            } else
-                document.getElementById("transitionFeedback").innerHTML = "Do you need a map?";
+                console.log("debug: +" + score + " points")
+                document.getElementById("transitionRoundScore").innerHTML = "+" + score + " points";
+            } else if (score <= 4750) {
+                document.getElementById("transitionFeedback").innerHTML = "Perfect!";
+                console.log("debug: +" + score + " points")
+                document.getElementById("transitionRoundScore").innerHTML = "+" + score + " points";
             }
-            document.getElementById("transitionRoundScore").innerHTML = "+" + score + " points";
             let total = getTotal();
             if (total != "") {
                 document.cookie = "total=" + (parseInt(total) + parseInt(score)) + ";"
@@ -261,7 +268,7 @@
             }
             let newTotal = getTotal();
             document.getElementById("transitionTotalScore").innerHTML = newTotal;
-
+        }
         function resetScoreCookie() {
             document.cookie = "total=0;"
         }
@@ -284,7 +291,7 @@
         
         function transitionBlur(option) {
             if (option == "blur") {
-                // INSERT DISPLAY FUNCTIONS HERE FOR SCORE POPUP
+                transition=true
                 document.getElementById("transitionPage").style.pointerEvents = "all";
                 document.getElementById("transitionNext").style.pointerEvents = "all";
                 document.getElementById("transitionTotalScore").style.pointerEvents = "all";
@@ -295,22 +302,10 @@
                 document.getElementById("transitionTotalScore").style.opacity = "0.25";
                 document.getElementById("transitionRoundScore").style.opacity = "0.75";
                 document.getElementById("transitionFeedback").style.opacity = "1";
-                
-
-                document.getElementById("guess").style.pointerEvents = "none";
                 document.getElementById("home").style.pointerEvents = "none";
-                document.getElementById("bar").style.pointerEvents = "none";
                 document.getElementById("help").style.pointerEvents = "none";
                 document.getElementById("map").style.pointerEvents = "none";
-                document.getElementById("pin").style.pointerEvents = "none";
                 document.getElementById("submit").style.pointerEvents = "none";
-                document.getElementById("mapText").style.pointerEvents = "none";
-                document.getElementById("round").style.pointerEvents = "none";
-                document.getElementById("score").style.pointerEvents = "none";
-                document.getElementById("timer").style.pointerEvents = "none";
-                document.getElementById("timerDropdown").style.pointerEvents = "none";
-                document.getElementById("scoreFlag").style.pointerEvents = "none";
-                document.getElementById("scoreFlagText").style.pointerEvents = "none";
                 document.getElementById("guess").style.filter = "blur(4px)";
                 document.getElementById("home").style.filter = "blur(4px)";
                 document.getElementById("bar").style.filter = "blur(4px)";
@@ -323,11 +318,9 @@
                 document.getElementById("score").style.filter = "blur(4px)";
                 document.getElementById("timer").style.filter = "blur(4px)";
                 document.getElementById("timerDropdown").style.filter = "blur(4px)";
-                document.getElementById("scoreFlag").style.filter = "blur(4px)";
-                document.getElementById("scoreFlagText").style.filter = "blur(4px)";
             }
             else if (option == "unblur") {
-                // INSERT UNDISPLAY OPTIONS HERE
+                transition=false
                 document.getElementById("transitionPage").style.pointerEvents = "none";
                 document.getElementById("transitionNext").style.pointerEvents = "none";
                 document.getElementById("transitionTotalScore").style.pointerEvents = "none";
@@ -338,22 +331,10 @@
                 document.getElementById("transitionTotalScore").style.opacity = "0";
                 document.getElementById("transitionRoundScore").style.opacity = "0";
                 document.getElementById("transitionFeedback").style.opacity = "0";
-
-                document.getElementById("guess").style.pointerEvents = "all";
                 document.getElementById("home").style.pointerEvents = "all";
-                document.getElementById("bar").style.pointerEvents = "all";
                 document.getElementById("help").style.pointerEvents = "all";
                 document.getElementById("map").style.pointerEvents = "all";
-                document.getElementById("pin").style.pointerEvents = "all";
                 document.getElementById("submit").style.pointerEvents = "all";
-                document.getElementById("mapText").style.pointerEvents = "all";
-                document.getElementById("round").style.pointerEvents = "all";
-                document.getElementById("score").style.pointerEvents = "all";
-                document.getElementById("timer").style.pointerEvents = "all";
-                document.getElementById("timerDropdown").style.pointerEvents = "all";
-                document.getElementById("scoreFlag").style.pointerEvents = "all";
-                document.getElementById("scoreFlagText").style.pointerEvents = "all";
-                
                 document.getElementById("guess").style.filter = "blur(0px)";
                 document.getElementById("home").style.filter = "blur(0px)";
                 document.getElementById("bar").style.filter = "blur(0px)";
@@ -366,44 +347,55 @@
                 document.getElementById("score").style.filter = "blur(0px)";
                 document.getElementById("timer").style.filter = "blur(0px)";
                 document.getElementById("timerDropdown").style.filter = "blur(0px)";
-                document.getElementById("scoreFlag").style.filter = "blur(0px)";
-                document.getElementById("scoreFlagText").style.filter = "blur(0px)";
-                
                 // round logic to continue after screen is closed
                 round++;
                 if (round == 5) {
                     document.getElementById("round").innerHTML = round + "/5";
-                    alert("game done!")
+                    endGame();
                 } else {
                     document.getElementById("round").innerHTML = round + "/5";
+                    retrieveImage();
                 }
             }
             
         }
+        function endGame() {
+            transition=true
+            document.getElementById("transitionPage").style.pointerEvents = "all";
+            document.getElementById("transitionPage").style.opacity = "1";
+            // play again button
+            // exit button
+            // leaderboard button
+            // text
+
+            document.getElementById("home").style.pointerEvents = "none";
+            document.getElementById("help").style.pointerEvents = "none";
+            document.getElementById("map").style.pointerEvents = "none";
+            document.getElementById("submit").style.pointerEvents = "none";
+            document.getElementById("guess").style.filter = "blur(4px)";
+            document.getElementById("home").style.filter = "blur(4px)";
+            document.getElementById("bar").style.filter = "blur(4px)";
+            document.getElementById("help").style.filter = "blur(4px)";
+            document.getElementById("map").style.filter = "blur(4px)";
+            document.getElementById("pin").style.filter = "blur(4px)";
+            document.getElementById("submit").style.filter = "blur(4px)";
+            document.getElementById("mapText").style.filter = "blur(4px)";
+            document.getElementById("round").style.filter = "blur(4px)";
+            document.getElementById("score").style.filter = "blur(4px)";
+            document.getElementById("timer").style.filter = "blur(4px)";
+            document.getElementById("timerDropdown").style.filter = "blur(4px)";
+        }
         function leave(option) {
             if (option == "prompt") {
-                document.getElementById("leavePromptBox").style.opacity = "1";
-                document.getElementById("leavePromptBox").style.pointerEvents = "all";
-                document.getElementById("leavePromptBoxNo").style.opacity = "0.75";
-                document.getElementById("leavePromptBoxNo").style.pointerEvents = "all";
-                document.getElementById("leavePromptBoxYes").style.opacity = "0.75";
+                document.getElementById("leavePromptBoxYes").style.opacity = 0.75;
                 document.getElementById("leavePromptBoxYes").style.pointerEvents = "all";
-
-                document.getElementById("guess").style.pointerEvents = "none";
+                document.getElementById("leavePromptBoxNo").style.opacity = 0.75;
+                document.getElementById("leavePromptBoxNo").style.pointerEvents = "all";
+                document.getElementById("leavePromptBox").style.opacity = 1;
                 document.getElementById("home").style.pointerEvents = "none";
-                document.getElementById("bar").style.pointerEvents = "none";
                 document.getElementById("help").style.pointerEvents = "none";
                 document.getElementById("map").style.pointerEvents = "none";
-                document.getElementById("pin").style.pointerEvents = "none";
                 document.getElementById("submit").style.pointerEvents = "none";
-                document.getElementById("mapText").style.pointerEvents = "none";
-                document.getElementById("round").style.pointerEvents = "none";
-                document.getElementById("score").style.pointerEvents = "none";
-                document.getElementById("timer").style.pointerEvents = "none";
-                document.getElementById("timerDropdown").style.pointerEvents = "none";
-                document.getElementById("scoreFlag").style.pointerEvents = "none";
-                document.getElementById("scoreFlagText").style.pointerEvents = "none";
-
                 document.getElementById("guess").style.filter = "blur(4px)";
                 document.getElementById("home").style.filter = "blur(4px)";
                 document.getElementById("bar").style.filter = "blur(4px)";
@@ -416,31 +408,16 @@
                 document.getElementById("score").style.filter = "blur(4px)";
                 document.getElementById("timer").style.filter = "blur(4px)";
                 document.getElementById("timerDropdown").style.filter = "blur(4px)";
-                document.getElementById("scoreFlag").style.filter = "blur(4px)";
-                document.getElementById("scoreFlagText").style.filter = "blur(4px)";
             } else if (option == "no") {
-                document.getElementById("leavePromptBox").style.opacity = "0";
-                document.getElementById("leavePromptBox").style.pointerEvents = "none";
-                document.getElementById("leavePromptBoxNo").style.opacity = "0";
-                document.getElementById("leavePromptBoxNo").style.pointerEvents = "none";
-                document.getElementById("leavePromptBoxYes").style.opacity = "0";
+                document.getElementById("leavePromptBoxYes").style.opacity = 0;
                 document.getElementById("leavePromptBoxYes").style.pointerEvents = "none";
-                
-                document.getElementById("guess").style.pointerEvents = "all";
+                document.getElementById("leavePromptBoxNo").style.opacity = 0;
+                document.getElementById("leavePromptBoxNo").style.pointerEvents = "none";
+                document.getElementById("leavePromptBox").style.opacity = 0;
                 document.getElementById("home").style.pointerEvents = "all";
-                document.getElementById("bar").style.pointerEvents = "all";
                 document.getElementById("help").style.pointerEvents = "all";
                 document.getElementById("map").style.pointerEvents = "all";
-                document.getElementById("pin").style.pointerEvents = "all";
                 document.getElementById("submit").style.pointerEvents = "all";
-                document.getElementById("mapText").style.pointerEvents = "all";
-                document.getElementById("round").style.pointerEvents = "all";
-                document.getElementById("score").style.pointerEvents = "all";
-                document.getElementById("timer").style.pointerEvents = "all";
-                document.getElementById("timerDropdown").style.pointerEvents = "all";
-                document.getElementById("scoreFlag").style.pointerEvents = "all";
-                document.getElementById("scoreFlagText").style.pointerEvents = "all";
-                
                 document.getElementById("guess").style.filter = "blur(0px)";
                 document.getElementById("home").style.filter = "blur(0px)";
                 document.getElementById("bar").style.filter = "blur(0px)";
@@ -453,16 +430,22 @@
                 document.getElementById("score").style.filter = "blur(0px)";
                 document.getElementById("timer").style.filter = "blur(0px)";
                 document.getElementById("timerDropdown").style.filter = "blur(0px)";
-                document.getElementById("scoreFlag").style.filter = "blur(0px)";
-                document.getElementById("scoreFlagText").style.filter = "blur(0px)";
             }
         }
         document.body.onkeyup = function(e) {
-            if (e.key == " " ||
-                e.code == "Space" ||      
-                e.keyCode == 32      
-            ) {
-                sendPin()
+            if (transition != true) {
+                if (e.key == " " ||
+                    e.code == "Space" ||      
+                    e.keyCode == 32      
+                ) {
+                    sendPin()
+                }
+            } else if (transition == true) {
+                if (e.code == "Escape" ||      
+                    e.keyCode == 27      
+                ) {
+                    transitionBlur("unblur")
+                }
             }
         }
     </script>
@@ -521,22 +504,10 @@
         
             if (countdown <= 0) {
                 clearInterval(countdownInterval);
-
-                document.getElementById("guess").style.pointerEvents = "none";
                 document.getElementById("home").style.pointerEvents = "none";
-                document.getElementById("bar").style.pointerEvents = "none";
                 document.getElementById("help").style.pointerEvents = "none";
                 document.getElementById("map").style.pointerEvents = "none";
-                document.getElementById("pin").style.pointerEvents = "none";
                 document.getElementById("submit").style.pointerEvents = "none";
-                document.getElementById("mapText").style.pointerEvents = "none";
-                document.getElementById("round").style.pointerEvents = "none";
-                document.getElementById("score").style.pointerEvents = "none";
-                document.getElementById("timer").style.pointerEvents = "none";
-                document.getElementById("timerDropdown").style.pointerEvents = "none";
-                document.getElementById("scoreFlag").style.pointerEvents = "none";
-                document.getElementById("scoreFlagText").style.pointerEvents = "none";
-                        
                 document.getElementById("guess").style.filter = "blur(4px)";
                 document.getElementById("home").style.filter = "blur(4px)";
                 document.getElementById("bar").style.filter = "blur(4px)";
@@ -549,14 +520,9 @@
                 document.getElementById("score").style.filter = "blur(4px)";
                 document.getElementById("timer").style.filter = "blur(4px)";
                 document.getElementById("timerDropdown").style.filter = "blur(4px)";
-                document.getElementById("scoreFlag").style.filter = "blur(4px)";
-                document.getElementById("scoreFlagText").style.filter = "blur(4px)";
             }
         }, 1000);
     }
     </script>
 </body>
-</html>
-
-    </script>
 </html>
