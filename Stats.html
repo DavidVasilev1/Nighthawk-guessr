@@ -10,9 +10,7 @@
 
 <!-- Java Sctipt Chart Library  -->  
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-
-<!-- Home and Help implementations on this page  -->  
-<body style="background-image: url('./assets/img/guess.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: cover;" onload = "resize()">
+<body onload = "resize()">
     <img src = "./assets/svg/home.svg" id="home"onclick = "home()" width = "60" height = "60" class = "topbar" style="top: 32px; left: 0px; opacity: 0.75;">
     <img src = "./assets/svg/help.svg" id="help" onclick = "//TBD" width = "60" height = "60" class = "topbar" style="top: 32px; right: 0px; opacity: 0.75;">
   
@@ -72,6 +70,23 @@
     color: #f1cc0c;
     opacity: 0.5;
   }
+  body {
+        animation-name: color;
+        animation-duration: 5s;
+        animation-iteration-count: infinite;
+    }
+    
+    @keyframes color {
+        0% {
+            background-color: #8fd4ff;
+        }
+        50% {
+            background-color: #5cb8f1;
+        }
+        100% {
+            background-color: #8fd4ff;
+        }
+    }
 </style>
   
  <div id="container">
