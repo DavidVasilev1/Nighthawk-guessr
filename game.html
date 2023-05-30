@@ -32,7 +32,7 @@
 
     <img src = "./assets/svg/transitionPage.svg" id="transitionPage" onclick = "//next" width = "1383" height = "700" class = "topbar" style = "top:82px; left:69px; opacity:0;pointer-events:none;z-index:3;">
     <img src = "./assets/svg/transitionNext.svg" id="transitionNext" onclick = "transitionBlur('unblur')" width = "175" height = "88" class = "leaveOption" style = "top:654px; left:1252px; opacity:0;pointer-events:none;z-index:3;">
-    <div id = "transitionFeedback" width="1020" height="317" class = "transitionTextLarge" style="top:391px;left:635px;opacity:0;pointer-events: none;z-index:3;text-align:center;"></div>
+    <div id = "transitionFeedback" width="1020" height="317" class = "transitionTextLarge" style="top:391px;left:635px;opacity:0;pointer-events: none;z-index:3;text-align:center;display:flex;align-items:center;justify-content:center;"></div>
     <div id = "transitionRoundScore" width="267" height="80" class = "transitionTextMed" style="top:471px;left:629px;opacity:0;pointer-events: none;z-index:3;text-align:center;"></div>
     <div id = "transitionTotalScore" width="1020" height="317" class = "transitionTextELarge" style="top:237px;left:629px;opacity:0;pointer-events: none;z-index:3;transform: rotate(-23deg);text-align:center;"></div>
 
@@ -241,18 +241,24 @@
         }
 
         function updateScoreCookie(score) {
-            if (score > 4750) {
-                document.getElementById("transitionFeedback").innerHTML = "Perfect!";
-            } else if (score > 4000) {
+            console.log("debug: updateScoreCookie")
+            if (score <= 1500) {
+                document.getElementById("transitionFeedback").innerHTML = "You can do better!";
+                console.log("debug: +" + score + " points")
+                document.getElementById("transitionRoundScore").innerHTML = "+" + score + " points";
+            } else if (score <= 3000) {
+                document.getElementById("transitionFeedback").innerHTML = "Close!";
+                console.log("debug: +" + score + " points")
+                document.getElementById("transitionRoundScore").innerHTML = "+" + score + " points";
+            } else if (score <= 4000) {
                 document.getElementById("transitionFeedback").innerHTML = "Great job!";
-            } else if (score > 3000) {
-                document.getElementById("transitionFeedback").innerHTML = "Close...";
-            } else if (score > 1500) {
-                document.getElementById("transitionFeedback").innerHTML = "Could do better.";
-            } else
-                document.getElementById("transitionFeedback").innerHTML = "Do you need a map?";
+                console.log("debug: +" + score + " points")
+                document.getElementById("transitionRoundScore").innerHTML = "+" + score + " points";
+            } else if (score <= 4750) {
+                document.getElementById("transitionFeedback").innerHTML = "Perfect!";
+                console.log("debug: +" + score + " points")
+                document.getElementById("transitionRoundScore").innerHTML = "+" + score + " points";
             }
-            document.getElementById("transitionRoundScore").innerHTML = "+" + score + " points";
             let total = getTotal();
             if (total != "") {
                 document.cookie = "total=" + (parseInt(total) + parseInt(score)) + ";"
@@ -261,7 +267,7 @@
             }
             let newTotal = getTotal();
             document.getElementById("transitionTotalScore").innerHTML = newTotal;
-
+        }
         function resetScoreCookie() {
             document.cookie = "total=0;"
         }
@@ -309,8 +315,6 @@
                 document.getElementById("score").style.pointerEvents = "none";
                 document.getElementById("timer").style.pointerEvents = "none";
                 document.getElementById("timerDropdown").style.pointerEvents = "none";
-                document.getElementById("scoreFlag").style.pointerEvents = "none";
-                document.getElementById("scoreFlagText").style.pointerEvents = "none";
                 document.getElementById("guess").style.filter = "blur(4px)";
                 document.getElementById("home").style.filter = "blur(4px)";
                 document.getElementById("bar").style.filter = "blur(4px)";
@@ -323,8 +327,6 @@
                 document.getElementById("score").style.filter = "blur(4px)";
                 document.getElementById("timer").style.filter = "blur(4px)";
                 document.getElementById("timerDropdown").style.filter = "blur(4px)";
-                document.getElementById("scoreFlag").style.filter = "blur(4px)";
-                document.getElementById("scoreFlagText").style.filter = "blur(4px)";
             }
             else if (option == "unblur") {
                 // INSERT UNDISPLAY OPTIONS HERE
@@ -351,8 +353,6 @@
                 document.getElementById("score").style.pointerEvents = "all";
                 document.getElementById("timer").style.pointerEvents = "all";
                 document.getElementById("timerDropdown").style.pointerEvents = "all";
-                document.getElementById("scoreFlag").style.pointerEvents = "all";
-                document.getElementById("scoreFlagText").style.pointerEvents = "all";
                 
                 document.getElementById("guess").style.filter = "blur(0px)";
                 document.getElementById("home").style.filter = "blur(0px)";
@@ -366,13 +366,13 @@
                 document.getElementById("score").style.filter = "blur(0px)";
                 document.getElementById("timer").style.filter = "blur(0px)";
                 document.getElementById("timerDropdown").style.filter = "blur(0px)";
-                document.getElementById("scoreFlag").style.filter = "blur(0px)";
-                document.getElementById("scoreFlagText").style.filter = "blur(0px)";
                 
                 // round logic to continue after screen is closed
                 round++;
+                retrieveImage();
                 if (round == 5) {
                     document.getElementById("round").innerHTML = round + "/5";
+
                     alert("game done!")
                 } else {
                     document.getElementById("round").innerHTML = round + "/5";
@@ -401,8 +401,6 @@
                 document.getElementById("score").style.pointerEvents = "none";
                 document.getElementById("timer").style.pointerEvents = "none";
                 document.getElementById("timerDropdown").style.pointerEvents = "none";
-                document.getElementById("scoreFlag").style.pointerEvents = "none";
-                document.getElementById("scoreFlagText").style.pointerEvents = "none";
 
                 document.getElementById("guess").style.filter = "blur(4px)";
                 document.getElementById("home").style.filter = "blur(4px)";
@@ -416,8 +414,6 @@
                 document.getElementById("score").style.filter = "blur(4px)";
                 document.getElementById("timer").style.filter = "blur(4px)";
                 document.getElementById("timerDropdown").style.filter = "blur(4px)";
-                document.getElementById("scoreFlag").style.filter = "blur(4px)";
-                document.getElementById("scoreFlagText").style.filter = "blur(4px)";
             } else if (option == "no") {
                 document.getElementById("leavePromptBox").style.opacity = "0";
                 document.getElementById("leavePromptBox").style.pointerEvents = "none";
@@ -438,8 +434,6 @@
                 document.getElementById("score").style.pointerEvents = "all";
                 document.getElementById("timer").style.pointerEvents = "all";
                 document.getElementById("timerDropdown").style.pointerEvents = "all";
-                document.getElementById("scoreFlag").style.pointerEvents = "all";
-                document.getElementById("scoreFlagText").style.pointerEvents = "all";
                 
                 document.getElementById("guess").style.filter = "blur(0px)";
                 document.getElementById("home").style.filter = "blur(0px)";
@@ -453,8 +447,6 @@
                 document.getElementById("score").style.filter = "blur(0px)";
                 document.getElementById("timer").style.filter = "blur(0px)";
                 document.getElementById("timerDropdown").style.filter = "blur(0px)";
-                document.getElementById("scoreFlag").style.filter = "blur(0px)";
-                document.getElementById("scoreFlagText").style.filter = "blur(0px)";
             }
         }
         document.body.onkeyup = function(e) {
@@ -534,8 +526,6 @@
                 document.getElementById("score").style.pointerEvents = "none";
                 document.getElementById("timer").style.pointerEvents = "none";
                 document.getElementById("timerDropdown").style.pointerEvents = "none";
-                document.getElementById("scoreFlag").style.pointerEvents = "none";
-                document.getElementById("scoreFlagText").style.pointerEvents = "none";
                         
                 document.getElementById("guess").style.filter = "blur(4px)";
                 document.getElementById("home").style.filter = "blur(4px)";
@@ -549,14 +539,9 @@
                 document.getElementById("score").style.filter = "blur(4px)";
                 document.getElementById("timer").style.filter = "blur(4px)";
                 document.getElementById("timerDropdown").style.filter = "blur(4px)";
-                document.getElementById("scoreFlag").style.filter = "blur(4px)";
-                document.getElementById("scoreFlagText").style.filter = "blur(4px)";
             }
         }, 1000);
     }
     </script>
 </body>
-</html>
-
-    </script>
 </html>
