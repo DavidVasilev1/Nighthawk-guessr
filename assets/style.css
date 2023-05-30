@@ -2,6 +2,14 @@
     font-family: "FuturaBoldItalic";
     src: url("./font/futura/Futura Bold Italic font.ttf");
 }
+@font-face {
+    font-family: "Inter";
+    src: url("./font/Inter/Inter-Regular.ttf");
+}
+@font-face {
+    font-family: "Inter-Bold";
+    src: url("./font/Inter/Inter-Bold.ttf");
+}
 
 .menuText {
     font-family: "FuturaBoldItalic";
@@ -11,9 +19,27 @@
     color: #000000;
     animation-duration: 0.05s;
     animation-fill-mode: forwards;
+    transition: transform 0.3s ease;
+    cursor: pointer;
 }
 .menuText:hover {
-    animation-name: bounce;
+    transform: scale(1.1);
+}
+
+.signOut {
+    font-family: "FuturaBoldItalic";
+    font-size: 35px;
+    position:absolute;
+    left: 91px;
+    color: #000000;
+    animation-duration: 0.05s;
+    animation-fill-mode: forwards;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.signOut:hover {
+    transform: scale(1.1);
 }
 
 .topbar {
@@ -23,19 +49,53 @@
     animation-fill-mode: forwards;
 }
 
+.timerText {
+    font-family: "FuturaBoldItalic";
+    font-size: 27px;
+    position:absolute;
+    color: #ffffff;
+    opacity: 0.75;
+}
+
 .topbarButtons {
     position: absolute;
     z-index: 1;
     animation-duration: 0.05s;
     animation-fill-mode: forwards;
+    transition: transform 0.3s ease;
+    cursor: pointer;
 }
 .topbarButtons:hover {
-    animation-name: bounce;
+    transform: scale(1.1);
 }
 
 .barText {
     font-family: "FuturaBoldItalic";
     font-size: 26px;
+    position: absolute;
+    color: #F4FAF8;
+    z-index: 2;
+}
+
+.transitionTextELarge {
+    font-family: "FuturaBoldItalic";
+    font-size: 259px;
+    position: absolute;
+    color: #F4FAF8;
+    z-index: 2;
+}
+
+.transitionTextLarge {
+    font-family: "FuturaBoldItalic";
+    font-size: 65px;
+    position: absolute;
+    color: #F4FAF8;
+    z-index: 2;
+}
+
+.transitionTextMed {
+    font-family: "FuturaBoldItalic";
+    font-size: 39px;
     position: absolute;
     color: #F4FAF8;
     z-index: 2;
@@ -60,22 +120,52 @@
     z-index: 2;
     animation-duration: 0.05s;
     animation-fill-mode: forwards;
+    transition: transform 0.3s ease;
 }
 .leaveOption:hover {
-    animation-name: bounceButton;
+    transform: scale(1.1);
 }
 
 .map {
     position: absolute;
     border-radius:50px;
 }
-@keyframes bounce {
-    0% { scale: 1.1; text-shadow: 0 0 25px #00000000; }
-    50%   { scale: 1.15; text-shadow: 0 0 25px #00000020;  }
-    100% { scale: 1.1; text-shadow: 0 0 25px #00000040; }
+
+.logintext {
+    font-family: Inter-Bold;
+    font-size: 20px;
 }
-@keyframes bounceButton {
-    0% { scale: 1.1; text-shadow: 0 0 25px #00000000; opacity: 0.75; }
-    50%   { scale: 1.15; text-shadow: 0 0 25px #00000020; opacity: 0.875; }
-    100% { scale: 1.1; text-shadow: 0 0 25px #00000040; opacity: 1; }
+.using {
+    font-family: Inter-Bold;
+    font-size: 20px;
+}
+
+input[type="text"] {
+    font-family: Inter-Bold;
+    font-size: 20px;
+    background: transparent;
+    border: none;
+    outline: none;
+    opacity: 0.5;
+}
+
+input[type="password"] {
+    font-family: Inter-Bold;
+    font-size: 20px;
+    background: transparent;
+    border: none;
+    outline: none;
+    opacity: 0.5;
+}
+.difficultyOption {
+    position: absolute;
+    font-family: "FuturaBoldItalic";
+    z-index: 2;
+    animation-duration: 0.05s;
+    animation-fill-mode: forwards;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+.difficultyOption:hover {
+    transform: scale(1.1);
 }

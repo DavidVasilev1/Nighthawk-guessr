@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./assets/style.css">
 </head>
 <body style="background-image: url('./assets/img/guess.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: cover;" onload = "resize()">
-    <img src = "./assets/svg/home.svg" id="home"onclick = "home()" width = "60" height = "60" class = "topbar" style="top: 32px; left: 0px; opacity: 0.75;">
+    <img src = "./assets/svg/home.svg" id="home"onclick = "home()" width = "60" height = "60" class = "topbarButtons" style="top: 32px; left: 0px; opacity: 0.75;">
     <img src = "./assets/svg/help.svg" id="help" onclick = "//prompt window with information" width = "60" height = "60" class = "topbar" style="top: 32px; right: 0px; opacity: 0.75;">
 
   <style>
@@ -25,7 +25,8 @@
     border-collapse: collapse;
     margin: 25px 0;
     margin-top: 40px;
-    width: 50%;
+    width: 80%;
+
   }
   .board thead tr {
     font-size: 17pt;
@@ -38,6 +39,7 @@
     text-align: center;
     padding: 12px 15px;
     border: none;
+    width: 200px;
     height: 50px;
   }
   .board tr {
@@ -66,70 +68,94 @@
     color: #f1cc0c;
     opacity: 0.5;
   }
+  .whiteColor {
+    color:#fff;
+  }
+  .normalColor {
+    color:#0a2f47;
+  }
+  .topBox {
+    background-color: #3478A2;
+  }
+  .darkBox {
+    background-color: #246186;
+  }
+  .normalBox {
+    background-color: #58a4d3;
+  }
 </style>
   
  <div id="container">
   <h1>NIGHTHAWKGUESSR Leaderboard</h1>
-  <table class="board" id="schedule" style="margin-left: auto; margin-right: auto;">
+  <table class="board" hidden id="total" style="margin-left: auto; margin-right: auto;">
     <tr>
       <thead>
-        <td>Name</td>
-        <td>Easy Points</td>
-        <td>Medium Points</td>
-        <td>Hard Points</td>
-        <td>Total Points: E+2M+3H</td>
+        <td class="topBox" >Name</td>
+        <td class="topBox" onclick="sort(0)">Easy Points</td>
+        <td class="topBox" onclick="sort(1)">Medium Points</td>
+        <td class="topBox" onclick="sort(2)">Hard Points</td>
+        <td class="darkBox" onclick="sort(3)">Total Points</td>
       </thead>
     </tr>
   </table>
-  <!-- <table class="board">
-    <thead>
-      <td>Name</td>
-      <td>Easy Points</td>
-      <td>Medium Points</td>
-      <td>Hard Points</td>
-    </thead>
-  <tr>
-    
-    <td>Alex</td>
-     <td>500</td>
-     <td>300</td> 
-     <td>1</td>
-      
-  </tr>
-  <tr>    
-    <td>David</td>
-    <td>450</td>
-    <td>350</td>
-    <td>2</td>
-  </tr>
-  <tr>
-    
-    <td>Kaiden</td>
-    <td>300</td>
-      <td>370</td>
-      <td>3</td>
-  </tr>
-  <tr>
-    
-    <td>Kalani</td>
-    <td>250</td>
-    <td>49</td>  
-    <td>5</td>
-  </tr>
-  <tr>
-    
-    <td>Navan</td>
-    <td>160</td>
-     <td>25</td> 
-      <td>5</td>
-  </tr>
-      
-    <tbody id='tbody'></tbody>
-  </table> -->
+
+  <table class="board" id="easy" hidden style="margin-left: auto; margin-right: auto;">
+    <tr>
+      <thead>
+        <td class="topBox">Name</td>
+        <td class="darkBox" onclick="sort(0)">Easy Points</td>
+        <td class="topBox" onclick="sort(1)">Medium Points</td>
+        <td class="topBox" onclick="sort(2)">Hard Points</td>
+        <td class="topBox" onclick="sort(3)">Total Points</td>
+      </thead>
+    </tr>
+  </table>
+
+  <table class="board" id="medium" hidden style="margin-left: auto; margin-right: auto;">
+    <tr>
+      <thead>
+        <td class="topBox">Name</td>
+        <td class="topBox" onclick="sort(0)">Easy Points</td>
+        <td class="darkBox" onclick="sort(1)">Medium Points</td>
+        <td class="topBox" onclick="sort(2)">Hard Points</td>
+        <td class="topBox" onclick="sort(3)">Total Points</td>
+      </thead>
+    </tr>
+  </table>
+
+  <table class="board" id="hard" hidden style="margin-left: auto; margin-right: auto;">
+    <tr>
+      <thead>
+        <td class="topBox">Name</td>
+        <td class="topBox" onclick="sort(0)">Easy Points</td>
+        <td class="topBox" onclick="sort(1)">Medium Points</td>
+        <td class="darkBox" onclick="sort(2)">Hard Points</td>
+        <td class="topBox" onclick="sort(3)">Total Points</td>
+      </thead>
+    </tr>
+  </table>
 </div>
     
 </body>
     <script>
+
+    
+      easyBoard = document.getElementById("easy");
+      
+      mediumBoard = document.getElementById("medium");
+      
+      hardBoard = document.getElementById("hard");
+      
+      totalBoard = document.getElementById("total");
+    function sort(Sort){
+      easyBoard.style.display = "none"
+      mediumBoard.style.display = "none"
+      hardBoard.style.display = "none"
+      totalBoard.style.display = "none"
+      sortDiff = ["easy", "medium","hard","total"]
+      x=document.getElementById(sortDiff[Sort])
+      x.style.display = "block";
+    }
     function dynamic_Positioning(idName, origionalTop, origionalLeft, size) {
         var element = document.getElementById(idName);
         var element_Top = size * origionalTop;
@@ -203,7 +229,7 @@
         window.location.hostname === "[::1]" ||
         window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
       )
-      const api = isLocalhost ? "http://localhost:8200" : "";
+      const api = isLocalhost ? "http://localhost:1337" : "";
 
       const getList = async () => {
         const list = await fetch(api + "/api/leaderboard/leaderboardTop10").then((r) => r.json());
@@ -212,12 +238,31 @@
       };
 
       getList().then(list => {
-        list.forEach(cls => {
-          addTask(cls.username, cls.total, cls.Easy, cls.Medium, cls.Hard)
+        list["TotalSort"].forEach(cls => {
+          addTask(cls.username, cls.total, cls.Easy, cls.Medium, cls.Hard,total,4)
         })
       })
 
-      function addTask(username, total, pointsEasy, pointsMedium, pointsHard) {
+      getList().then(list => {
+        list["EasySort"].forEach(cls => {
+          addTask(cls.username, cls.total, cls.Easy, cls.Medium, cls.Hard,easy,1)
+        })
+      })
+
+      getList().then(list => {
+        list["MediumSort"].forEach(cls => {
+          addTask(cls.username, cls.total, cls.Easy, cls.Medium, cls.Hard,medium,2)
+        })
+      })
+
+      getList().then(list => {
+        list["HardSort"].forEach(cls => {
+          addTask(cls.username, cls.total, cls.Easy, cls.Medium, cls.Hard,hard,3)
+        })
+      })
+      x=document.getElementById("total")
+      x.style.display = "block";
+      function addTask(username, total, pointsEasy, pointsMedium, pointsHard,table,rownum) {
   
         var tableCells = [username, pointsEasy, pointsMedium, pointsHard, total]
         var row = document.createElement('tr')
@@ -225,11 +270,21 @@
           var tableCell = document.createElement('td')
           tableCell.textContent = tableCells[i]
           tableCell.className = 'cell'
+          //tableCell.bgColor = "#3478a2"
+          tableCell.classList.add("normalBox")
+          //tableCell.classList.add("normalColor")
+          if (i == rownum){
+            console.log(rownum)
+            //tableCell.bgColor = "#246186"
+            tableCell.classList.remove("normalColor")
+            tableCell.classList.add("whiteColor")
+            tableCell.classList.remove("normalBox")
+            tableCell.classList.add("darkBox")
+          }
           row.appendChild(tableCell)
+          row.classList.add("hoverrow")
         }
-        schedule.appendChild(row)
+        table.appendChild(row)
       }
-
-      getList()
     </script>
 </html>

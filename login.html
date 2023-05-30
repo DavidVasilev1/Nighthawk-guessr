@@ -2,9 +2,10 @@
 <html>
 <head>
     <title>Login</title>
+    <link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
-    <form id="loginForm">
+    <!-- <form id="loginForm">
         <label for="username">Username</label>
         <input type="text" id="username" name="username" required>
 
@@ -12,7 +13,23 @@
         <input type="password" id="password" name="password" required>
 
         <button type="submit">Login</button>
-    </form>
+    </form> -->
+    <img    id="loginbox"               src="./assets/svg/loginbox.svg" alt="loginbox" class = "loginbox" width="600" height="729" style="position:absolute;left:660px;top:175px;">
+        
+        <div    id="loginUsernameText"      class="logintext" style="position:absolute;left:712px;top:363px;">Username</div>
+        <img    id="loginUsernameIcon"      src="./assets/svg/usernameicon.svg" alt="unicon" class = "unicon" width="20" height="24" style="position:absolute;left:722px;top:393px;">
+        <input  id="loginUsername"          type="text" placeholder="Type your username" style="position:absolute;left:753px;top:393px;">
+        <img    id="loginUsernameUnderbar"  src="./assets/svg/underbar.svg" alt="underbar" class = "underbar" width="496" height="7" style="position:absolute;left:712px;top:427px;">
+
+        <div    id="loginPasswordText"      class="logintext" style="position:absolute;left:712px;top:503px;">Password</div>
+        <img    id="loginPasswordIcon"      src="./assets/svg/passwordicon.svg" alt="pwicon" class = "pwicon" width="20" height="24" style="position:absolute;left:722px;top:533px;">
+        <input  id = "loginPassword"        type="password" placeholder="Type your password" style="position:absolute;left:753px;top:533px;">
+        <img    id="loginPasswordUnderbar"  src="./assets/svg/underbar.svg" alt="underbar" class = "underbar" width="496" height="7" style="position:absolute;left:712px;top:567px;">
+
+        <img    id="loginButton"            src="./assets/svg/loginbutton.svg" alt="loginbutton" class = "loginbutton" width="448" height="50" style="position:absolute;left:736px;top:644px;" onclick="auth('loginUsername', 'loginPassword')">
+
+        <div    id="goToSignupText"         class="using" style="position:absolute;left:880px;top:763px;opacity:0.75;">Or sign up using</div>
+        <div    id="goToSignUp"             class="using" style="position:absolute;left:919px;top:807px;" onclick="switchPage('login','signup')">SIGN UP</div>
 </body>
 <script>
 document.getElementById('loginForm').addEventListener('submit', function(e) {
@@ -21,7 +38,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     let username = document.getElementById('username').value;
     let password = document.getElementById('password').value;
 
-    fetch('http://localhost:8200/login', {
+    fetch('http://localhost:5500/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -46,5 +63,62 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
         console.error('Error:', error);
     });
 });
+</script>
+<script>
+function dynamic_TextPositioning(idName, originalLeft, originalTop, size) {
+    var element = document.getElementById(idName);
+    var element_Top = size * originalTop;
+    element.style.top = element_Top + "px";
+    var element_Left = size * originalLeft;
+    element.style.left = element_Left + "px";
+}
+function dynamic_TextSize(className, originalSize, size) {
+    var element_Font = size * originalSize;
+    var elements = document.getElementsByClassName(className);
+    for (var i = 0; i < elements.length; i++) {
+        var element = elements[i];
+        element.style.fontSize = element_Font + "px";
+    }
+}
+function dynamic_TextSizeByID(idName, originalSize, size) {
+    var element_Font = size * originalSize;
+    var element = document.getElementById(idName);
+    element.style.fontSize = element_Font + "px";
+}
+function dynamic_imgSize(idName, originalWidth, originalHeight, originalLeft, originalTop, size) {
+    var element = document.getElementById(idName);
+    var element_Height = size * originalHeight;
+    element.style.height = element_Height + "px";
+    var element_Width = size * originalWidth;
+    element.style.width = element_Width + "px";
+    var element_Top = size * originalTop;
+    element.style.top = element_Top + "px";
+    var element_Left = size * originalLeft;
+    element.style.left = element_Left + "px";
+}
+window.onresize = resize;
+function resize () {
+    var current = window.innerWidth;
+    var size = window.innerWidth/1920;
+    //login
+    dynamic_imgSize("loginbox", 600, 729, 660, 175, size);
+    
+    dynamic_TextPositioning('loginUsernameText', 712, 363, size);
+    dynamic_imgSize('loginUsernameIcon', 20, 24, 722, 393, size);
+    dynamic_TextPositioning('loginUsername', 753, 393, size);
+    dynamic_TextSizeByID('loginUsername', 20, size);
+    dynamic_imgSize('loginUsernameUnderbar', 496, 7, 712, 427, size);
+    
+    dynamic_TextPositioning('loginPasswordText', 712, 503, size);
+    dynamic_imgSize('loginPasswordIcon', 20, 24, 722, 533, size);
+    dynamic_TextPositioning('loginPassword', 753, 533, size);
+    dynamic_TextSizeByID('loginPassword', 20, size);
+    dynamic_imgSize('loginPasswordUnderbar', 496, 7, 712, 567, size);
+    
+    dynamic_imgSize('loginButton', 448, 50, 736, 644, size);
+    
+    dynamic_TextPositioning('goToSignupText', 880, 763, size);
+    dynamic_TextPositioning('goToSignUp', 919, 807, size);
+}
 </script>
 </html>
