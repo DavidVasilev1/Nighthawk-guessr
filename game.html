@@ -182,7 +182,7 @@
                 body: JSON.stringify(body)
             }
 
-            const api = isLocalhost ? "http://localhost:1337" : "";
+            const api = isLocalhost ? "http://localhost:8570" : "";
             
             //calculating points in backend
             const getList = async () => {
@@ -478,7 +478,7 @@
             window.location.hostname === "[::1]" ||
             window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
         )
-        const api = isLocalhost ? "http://localhost:1337" : "";
+        const api = isLocalhost ? "http://localhost:8570" : "";
         var endpoint = "/api/images/GetEasyImage"
 
         const getList = async () => {

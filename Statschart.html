@@ -9,7 +9,7 @@
 
   // Get the Stats data from the Database
   $(document).ready(function() {
-    fetch('http://localhost:1337//leaderboard', {mode: 'cors'})
+    fetch('http://localhost:8570//leaderboard', {mode: 'cors'})
     .then(response => {
       if (!response.ok) {
         throw new Error('API response failed');
