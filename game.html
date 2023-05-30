@@ -195,8 +195,8 @@
                 console.log(list);
                 updateScoreCookie(list);
                 let total = convertScoreToString();
-                transitionBlur("blur");
                 document.getElementById("score").innerHTML = total;
+                transitionBlur("blur");
             })
         }
 
@@ -369,13 +369,12 @@
                 
                 // round logic to continue after screen is closed
                 round++;
-                retrieveImage();
                 if (round == 5) {
                     document.getElementById("round").innerHTML = round + "/5";
-
                     alert("game done!")
                 } else {
                     document.getElementById("round").innerHTML = round + "/5";
+                    retrieveImage();
                 }
             }
             
