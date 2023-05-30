@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    body {
+        animation-name: color;
+        animation-duration: 5s;
+        animation-iteration-count: infinite;
+    }
+    
+    @keyframes color {
+        0% {
+            background-color: #8fd4ff;
+        }
+        50% {
+            background-color: #5cb8f1;
+        }
+        100% {
+            background-color: #8fd4ff;
+        }
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nighthawk Guessr</title>
+    <link rel="stylesheet" href="./assets/style.css">
+</head>
+<body onload = "resize()">
+  <img src = "./assets/svg/home.svg" id="home"onclick = "home()" width = "60" height = "60" class = "topbarButtons" style="top: 32px; left: 0px; opacity: 0.75;">
+  <img src = "./assets/svg/help.svg" id="help" onclick = "//prompt window with information" width = "60" height = "60" class = "topbar" style="top: 32px; right: 0px; opacity: 0.75;">
+</body>
+<script>
+
+    
+  easyBoard = document.getElementById("easy");
+  
+  mediumBoard = document.getElementById("medium");
+  
+  hardBoard = document.getElementById("hard");
+  
+  totalBoard = document.getElementById("total");
+function sort(Sort){
+  easyBoard.style.display = "none"
+  mediumBoard.style.display = "none"
+  hardBoard.style.display = "none"
+  totalBoard.style.display = "none"
+  sortDiff = ["easy", "medium","hard","total"]
+  x=document.getElementById(sortDiff[Sort])
+  x.style.display = "block";
+}
+function dynamic_Positioning(idName, origionalTop, origionalLeft, size) {
+    var element = document.getElementById(idName);
+    var element_Top = size * origionalTop;
+    element.style.top = element_Top + "px";
+    var element_Left = size * origionalLeft;
+    element.style.left = element_Left + "px";
+}
+function dynamic_TextSize(className, origionalSize, size) {
+    var element_Font = size * origionalSize;
+    var elements = document.getElementsByClassName(className);
+    for (var i = 0; i < elements.length; i++) {
+        var element = elements[i];
+        element.style.fontSize = element_Font + "px";
+    }
+}
+function dynamic_imgSize(idName, origionalHeight, origionalWidth, origionalTop, origionalLeft, size) {
+    var element = document.getElementById(idName);
+    var element_Height = size * origionalHeight;
+    element.style.width = element_Height + "px";
+    var element_Width = size * origionalWidth;
+    element.style.height = element_Width + "px";
+    var element_Top = size * origionalTop;
+    element.style.top = element_Top + "px";
+    var element_Left = size * origionalLeft;
+    element.style.left = element_Left + "px";
+}
+function dynamic_imgSizeRight(idName, origionalHeight, origionalWidth, origionalTop, origionalRight, size) {
+    var element = document.getElementById(idName);
+    var element_Height = size * origionalHeight;
+    element.style.width = element_Height + "px";
+    var element_Width = size * origionalWidth;
+    element.style.height = element_Width + "px";
+    var element_Top = size * origionalTop;
+    element.style.top = element_Top + "px";
+    var element_Right = size * origionalRight;
+    element.style.right = element_Right + "px";
+}
+window.onresize = resize;
+function resize () {
+    var current = window.innerWidth;
+    var size = window.innerWidth/1536;
+
+    // MENU BUTTONS RESIZE
+    dynamic_imgSize('home', 60, 60, 32, 0, size)
+    dynamic_imgSizeRight('help', 60, 60, 32, 0, size)
+
+    // TITLE
+    dynamic_TextSize('title', 45, size)
+
+    //TABLE
+    //weird
+}
+function home() {
+    window.location.href = '/index.html'
+}
+</script>
