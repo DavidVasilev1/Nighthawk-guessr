@@ -78,9 +78,12 @@
   <h1>NIGHTHAWKGUESSR Stats</h1>
 
   <!-- This code creates three canvas elements, one for each type of chart. -->
-  <canvas id="easyChart" style="width:100%;max-width:700px;padding:100px"></canvas>
-  <canvas id="mediumChart" style="width:100%;max-width:700px;padding:100px"></canvas>
-  <canvas id="hardChart" style="width:100%;max-width:700px;padding:100px"></canvas>
+  <h2><u>Easy Point Propotions (Pie Chart Style)</u></h2>
+  <canvas id="easyChart" style="width:100%;max-width:1500px;padding:100px"></canvas>
+  <h2><u>Medium Point Distributions (Doughnut Chart Style)</u></h2>
+  <canvas id="mediumChart" style="width:100%;max-width:1500px;padding:100px"></canvas>
+  <h2><u>Hard Point Propotions (Bar Chart Style)</u></h2>
+  <canvas id="hardChart" style="width:100%;max-width:1500px;padding:100px"></canvas>
 
   <h2><u>Unsorted Standings</u></h2>
   
@@ -92,7 +95,6 @@
         <td>Easy Points</td>
         <td>Medium Points</td>
         <td>Hard Points</td>
-        <td>Total Points: E+2M+3H</td>
       </thead>
     </tr>
   </table>
@@ -107,7 +109,6 @@
         <td>Easy Points</td>
         <td>Medium Points</td>
         <td>Hard Points</td>
-        <td>Total Points: E+2M+3H</td>
       </thead>
     </tr>
   </table>
@@ -162,10 +163,10 @@
         // Show Hardpoints sorted data in a table
         showHardpoints(list);
 
-        generateColors(list.length);
-        displayChart(list, easyChart, "pie", "Hard");
-        displayChart(list, mediumChart, "doughnut", "Easy");
-        displayChart(list, hardChart, "bar", "Medium");
+        //generateColors(list.length);
+        displayChart(list, easyChart, "pie", "Easy");
+        displayChart(list, mediumChart, "doughnut", "Medium");
+        displayChart(list, hardChart, "bar", "Hard");
 
       })
 
@@ -184,7 +185,7 @@
        */
       function addTask(username, total, pointsEasy, pointsMedium, pointsHard, tableID) {
   
-        var tableCells = [username, pointsEasy, pointsMedium, pointsHard, total]
+        var tableCells = [username, pointsEasy, pointsMedium, pointsHard]
         // create a row
         var row = document.createElement('tr')
 
@@ -265,8 +266,8 @@
             options: {
                // Display the title.
               title: {
-                display: true,
-                text:  points + " Point Propotions (" + type + " style)",
+                display: false,
+                text:  type + " style",
                 fontSize: 20
               },
                 
@@ -275,7 +276,7 @@
                 display: ( type === "bar" ? false : true),
                 position: "left",
                 labels: {
-                  fontSize: 20
+                  fontSize: 30
                 }   
               },
                 
@@ -291,7 +292,8 @@
         }
      
         // This function generates a random color.
-        var barColors = []
+        //var barColors = []
+        var barColors =  ["blue", "black", "green", "pink", "orange", "maroon", "purple", "teal", "grey", "yellow"]
         function generateColors(dataLength) {
             for (var i = 0; i < dataLength; i++) {
               var red = Math.floor(Math.random() * 255);
