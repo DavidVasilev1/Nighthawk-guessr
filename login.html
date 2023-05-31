@@ -4,7 +4,7 @@
     <title>Login</title>
     <link rel="stylesheet" href="./assets/style.css">
 </head>
-<body onload="resize();">
+<body onload="resize();" style="background-image: url('./assets/svg/background.svg');background-repeat: no-repeat;background-size: cover;cursor: default;">
     <!-- <form id="loginForm">
         <label for="username">Username</label>
         <input type="text" id="username" name="username" required>
@@ -14,7 +14,13 @@
 
         <button type="submit">Login</button>
     </form> -->
-    <img    id="loginbox"               src="./assets/svg/loginbox.svg" alt="loginbox" class = "loginbox" width="600" height="729" style="position:absolute;left:660px;top:175px;">
+
+    <!------------------------------------------------->
+    <!--                    LOGIN                    -->
+    <!------------------------------------------------->
+
+    <div id="login" style="opacity:1;pointer-events: all;">
+        <img    id="loginbox"               src="./assets/svg/loginbox.svg" alt="loginbox" class = "loginbox" width="600" height="729" style="position:absolute;left:660px;top:175px;">
         
         <div    id="loginUsernameText"      class="logintext" style="position:absolute;left:712px;top:363px;">Username</div>
         <img    id="loginUsernameIcon"      src="./assets/svg/usernameicon.svg" alt="unicon" class = "unicon" width="20" height="24" style="position:absolute;left:722px;top:393px;">
@@ -30,7 +36,36 @@
 
         <div    id="goToSignupText"         class="using" style="position:absolute;left:880px;top:763px;opacity:0.75;">Or sign up using</div>
         <div    id="goToSignUp"             class="using" style="position:absolute;left:919px;top:807px;" onclick="switchPage('login','signup')">SIGN UP</div>
-        <div    id="credits"                class="usingalt" style="position:absolute;left:1920px;top:1080px;opacity:0.25">Login page design by Ethan Zhao</div>
+        <div    id="credits"                class="usingalt" style="position:absolute;left:1775px;top:1080px;opacity:0.25">Login page design by Ethan Zhao 2023</div>
+    </div>
+
+    <!-------------------------------------------------->
+    <!--                    SIGNUP                    -->
+    <!-------------------------------------------------->
+
+    <div id="signup" style="opacity:0;pointer-events: none;">
+        <img    id="signupbox"              src="./assets/svg/signupbox.svg" alt="signupbox" class = "signupbox" width="600" height="885" style="position:absolute;left:660px;top:97px;">
+        
+        <div    id="signupFullnameText"     class="logintext" style="position:absolute;left:712px;top:298px;">Full Name</div>
+        <img    id="signupFullnameIcon"     src="./assets/svg/usernameicon.svg" alt="unicon" class = "unicon" width="20" height="24" style="position:absolute;left:722px;top:328px;">
+        <input  id="signupFullname"         type="text" placeholder="Type your full name" style="position:absolute;left:753px;top:328px;">
+        <img    id="signupFullnameUnderbar" src="./assets/svg/underbar.svg" alt="underbar" class = "underbar" width="496" height="7" style="position:absolute;left:712px;top:362px;">
+        
+        <div    id="signupUsernameText"     class="logintext" style="position:absolute;left:712px;top:439px;">Username</div>
+        <img    id="signupUsernameIcon"     src="./assets/svg/usernameicon.svg" alt="unicon" class = "unicon" width="20" height="24" style="position:absolute;left:722px;top:469px;">
+        <input  id="signupUsername"         type="text" placeholder="Type your username" style="position:absolute;left:753px;top:469px;">
+        <img    id="signupUsernameUnderbar" src="./assets/svg/underbar.svg" alt="underbar" class = "underbar" width="496" height="7" style="position:absolute;left:712px;top:502px;">
+        
+        <div    id="signupPasswordText"     class="logintext" style="position:absolute;left:712px;top:579px;">Password</div>
+        <img    id="signupPasswordIcon"     src="./assets/svg/passwordicon.svg" alt="pwicon" class = "pwicon" width="20" height="24" style="position:absolute;left:722px;top:609px;">
+        <input  id = "signupPassword"       type="password" placeholder="Type your username" style="position:absolute;left:753px;top:609px;">
+        <img    id="signupPassordUnderbar"  src="./assets/svg/underbar.svg" alt="underbar" class = "underbar" width="496" height="7" style="position:absolute;left:712px;top:643px;">
+        
+        <img    id="signupButton"           src="./assets/svg/loginbutton.svg" alt="signupButton" class = "signupButton" width="448" height="50" style="position:absolute;left:736px;top:720px;" onclick="createUser('signupFullname','signupUsername','signupPassword')">
+        
+        <div    id="goToLoginText"          class="using" style="position:absolute;left:890px;top:842px;opacity:0.75;">Or log in using</div>
+        <div    id="goToLogin"              class="using" style="position:absolute;left:926px;top:886px;" onclick="switchPage('signup','login')">LOG IN</div>
+    </div>
 </body>
 <script>
 function auth(unID, pwID) {
@@ -38,10 +73,7 @@ function auth(unID, pwID) {
     password = document.getElementById(pwID).value;
     const body = {
         username: username,
-        password: password,
-        pointsEasy: 0,
-        pointsMedium: 0,
-        pointsHard: 0
+        password: password
     };
     const read_options = {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -66,7 +98,7 @@ function auth(unID, pwID) {
             response.json().then(data => {
             if (data !== null) {
                 document.cookie = "auth="+data;
-                switchPage('login','main')
+                window.location.href = '/index.html';
             }
             else {
                 console.log("invalid login credentials")
@@ -77,6 +109,58 @@ function auth(unID, pwID) {
     .catch(err => {
       console.error(err);
     });
+}
+function createUser(fnid, unid, pwid) {
+    fullname = document.getElementById(fnid).value;
+    username = document.getElementById(unid).value;
+    password = document.getElementById(pwid).value;
+    const body = {
+        username: username,
+        password: password,
+        pointsEasy: 0,
+        pointsMedium: 0,
+        pointsHard: 0
+    };
+    const read_options = {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        cache: 'default', // *default, no-cache, reload, force-cache, only-if-cached
+        body: JSON.stringify(body),
+        credentials: 'omit', // include, *same-origin, omit
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    };
+    // fetch the data from API
+    fetch("http://127.0.0.1:8570/api/leaderboard/leaderboard", read_options)
+        // response is a RESTful "promise" on any successful fetch
+        .then(response => {
+            // check for response errors
+            if (response.status !== 200) {
+                const errorMsg = 'Database read error: ' + response.status;
+                return;
+            }
+            // valid response will have json data
+            response.json().then(data => {
+            if (data !== null) {
+                window.location = "./index.html"
+            }
+            else {
+                // display invalid creds
+            }
+        })
+    })
+    // catch fetch errors (ie ACCESS to server blocked)
+    .catch(err => {
+      console.error(err);
+    });
+    auth(unid, pwid)
+}
+function switchPage(current, page) {
+    document.getElementById(current).style.opacity = "0";
+    document.getElementById(current).style.pointerEvents = "none";
+    document.getElementById(page).style.opacity = "1";
+    document.getElementById(page).style.pointerEvents = "all";
 }
 </script>
 <script>
@@ -134,7 +218,38 @@ function resize () {
     
     dynamic_TextPositioning('goToSignupText', 880, 763, size);
     dynamic_TextPositioning('goToSignUp', 919, 807, size);
-    dynamic_TextPositioning('credits', 1800, 1080, size);
+    dynamic_TextPositioning('credits', 1775, 1080, size);
+    //signup
+    dynamic_imgSize("signupbox", 600, 885, 660, 97, size);
+
+    dynamic_TextPositioning('signupFullnameText', 712, 298, size);
+    dynamic_imgSize('signupFullnameIcon', 20, 24, 722, 328, size);
+    dynamic_TextPositioning('signupFullname', 753, 328, size);
+    dynamic_TextSizeByID('signupFullname', 20, size);
+    dynamic_imgSize('signupFullnameUnderbar', 496, 7, 712, 362, size);
+
+    dynamic_TextPositioning('signupUsernameText', 712, 439, size);
+    dynamic_imgSize('signupUsernameIcon', 20, 24, 722, 469, size);
+    dynamic_TextPositioning('signupUsername', 753, 469, size);
+    dynamic_TextSizeByID('signupUsername', 20, size);
+    dynamic_imgSize('signupUsernameUnderbar', 496, 7, 712, 502, size);
+
+    dynamic_TextPositioning('signupPasswordText', 712, 579, size);
+    dynamic_imgSize('signupPasswordIcon', 20, 24, 722, 609, size);
+    dynamic_TextPositioning('signupPassword', 753, 609, size);
+    dynamic_TextSizeByID('signupPassword', 20, size);
+    dynamic_imgSize('signupPassordUnderbar', 496, 7, 712, 643, size);
+
+    dynamic_imgSize('signupButton', 448, 50, 736, 720, size);
+
+    dynamic_TextPositioning('goToLoginText', 890, 842, size);
+    dynamic_TextPositioning('goToLogin', 926, 886, size);
+
+    // text
+    dynamic_TextSize('logintext', 20, size);
+    dynamic_TextSize('using', 20, size);
+    dynamic_TextSize('usingalt', 7, size);
+
 }
 </script>
 </html>
