@@ -24,8 +24,27 @@
       font-size: 55px;
       margin-top: 55px;
     }
+    h2 {
+        font-family: "Inter-Bold";
+    }
+    div {
+      margin-left: auto;
+      margin-right: auto;
+      width: 960px;
+    }
     p {
-      
+        font-family: "Calibri";
+        margin-left: 40px;
+        font-size: 20px;
+    }
+    .tutorial {
+        border-radius: 30px;
+        border: 5px solid black;
+        width: 960px;
+        height: 540px;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
     }
 </style>
 <head>
@@ -38,9 +57,30 @@
 <body onload = "resize()">
   <img src = "./assets/svg/home.svg" id="home"onclick = "home()" width = "60" height = "60" class = "topbarButtons" style="top: 32px; left: 0px; opacity: 0.75;">
   <img src = "./assets/svg/help.svg" id="help" onclick = "//prompt window with information" width = "60" height = "60" class = "topbar" style="top: 32px; right: 0px; opacity: 0.75;">
-  <div>
+  <div class="text">
     <h1 id="title">How To Play</h1>
-      <p>Below is a tutorial on how to play the game.</p>
+        <h2>Getting Started</h2>
+            <p>When you enter the home screen you will see four main options on the left, labeled as "Play", "Stats", "Tutorial", and "Leaderboard".</p>
+                <img class="tutorial" src="./assets/img/home_main.png">
+            <p>The "Play" button starts the game.</p>
+                <img class="tutorial" src="./assets/img/home_play.png">
+            <p>The "Stats" button displays stats of you and others.</p>
+                <img class="tutorial" src="./assets/img/home_stats.png">
+            <p>The "Leaderboard" button displays the top 10 players on the game.</p>
+                <img class="tutorial" src="./assets/img/home_leaderboard.png">
+            <p>The "Sign In" button allows you to sign up into your account for you to record your scores.</p>
+                <img class="tutorial" src="./assets/img/home_signin.png">
+        <h2>Start Playing</h2>
+            <p>Once clicking the "Play" button, you will need to select the difficulty you want to play.</p>
+                <img class="tutorial" src="./assets/img/home_level.png">
+            <p>Once you select your difficulty, you will see a map in the right corner. This is where you select your guess</p>
+                <img class="tutorial" src="./assets/img/game_map.png">
+            <p>In the top you will see statistics that show your score and time remaining.</p>
+                <img class="tutorial" src="./assets/img/game_stats.png">
+            <p>Once you select your guess and click the button that you are ready, you will see the screen with your total score in the background and your current score in the foreground.</p>
+                <img class="tutorial" src="./assets/img/game_score.png">
+            <p>Once you are done viewing this, you can click the next button to continue playing.</p>
+                <img class="tutorial" src="./assets/img/game_next.png">
   </div>
 </body>
 <script>
