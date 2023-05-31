@@ -29,7 +29,7 @@
 </head>
 <body onload = "resize()">
     <img src = "./assets/svg/home.svg" id="home"onclick = "home()" width = "60" height = "60" class = "topbarButtons" style="top: 32px; left: 0px; opacity: 0.75;">
-    <img src = "./assets/svg/help.svg" id="help" onclick = "//prompt window with information" width = "60" height = "60" class = "topbar" style="top: 32px; right: 0px; opacity: 0.75;">
+    <img src = "./assets/svg/help.svg" id="help" onclick = "info()" width = "60" height = "60" class = "topbarButtons" style="top: 32px; right: 0px; opacity: 0.75;">
 
   <style>
   * {
@@ -44,7 +44,7 @@
   table.board {
     font-size: 13pt;
     border-collapse: collapse;
-    margin: 25px 0;
+    margin-left: 377px !important;
     margin-top: 40px;
     width: 80%;
     font-family: "FuturaBoldItalic";
@@ -236,6 +236,9 @@
     <script>
       function home() {
           window.location.href = '/index.html'
+      }
+      function info() {
+          window.location.href = '/tutorial.html'
       }
     </script>
     <script>
