@@ -251,18 +251,18 @@
 
         function updateScoreCookie(score) {
             if (score <= 1500) {
-                document.getElementById("transitionFeedback").innerHTML = "You can do better!";
+                document.getElementById("transitionFeedback").innerHTML = "Do you need a map?";
                 document.getElementById("transitionRoundScore").innerHTML = "+" + score + " points";
             } else if (score <= 3000) {
-                document.getElementById("transitionFeedback").innerHTML = "Close!";
+                document.getElementById("transitionFeedback").innerHTML = "You can do better!";
                 document.getElementById("transitionRoundScore").innerHTML = "+" + score + " points";
             } else if (score <= 4000) {
+                document.getElementById("transitionFeedback").innerHTML = "Close!";
+                document.getElementById("transitionRoundScore").innerHTML = "+" + score + " points";
+            } else if (score <= 4750) {
                 document.getElementById("transitionFeedback").innerHTML = "Great job!";
                 document.getElementById("transitionRoundScore").innerHTML = "+" + score + " points";
-            } else if (score <= 4750) {
-                document.getElementById("transitionFeedback").innerHTML = "Perfect!";
-                document.getElementById("transitionRoundScore").innerHTML = "+" + score + " points";
-            } else if (score <= 4750) {
+            } else if (score <= 5000) {
                 document.getElementById("transitionFeedback").innerHTML = "Perfect!";
                 document.getElementById("transitionRoundScore").innerHTML = "+" + score + " points";
             }
@@ -354,14 +354,13 @@
                 document.getElementById("timer").style.filter = "blur(0px)";
                 document.getElementById("timerDropdown").style.filter = "blur(0px)";
                 // round logic to continue after screen is closed
-                if (round == 5) {
-                    document.getElementById("round").innerHTML = round + "/5";
+                round++;
+                document.getElementById("round").innerHTML = round + "/5";
+                if (round > 5) {
                     endGame();
                 } else {
-                    document.getElementById("round").innerHTML = round + "/5";
                     retrieveImage();
                 }
-                round++;
             }
         }
 
