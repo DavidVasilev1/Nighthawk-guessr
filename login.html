@@ -88,7 +88,7 @@ function auth(unID, pwID) {
         },
     };
     // fetch the data from API
-    fetch("http://127.0.0.1:8570/api/leaderboard/auth", read_options)
+    fetch("https://nighthawkguessr.duckdns.org/api/leaderboard/auth", read_options)
         // response is a RESTful "promise" on any successful fetch
         .then(response => {
             // check for response errors
@@ -133,7 +133,7 @@ function createUser(fnid, unid, pwid) {
         },
     };
     // fetch the data from API
-    fetch("http://127.0.0.1:8570/api/leaderboard/leaderboard", read_options)
+    fetch("https://nighthawkguessr.duckdns.org/api/leaderboard/leaderboard", read_options)
         // response is a RESTful "promise" on any successful fetch
         .then(response => {
             // check for response errors
