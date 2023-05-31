@@ -5,6 +5,8 @@
     <link rel="stylesheet" href="./assets/style.css">
 </head>
 <body onload="resize();" style="background-image: url('./assets/svg/background.svg');background-repeat: no-repeat;background-size: cover;cursor: default;">
+    <img src = "./assets/svg/home.svg" id="home"onclick = "home()" width = "60" height = "60" class = "topbarButtons" style="top: 32px; left: 0px; opacity: 0.75;">
+    
     <!-- <form id="loginForm">
         <label for="username">Username</label>
         <input type="text" id="username" name="username" required>
@@ -36,7 +38,7 @@
 
         <div    id="goToSignupText"         class="using" style="position:absolute;left:880px;top:763px;opacity:0.75;">Or sign up using</div>
         <div    id="goToSignUp"             class="using" style="position:absolute;left:919px;top:807px;" onclick="switchPage('login','signup')">SIGN UP</div>
-        <div    id="credits"                class="usingalt" style="position:absolute;left:1775px;top:1080px;opacity:0.25">Login page design by Ethan Zhao 2023</div>
+        <div    id="credits"                class="usingalt" style="left:1775px;top:1080px;opacity:0.25">Login page design by Ethan Zhao 2023</div>
     </div>
 
     <!-------------------------------------------------->
@@ -198,6 +200,9 @@ window.onresize = resize;
 function resize () {
     var current = window.innerWidth;
     var size = window.innerWidth/1920;
+    //menu
+    // dynamic_imgSize('home', 60, 60, 32, 0, size)
+
     //login
     dynamic_imgSize("loginbox", 600, 729, 660, 175, size);
     
@@ -249,6 +254,11 @@ function resize () {
     dynamic_TextSize('using', 20, size);
     dynamic_TextSize('usingalt', 7, size);
 
+}
+</script>
+<script>
+    function home() {
+    window.location.href = '/index.html'
 }
 </script>
 </html>
