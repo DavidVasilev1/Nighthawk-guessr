@@ -1,23 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <style>
-    /* body {
-        animation-name: fadeIn;
-        animation-iteration-count: 1;
-        animation-timing-function: ease-in-out;
-        animation-duration: 1s;
-        animation-fill-mode:forwards;
-    }
-
-    @keyframes fadeIn {
-        0% {
-            opacity: 0;
-        }
-        100% {
-            opacity: 1;
-        }
-    } */
-
     body {
         animation-name: color;
         animation-duration: 5s;
@@ -35,7 +18,6 @@
             background-color: #8fd4ff;
         }
     }
-
 </style>
 <head>
     <meta charset="UTF-8">
@@ -75,7 +57,7 @@ function getCookie(name) {
     <div class="bg" id="bg">
         <div id="text1" class="menuText bounce" style="top: 235px;" onclick="difficulty('prompt')">PLAY</div>
         <div id="text2" class="menuText bounce" style="top: 340px;" onclick="window.location = './Stats.html'">STATS</div>
-        <div id="text3" class="menuText bounce" style="top: 445px;" onclick="window.location = ''">TUTORIAL</div>
+        <div id="text3" class="menuText bounce" style="top: 445px;" onclick="window.location = './tutorial.html'">TUTORIAL</div>
         <div id="text4" class="menuText bounce" style="top: 550px;" onclick="window.location = './leaderboard.html'">LEADERBOARD</div>
         <img src = "./assets/svg/logo.svg" id="logo" width = "392" class = "home" style="top: 13px; left: 40px; opacity: 1;">
         <img src = "./assets/svg/profile.svg" id="profile" width = "80" height = "80" class = "home" style="top: 20px; left: 1436px; opacity: 1;">
@@ -235,6 +217,13 @@ function getCookie(name) {
 
         // IMAGE RESIZE
         dynamic_imgSize('photos1', 640, 640, 112, 775, size)
+
+        // TRANSITION SCREEN
+        dynamic_imgSize('difficultyPrompt', 734, 250, 307, 401, size)
+        dynamic_imgSize('difficultyEasy', 175, 88, 450, 446, size)
+        dynamic_imgSize('difficultyMedium', 175, 88, 450, 681, size)
+        dynamic_imgSize('difficultyHard', 175, 88, 450, 915, size)
+        dynamic_imgSize('difficultyClose', 21, 21, 336, 1084, size)
     }
 </script>
 

@@ -7,11 +7,14 @@
     <title>Nighthawk Guessr</title>
     <link rel="stylesheet" href="./assets/style.css">
 </head>
+
+<!-- Java Sctipt Chart Library  -->  
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-<body style="background-image: url('./assets/img/guess.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: cover;" onload = "resize()">
+<body onload = "resize()">
     <img src = "./assets/svg/home.svg" id="home"onclick = "home()" width = "60" height = "60" class = "topbar" style="top: 32px; left: 0px; opacity: 0.75;">
     <img src = "./assets/svg/help.svg" id="help" onclick = "//TBD" width = "60" height = "60" class = "topbar" style="top: 32px; right: 0px; opacity: 0.75;">
-    
+  
+   <!-- These are the styles for the tables, charts, fonts etc displayed on this page -->  
   <style>
   * {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -67,15 +70,35 @@
     color: #f1cc0c;
     opacity: 0.5;
   }
+  body {
+        animation-name: color;
+        animation-duration: 5s;
+        animation-iteration-count: infinite;
+    }
+    
+    @keyframes color {
+        0% {
+            background-color: #8fd4ff;
+        }
+        50% {
+            background-color: #5cb8f1;
+        }
+        100% {
+            background-color: #8fd4ff;
+        }
+    }
 </style>
   
  <div id="container">
   <h1>NIGHTHAWKGUESSR Stats</h1>
 
   <!-- This code creates three canvas elements, one for each type of chart. -->
-  <canvas id="easyChart" style="width:100%;max-width:700px;padding:100px"></canvas>
-  <canvas id="mediumChart" style="width:100%;max-width:700px;padding:100px"></canvas>
-  <canvas id="hardChart" style="width:100%;max-width:700px;padding:100px"></canvas>
+  <h2><u>Easy Point Propotions (Pie Chart Style)</u></h2>
+  <canvas id="easyChart" style="width:100%;max-width:1500px;padding:100px"></canvas>
+  <h2><u>Medium Point Distributions (Doughnut Chart Style)</u></h2>
+  <canvas id="mediumChart" style="width:100%;max-width:1500px;padding:100px"></canvas>
+  <h2><u>Hard Point Propotions (Bar Chart Style)</u></h2>
+  <canvas id="hardChart" style="width:100%;max-width:1500px;padding:100px"></canvas>
 
   <h2><u>Unsorted Standings</u></h2>
   
@@ -87,7 +110,6 @@
         <td>Easy Points</td>
         <td>Medium Points</td>
         <td>Hard Points</td>
-        <td>Total Points: E+2M+3H</td>
       </thead>
     </tr>
   </table>
@@ -102,7 +124,6 @@
         <td>Easy Points</td>
         <td>Medium Points</td>
         <td>Hard Points</td>
-        <td>Total Points: E+2M+3H</td>
       </thead>
     </tr>
   </table>
@@ -114,6 +135,7 @@
  </body>
  <script>
     window.onresize = resize;
+    // Handles browser resizes
     function resize () {
         var current = window.innerWidth;
         var size = window.innerWidth/1536;
@@ -121,6 +143,7 @@
  </script>
  
  <script>
+      // function to go back to home
       function home() {
           window.location.href = '/index.html'
       }
@@ -128,11 +151,10 @@
  
  <script>
       // Server URL
-      const api = "http://localhost:1337";
-      //const api = "http://localhost:8200";
+      const api = "http://localhost:8570";
       
       /**
-       * Get the Leaderboard data from Server 
+       * Get the Stats data from Server 
        */
       const getList = async () => {
         const list = await fetch(api + "/api/stats/statschart").then((r) => r.json());
@@ -142,24 +164,24 @@
       };
 
       /**
-       * Build the unsorted and sorted Leaderboard data from Server list 
+       * Build the unsorted and sorted Leaderboard Stats data from Server list 
        */
       getList().then(list => {
         list.forEach(cls => {
-          // Add each row  unsorted data
+          // Add each row  unsorted data to a table
           addTask(cls.username, cls.total, cls.Easy, cls.Medium, cls.Hard, schedule)
         })
 
         // Sort based on Hardpoints
         list = bubbleSort(list);
 
-        // Show Hardpoints sorted data
+        // Show Hardpoints sorted data in a table
         showHardpoints(list);
 
-        generateColors(list.length);
-        displayPieChart(list, easyChart, "pie", "Hard");
-        displayPieChart(list, mediumChart, "doughnut", "Easy");
-        displayPieChart(list, hardChart, "bar", "Medium");
+        //generateColors(list.length);
+        displayChart(list, easyChart, "pie", "Easy");
+        displayChart(list, mediumChart, "doughnut", "Medium");
+        displayChart(list, hardChart, "bar", "Hard");
 
       })
 
@@ -178,7 +200,7 @@
        */
       function addTask(username, total, pointsEasy, pointsMedium, pointsHard, tableID) {
   
-        var tableCells = [username, pointsEasy, pointsMedium, pointsHard, total]
+        var tableCells = [username, pointsEasy, pointsMedium, pointsHard]
         // create a row
         var row = document.createElement('tr')
 
@@ -222,7 +244,7 @@
         /**
          * This function creates a charts of pie, bar, doughnut.
          */
-        function displayPieChart(data, canvas, type, points) {
+        function displayChart(data, canvas, type, points) {
           
           // Create a new chart object.
           var chart = new Chart(canvas, {
@@ -259,8 +281,8 @@
             options: {
                // Display the title.
               title: {
-                display: true,
-                text:  points + " Point Propotions (" + type + " style)",
+                display: false,
+                text:  type + " style",
                 fontSize: 20
               },
                 
@@ -269,7 +291,7 @@
                 display: ( type === "bar" ? false : true),
                 position: "left",
                 labels: {
-                  fontSize: 20
+                  fontSize: 30
                 }   
               },
                 
@@ -284,21 +306,9 @@
           });
         }
      
-
-        //Test data
-        data = [
-          {"name": "Tom", "easy": 20, "medium": 50, "hard": 330},
-          {"name": "Zen", "easy": 60, "medium": 150, "hard": 930},
-          {"name": "Bob", "easy": 40, "medium": 56, "hard": 39},
-          {"name": "Ken", "easy": 50, "medium": 506, "hard": 239},
-          {"name": "Bob1", "easy": 40, "medium": 56, "hard": 39},
-          {"name": "Ken1", "easy": 50, "medium": 506, "hard": 239},  
-          {"name": "Bob2", "easy": 40, "medium": 56, "hard": 39},
-          {"name": "Ken2", "easy": 50, "medium": 506, "hard": 239},    
-        ];
-     
         // This function generates a random color.
-        var barColors = []
+        //var barColors = []
+        var barColors =  ["blue", "black", "green", "pink", "orange", "maroon", "purple", "teal", "grey", "yellow"]
         function generateColors(dataLength) {
             for (var i = 0; i < dataLength; i++) {
               var red = Math.floor(Math.random() * 255);
@@ -309,13 +319,11 @@
             }
         }
       
-      // build list
+      // (1) Build Stats list from Server 
+      // (2) Sort the list 
+      // (3) Display charts
+      // (4) Display unsorted and sorted table
       getList()
-
-     //generateColors(data.length);
-     //displayPieChart(data, easyChart, "pie", "Hard");
-     //displayPieChart(data, mediumChart, "doughnut", "Easy");
-     //displayPieChart(data, hardChart, "bar", "Medium");
 
   </script>
 </html>

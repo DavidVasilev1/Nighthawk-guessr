@@ -1,5 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+<style>
+  body {
+        animation-name: color;
+        animation-duration: 5s;
+        animation-iteration-count: infinite;
+    }
+    
+    @keyframes color {
+        0% {
+            background-color: #8fd4ff;
+        }
+        50% {
+            background-color: #5cb8f1;
+        }
+        100% {
+            background-color: #8fd4ff;
+        }
+    }
+    
+</style>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,7 +27,7 @@
     <title>Nighthawk Guessr</title>
     <link rel="stylesheet" href="./assets/style.css">
 </head>
-<body style="background-image: url('./assets/img/guess.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: cover;" onload = "resize()">
+<body onload = "resize()">
     <img src = "./assets/svg/home.svg" id="home"onclick = "home()" width = "60" height = "60" class = "topbarButtons" style="top: 32px; left: 0px; opacity: 0.75;">
     <img src = "./assets/svg/help.svg" id="help" onclick = "//prompt window with information" width = "60" height = "60" class = "topbar" style="top: 32px; right: 0px; opacity: 0.75;">
 
@@ -16,9 +36,10 @@
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   }
   h1 {
-    font-size: 32pt;
+    font-size: 45px;
     text-align: center;
     margin-top: 40px;
+    font-family: "FuturaBoldItalic";
   }
   table.board {
     font-size: 13pt;
@@ -26,7 +47,7 @@
     margin: 25px 0;
     margin-top: 40px;
     width: 80%;
-
+    font-family: "FuturaBoldItalic";
   }
   .board thead tr {
     font-size: 17pt;
@@ -34,6 +55,7 @@
     background-color: #246186;
     color: #ffffff;
     text-align: left;
+    font-family: "FuturaBoldItalic";
   }
   .board td {
     text-align: center;
@@ -41,6 +63,7 @@
     border: none;
     width: 200px;
     height: 50px;
+    font-family: "FuturaBoldItalic";
   }
   .board tr {
     font-weight: bold;
@@ -50,6 +73,7 @@
     background-color: #58a4d3;
     border-bottom: 4px solid #2b8bc6;
     width: 50%;
+    font-family: "FuturaBoldItalic";
   }
   .board tr:hover {
     color: #ffffff;
@@ -86,7 +110,7 @@
 </style>
   
  <div id="container">
-  <h1>NIGHTHAWKGUESSR Leaderboard</h1>
+  <h1 class="title">NIGHTHAWKGUESSR Leaderboard</h1>
   <table class="board" hidden id="total" style="margin-left: auto; margin-right: auto;">
     <tr>
       <thead>
@@ -198,23 +222,15 @@
         var current = window.innerWidth;
         var size = window.innerWidth/1536;
 
-        // TOP BAR RESIZE
-        //dynamic_TextSize('barText', 26, size)
-        //dynamic_Positioning('mapText', 60, 393, size)
-        //dynamic_Positioning('round', 60, 746, size)
-        //dynamic_Positioning('score', 60, 1070, size)
-        //dynamic_imgSize('bar', 800, 104, 10, 375, size)
-        // TOP BAR RESIZE
-
         // MENU BUTTONS RESIZE
         dynamic_imgSize('home', 60, 60, 32, 0, size)
         dynamic_imgSizeRight('help', 60, 60, 32, 0, size)
-        // MENU BUTTONS RESIZE
 
-        // MAP RESIZE
-        //dynamic_imgSize('map', 400, 400, 375, 1120, size)
-        dynamic_imgSize('submit', 400, 47, 790, 1120, size)
-        // MENU RESIZE
+        // TITLE
+        dynamic_TextSize('title', 45, size)
+
+        //TABLE
+        //weird
     }
     </script>
     <script>
@@ -229,7 +245,7 @@
         window.location.hostname === "[::1]" ||
         window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
       )
-      const api = isLocalhost ? "http://localhost:1337" : "";
+      const api = isLocalhost ? "http://localhost:8570" : "";
 
       const getList = async () => {
         const list = await fetch(api + "/api/leaderboard/leaderboardTop10").then((r) => r.json());
