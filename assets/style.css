@@ -139,6 +139,10 @@
     font-family: Inter-Bold;
     font-size: 20px;
 }
+.usingalt {
+    font-family: Inter-Bold;
+    font-size: 5px;
+}
 
 input[type="text"] {
     font-family: Inter-Bold;
