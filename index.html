@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,34 +6,7 @@
     <title>Nighthawk Guessr</title>
     <link rel="stylesheet" href="./assets/style.css">
 </head>
-<script>
 
-    window.onload = function() {
-    var token = getCookie('token');
-    if (!token) {
-        window.location.href = '/login.html';
-    }
-    
-}
-
-function getCookie(name) {
-    let cookieArr = document.cookie.split("; ");
-    
-    for(let i = 0; i < cookieArr.length; i++) {
-        let cookiePair = cookieArr[i].split("=");
-        
-        if(name == cookiePair[0]) {
-            return decodeURIComponent(cookiePair[1]);
-        }
-    }
-    return null;
-}
-//function signOut() {
-//    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-//    window.location.href = '/login.html';
-//}
-
-</script>
 <body style="background-color: #f4faf8;">
     <div class="menuText bounce" style="top: 235px;" onclick="window.location = './game.html'">PLAY</div>
     <div class="menuText bounce" style="top: 340px;" onclick="window.location = './Stats.html'">STATS</div>
