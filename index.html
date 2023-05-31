@@ -100,16 +100,16 @@ function signOut() {
 </script>
 <body style="background-color: #f4faf8;" onload="resize();authenticateLogin();">
     <div class="bg" id="bg">
-        <div id="text1" class="menuText bounce" style="top: 235px;" onclick="difficulty('prompt')">PLAY</div>
-        <div id="text2" class="menuText bounce" style="top: 340px;" onclick="window.location = './Stats.html'">STATS</div>
-        <div id="text3" class="menuText bounce" style="top: 445px;" onclick="window.location = './tutorial.html'">TUTORIAL</div>
-        <div id="text4" class="menuText bounce" style="top: 550px;" onclick="window.location = './leaderboard.html'">LEADERBOARD</div>
+        <div id="text1" class="menuText" style="top: 235px;" onclick="difficulty('prompt')">PLAY</div>
+        <div id="text2" class="menuText" style="top: 340px;" onclick="window.location = './Stats.html'">STATS</div>
+        <div id="text3" class="menuText" style="top: 445px;" onclick="window.location = './tutorial.html'">TUTORIAL</div>
+        <div id="text4" class="menuText" style="top: 550px;" onclick="window.location = './leaderboard.html'">LEADERBOARD</div>
         <img src = "./assets/svg/logo.svg" id="logo" width = "392" class = "home" style="top: 13px; left: 40px; opacity: 1;">
         <img src = "./assets/svg/profile.svg" id="profile" width = "80" height = "80" class = "home" style="top: 20px; left: 1436px; opacity: 1;">
         <div id="text5" class="menuText" style="top: 40px; left: 1175px;" onclick="window.location = './login.html'">SIGN IN</div>
         <img src = "./assets/svg/indexPhotos.svg" id="photos1" width = "640" height = "640" class = "home" style="top: 112px; left: 775px; opacity: 1;">
         <img src = "./assets/svg/exit.svg" id="photos2" width = "40" height = "40" class = "home" style="top: 801px; left: 1472px; opacity: 1;">
-        <div id="home" class="signOut bounce" style="top: 799px; left: 1278px; font-size: 35px;" onclick="signOut()">SIGN OUT</div>
+        <div id="signOut" class="signOut" style="top: 799px; left: 1278px; font-size: 35px;" onclick="signOut()">LOGOUT</div>
 
         <img src = "./assets/svg/difficultyPrompt.svg" id="difficultyPrompt" onclick = "" width = "734" height = "250" class = "" style="position: absolute; top: 307px; left: 401px; opacity: 0;pointer-events: none;z-index: 2;">
         <img src = "./assets/svg/difficultyEasy.svg" id="difficultyEasy" onclick = "gameRedirect('easy')" width = "175" height = "88" class = "difficultyOption" style="top: 450px; left: 446px; opacity: 0;pointer-events: none;filter: blur(0px);z-index: 2;">
@@ -150,7 +150,7 @@ function signOut() {
             document.getElementById("profile").style.pointerEvents = "none";
             document.getElementById("photos1").style.pointerEvents = "none";
             document.getElementById("photos2").style.pointerEvents = "none";
-            document.getElementById("home").style.pointerEvents = "none";
+            document.getElementById("signOut").style.pointerEvents = "none";
             document.getElementById("logo").style.filter = "blur(4px)";
             document.getElementById("profile").style.filter = "blur(4px)";
             document.getElementById("photos1").style.filter = "blur(4px)";
@@ -160,7 +160,7 @@ function signOut() {
             document.getElementById("text3").style.filter = "blur(4px)";
             document.getElementById("text4").style.filter = "blur(4px)";
             document.getElementById("text5").style.filter = "blur(4px)";
-            document.getElementById("home").style.filter = "blur(4px)";
+            document.getElementById("signOut").style.filter = "blur(4px)";
         } else if (option == "no") {
             document.getElementById("difficultyPrompt").style.opacity = "0";
             document.getElementById("difficultyPrompt").style.pointerEvents = "none";
@@ -177,7 +177,7 @@ function signOut() {
             document.getElementById("profile").style.pointerEvents = "all";
             document.getElementById("photos1").style.pointerEvents = "all";
             document.getElementById("photos2").style.pointerEvents = "all";
-            document.getElementById("home").style.pointerEvents = "all";
+            document.getElementById("signOut").style.pointerEvents = "all";
             document.getElementById("logo").style.filter = "blur(0px)";
             document.getElementById("profile").style.filter = "blur(0px)";
             document.getElementById("photos1").style.filter = "blur(0px)";
@@ -187,7 +187,7 @@ function signOut() {
             document.getElementById("text3").style.filter = "blur(0px)";
             document.getElementById("text4").style.filter = "blur(0px)";
             document.getElementById("text5").style.filter = "blur(0px)";
-            document.getElementById("home").style.filter = "blur(0px)";
+            document.getElementById("signOut").style.filter = "blur(0px)";
         }
     }
 </script>
@@ -251,10 +251,10 @@ function signOut() {
         dynamic_Positioning('text2', 340, 91, size)
         dynamic_Positioning('text3', 445, 91, size)
         dynamic_Positioning('text4', 550, 91, size)
-        dynamic_Positioning('text5', 40, 1175, size)
+        dynamic_Positioning('text5', 22, 1210, size)
         dynamic_TextSize('menuText', 63, size)
-        dynamic_Positioning('home', 803, 1278, size)
-        dynamic_TextSize('logOut', 35, size)
+        dynamic_Positioning('signOut', 800, 1270, size)
+        dynamic_TextSize('signOut', 35, size)
 
         // SMALL IMAGE RESIZE
         dynamic_imgSize('profile', 80, 80, 20, 1436, size)

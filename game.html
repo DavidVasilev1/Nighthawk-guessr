@@ -37,8 +37,8 @@
     <div id = "transitionTotalScore" width="1020" height="317" class = "transitionTextELarge" style="top:237px;left:629px;opacity:0;pointer-events: none;z-index:3;transform: rotate(-23deg);text-align:center;"></div>
     
     <img src = "./assets/svg/playAgain.svg" id="playAgain" onclick = "location.reload();" width = "486" height = "88" class = "leaveOption" style = "top:482px;left:525px;opacity:0;pointer-events:none;z-index:3;">
-    <img src = "./assets/svg/goLeaderboard.svg" id="goLeaderboard" onclick = "//gotoleaderboard" width = "175" height = "88" class = "leaveOption" style = "top:654px;left:1052px;opacity:0;pointer-events:none;z-index:3;">
-    <img src = "./assets/svg/gameExit.svg" id="gameExit" onclick = "//gotohome" width = "175" height = "88" class = "leaveOption" style = "top:654px;left:1252px;opacity:0;pointer-events:none;z-index:3;">
+    <img src = "./assets/svg/goLeaderboard.svg" id="goLeaderboard" onclick = "window.location = './leaderboard.html'" width = "175" height = "88" class = "leaveOption" style = "top:654px;left:1052px;opacity:0;pointer-events:none;z-index:3;">
+    <img src = "./assets/svg/gameExit.svg" id="gameExit" onclick = "window.location = './index.html'" width = "175" height = "88" class = "leaveOption" style = "top:654px;left:1252px;opacity:0;pointer-events:none;z-index:3;">
     <div id = "gameOver" width="1020" height="317" class = "transitionTextLarge" style="top:294px;left:552px;opacity:0;pointer-events: none;z-index:3;text-align:center;display:flex;align-items:center;justify-content:center;">GAME OVER!</div>
     <div id = "gamePoints" width="267" height="80" class = "transitionTextMed" style="top:374px;left:629px;opacity:0;pointer-events: none;z-index:3;text-align:center;"></div>
 </body>
@@ -174,7 +174,6 @@
 
         // sending pin location for distance calculations
         function sendPin() {
-            console.log("pin pos ("+pinLeft+", " +pinTop+ ")");
             const isLocalhost = Boolean(
                 window.location.hostname === "localhost" ||
                 window.location.hostname === "[::1]" ||
@@ -201,12 +200,10 @@
             //calculating points in backend
             const getList = async () => {
                 const list = await fetch(api + "/api/images/CalculatePoints", headers).then((r) => r.json());
-                console.log(headers);
                 return list;
             };
 
             getList().then(list => {
-                console.log(list);
                 updateScoreCookie(list);
                 let total = convertScoreToString();
                 document.getElementById("score").innerHTML = total;
@@ -216,9 +213,7 @@
 
         //getting score from backend and displaying on frontend
         function convertScoreToString() {
-            console.log(getTotal())
             let total_score = parseInt(getTotal())
-            console.log("Total Score " + total_score);
             return total_score.toLocaleString();
         }
         
@@ -255,22 +250,20 @@
         }
 
         function updateScoreCookie(score) {
-            console.log("debug: updateScoreCookie")
             if (score <= 1500) {
                 document.getElementById("transitionFeedback").innerHTML = "You can do better!";
-                console.log("debug: +" + score + " points")
                 document.getElementById("transitionRoundScore").innerHTML = "+" + score + " points";
             } else if (score <= 3000) {
                 document.getElementById("transitionFeedback").innerHTML = "Close!";
-                console.log("debug: +" + score + " points")
                 document.getElementById("transitionRoundScore").innerHTML = "+" + score + " points";
             } else if (score <= 4000) {
                 document.getElementById("transitionFeedback").innerHTML = "Great job!";
-                console.log("debug: +" + score + " points")
                 document.getElementById("transitionRoundScore").innerHTML = "+" + score + " points";
             } else if (score <= 4750) {
                 document.getElementById("transitionFeedback").innerHTML = "Perfect!";
-                console.log("debug: +" + score + " points")
+                document.getElementById("transitionRoundScore").innerHTML = "+" + score + " points";
+            } else if (score <= 4750) {
+                document.getElementById("transitionFeedback").innerHTML = "Perfect!";
                 document.getElementById("transitionRoundScore").innerHTML = "+" + score + " points";
             }
             let total = getTotal();
@@ -361,7 +354,6 @@
                 document.getElementById("timer").style.filter = "blur(0px)";
                 document.getElementById("timerDropdown").style.filter = "blur(0px)";
                 // round logic to continue after screen is closed
-                round++;
                 if (round == 5) {
                     document.getElementById("round").innerHTML = round + "/5";
                     endGame();
@@ -369,8 +361,22 @@
                     document.getElementById("round").innerHTML = round + "/5";
                     retrieveImage();
                 }
+                round++;
             }
         }
+
+function getCookie(name) {
+    let cookieArr = document.cookie.split("; ");
+    
+    for(let i = 0; i < cookieArr.length; i++) {
+        let cookiePair = cookieArr[i].split("=");
+        
+        if(name == cookiePair[0]) {
+            return decodeURIComponent(cookiePair[1]);
+        }
+    }
+    return null;
+}
         function endGame() {
             transition=true
             let total = convertScoreToString();
@@ -401,6 +407,55 @@
             document.getElementById("score").style.filter = "blur(4px)";
             document.getElementById("timer").style.filter = "blur(4px)";
             document.getElementById("timerDropdown").style.filter = "blur(4px)";
+
+            // move score to backend
+            username = (getCookie("auth")).split(":")[0];
+            key = (getCookie("auth")).split(":")[1];
+            difficulty = getCookie("difficulty")
+            if (difficulty == "easy") {
+                body = {
+                    username: username,
+                    key: key,
+                    pointsEasy: getTotal()
+                };
+            } else if (difficulty == "medium") {
+                body = {
+                    username: username,
+                    key: key,
+                    pointsMedium: getTotal()
+                };
+            } else if (difficulty == "hard") {
+                body = {
+                    username: username,
+                    key: key,
+                    pointsHard: getTotal()
+                };
+            }
+            const read_options = {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'default', // *default, no-cache, reload, force-cache, only-if-cached
+                body: JSON.stringify(body),
+                credentials: 'omit', // include, *same-origin, omit
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            };
+            // fetch the data from API
+            fetch("http://127.0.0.1:8570/api/leaderboard/leaderboard", read_options)
+                // response is a RESTful "promise" on any successful fetch
+                .then(response => {
+                    // check for response errors
+                    if (response.status !== 200) {
+                        const errorMsg = 'Database read error: ' + response.status;
+                        return;
+                    }
+                    // valid response will have json data
+            })
+            // catch fetch errors (ie ACCESS to server blocked)
+            .catch(err => {
+              console.error(err);
+            });
         }
         function leave(option) {
             if (option == "prompt") {
