@@ -14,7 +14,7 @@
     <img src = "" id = "guess" class = "topbar" style="top: 0px; left: 0px; opacity: 1;pointer-events: none;filter: blur(0px);">
     
     <img src = "./assets/svg/bar.svg" id = "bar" width = "800" height = "104" class = "topbar" style="top: 10px; left: 370px; opacity: 0.75;pointer-events: none;filter: blur(0px);">
-    <img src = "./assets/svg/help.svg" id="help" onclick = "//prompt window with information" width = "60" height = "60" class = "topbarButtons" style="top: 32px; right: 0px; opacity: 0.75;pointer-events: all;filter: blur(0px);">
+    <img src = "./assets/svg/help.svg" id="help" onclick = "info()" width = "60" height = "60" class = "topbarButtons" style="top: 32px; right: 0px; opacity: 0.75;pointer-events: all;filter: blur(0px);">
     <img src = "./assets/svg/home.svg" id="home" onclick = "leave('prompt')" width = "60" height = "60" class = "topbarButtons" style="top: 32px; left: 0px; opacity: 0.75;pointer-events: all;filter: blur(0px);">
     <img src = "./assets/img/map.png" id="map" class = "map" width = "400" height = "400" class = "topbar" style="top: 375px; left: 1120px; border-radius:50px;pointer-events: all;filter: blur(0px);z-index: 2;">
     <img src = "./assets/svg/pin.svg" id="pin" width = "21" height = "35" class = "topbar" style="opacity: 0; pointer-events: none;filter: blur(0px);z-index: 3;">
@@ -518,6 +518,9 @@ function getCookie(name) {
                     transitionBlur("unblur")
                 }
             }
+        }
+        function info() {
+            window.location.href = '/tutorial.html'
         }
     </script>
     <script>

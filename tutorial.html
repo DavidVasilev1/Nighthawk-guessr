@@ -26,6 +26,7 @@
     }
     h2 {
         font-family: "Inter-Bold";
+        font-size: 30px;
     }
     div {
       margin-left: auto;
@@ -35,16 +36,13 @@
     p {
         font-family: "Calibri";
         margin-left: 40px;
-        font-size: 20px;
+        font-size: 15px;
     }
     .tutorial {
         border-radius: 30px;
         border: 5px solid black;
-        width: 960px;
-        height: 540px;
-        text-align: center;
-        margin-left: auto;
-        margin-right: auto;
+        width: 720px;
+        height: 405px;
     }
 </style>
 <head>
@@ -56,36 +54,31 @@
 </head>
 <body onload = "resize()">
     <img src = "./assets/svg/home.svg" id="home"onclick = "home()" width = "60" height = "60" class = "topbarButtons" style="top: 32px; left: 0px; opacity: 0.75;">
-    <img src = "./assets/svg/help.svg" id="help" onclick = "leave('prompt')" width = "60" height = "60" class = "topbarButtons" style="top: 32px; right: 0px; opacity: 0.75;">
   
-    <img src = "./assets/svg/leavePrompt.svg" id="leavePromptBox" onclick = "" width = "250" height = "500" class = "" style="position: absolute; top: 790px; left: 1120px;z-index: 2;opacity:0;pointer-events:none;">
-    <img src = "./assets/svg/leavePromptYes.svg" id="leavePromptBoxYes" onclick = "window.location.href = './index.html';" width = "88" height = "175" class = "leaveOption" style="top: 790px; left: 1120px;z-index: 2;opacity:0;pointer-events:none;">
-    <img src = "./assets/svg/leavePromptNo.svg" id="leavePromptBoxNo" onclick = "leave('no')" width = "88" height = "175" class = "leaveOption" style="top: 790px; left: 1120px;z-index: 2;opacity:0;pointer-events:none;">
-  
-    <div class="text">
-        <h1 id="title">How To Play</h1>
-            <h2 id="title">Getting Started</h2>
-                <p id="text">When you enter the home screen you will see four main options on the left, labeled as "Play", "Stats", "Tutorial", and "Leaderboard".</p>
-                    <img class="tutorial" id="image" src="./assets/img/home_main.png">
-                <p id="text">The "Play" button starts the game.</p>
-                    <img class="tutorial" id="image" src="./assets/img/home_play.png">
-                <p id="text">The "Stats" button displays stats of you and others.</p>
-                    <img class="tutorial" id="image" src="./assets/img/home_stats.png">
-                <p id="text">The "Leaderboard" button displays the top 10 players on the game.</p>
-                    <img class="tutorial" id="image" src="./assets/img/home_leaderboard.png">
-                <p id="text">The "Sign In" button allows you to sign up into your account for you to record your scores.</p>
-                    <img class="tutorial" id="image" src="./assets/img/home_signin.png">
-            <h2 id="title">Start Playing</h2>
-                <p id="text">Once clicking the "Play" button, you will need to select the difficulty you want to play.</p>
-                    <img class="tutorial" id="image"src="./assets/img/home_level.png">
-                <p id="text">Once you select your difficulty, you will see a map in the right corner. This is where you select your guess</p>
-                    <img class="tutorial" id="image" src="./assets/img/game_map.png">
-                <p id="text">In the top you will see statistics that show your score and time remaining.</p>
-                    <img class="tutorial" id="image" src="./assets/img/game_stats.png">
-                <p id="text">Once you select your guess and click the button that you are ready, you will see the screen with your total score in the background and your current score in the foreground.</p>
-                    <img class="tutorial" id="image" src="./assets/img/game_score.png">
-                <p id="text">Once you are done viewing this, you can click the next button to continue playing.</p>
-                    <img class="tutorial" id="image" src="./assets/img/game_next.png">
+    <div class="text" id="textBox">
+        <h1 class="title" id="title">How To Play</h1>
+            <h2 class="title2">Getting Started</h2>
+                <p class="text">When you enter the home screen you will see four main options on the left, labeled as "Play", "Stats", "Tutorial", and "Leaderboard".</p>
+                    <img class="tutorial" id="image1" src="./assets/img/home_main.png">
+                <p class="text">The "Play" button starts the game.</p>
+                    <img class="tutorial" id="image2" src="./assets/img/home_play.png">
+                <p class="text">The "Stats" button displays stats of you and others.</p>
+                    <img class="tutorial" id="image3" src="./assets/img/home_stats.png">
+                <p class="text">The "Leaderboard" button displays the top 10 players on the game.</p>
+                    <img class="tutorial" id="image4" src="./assets/img/home_leaderboard.png">
+                <p class="text">The "Sign In" button allows you to sign up into your account for you to record your scores.</p>
+                    <img class="tutorial" id="image5" src="./assets/img/home_signin.png">
+            <h2 class="title2">Start Playing</h2>
+                <p class="text">Once clicking the "Play" button, you will need to select the difficulty you want to play.</p>
+                    <img class="tutorial" id="image6"src="./assets/img/home_level.png">
+                <p class="text">Once you select your difficulty, you will see a map in the right corner. This is where you select your guess</p>
+                    <img class="tutorial" id="image7" src="./assets/img/game_map.png">
+                <p class="text">In the top you will see statistics that show your score and time remaining.</p>
+                    <img class="tutorial" id="image8" src="./assets/img/game_stats.png">
+                <p class="text">Once you select your guess and click the button that you are ready, you will see the screen with your total score in the background and your current score in the foreground.</p>
+                    <img class="tutorial" id="image9" src="./assets/img/game_score.png">
+                <p class="text">Once you are done viewing this, you can click the next button to continue playing.</p>
+                    <img class="tutorial" id="image10" src="./assets/img/game_next.png">
     </div>
 </body>
 <script>
@@ -151,47 +144,26 @@ function resize () {
 
     // MENU BUTTONS RESIZE
     dynamic_imgSize('home', 60, 60, 32, 0, size)
-    dynamic_imgSizeRight('help', 60, 60, 32, 0, size)
 
     // TITLE
     dynamic_TextSize('title', 45, size)
+    dynamic_TextSize('title2', 30, size)
+    dynamic_TextSize('text', 15, size)
 
-    //TABLE
-    //weird
+    // IMAGES
+    dynamic_imgSize('image1', 720, 405, 0, 0, size)
+    dynamic_imgSize('image2', 720, 405, 0, 0, size)
+    dynamic_imgSize('image3', 720, 405, 0, 0, size)
+    dynamic_imgSize('image4', 720, 405, 0, 0, size)
+    dynamic_imgSize('image5', 720, 405, 0, 0, size)
+    dynamic_imgSize('image6', 720, 405, 0, 0, size)
+    dynamic_imgSize('image7', 720, 405, 0, 0, size)
+    dynamic_imgSize('image8', 720, 405, 0, 0, size)
+    dynamic_imgSize('image9', 720, 405, 0, 0, size)
+    dynamic_imgSize('image10', 720, 405, 0, 0, size)
+
 }
 function home() {
     window.location.href = '/index.html'
 }
-</script>
-<script>
-    function leave(option) {
-        if (option == "prompt") {
-            document.getElementById("leavePromptBoxYes").style.opacity = 0.75;
-            document.getElementById("leavePromptBoxYes").style.pointerEvents = "all";
-            document.getElementById("leavePromptBoxNo").style.opacity = 0.75;
-            document.getElementById("leavePromptBoxNo").style.pointerEvents = "all";
-            document.getElementById("leavePromptBox").style.opacity = 1;
-            document.getElementById("home").style.pointerEvents = "none";
-            document.getElementById("help").style.pointerEvents = "none";
-            document.getElementsByClassName("text").style.filter = "blur(4px)";
-            // document.getElementById("home").style.filter = "blur(4px)";
-            // document.getElementById("help").style.filter = "blur(4px)";
-            // document.getElementById("title").style.filter = "blur(4px)";
-            // document.getElementById("text").style.filter = "blur(4px)";
-            // document.getElementById("image").style.filter = "blur(4px)";
-        } else if (option == "no") {
-            document.getElementById("leavePromptBoxYes").style.opacity = 0;
-            document.getElementById("leavePromptBoxYes").style.pointerEvents = "none";
-            document.getElementById("leavePromptBoxNo").style.opacity = 0;
-            document.getElementById("leavePromptBoxNo").style.pointerEvents = "none";
-            document.getElementById("leavePromptBox").style.opacity = 0;
-            document.getElementById("home").style.pointerEvents = "all";
-            document.getElementById("help").style.pointerEvents = "all";
-            document.getElementById("home").style.filter = "blur(0px)";
-            document.getElementById("help").style.filter = "blur(0px)";
-            document.getElementById("title").style.filter = "blur(0px)";
-            document.getElementById("text").style.filter = "blur(0px)";
-            document.getElementById("image").style.filter = "blur(0px)";
-        }
-    }
 </script>

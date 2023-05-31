@@ -11,8 +11,8 @@
 <!-- Java Sctipt Chart Library  -->  
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <body onload = "resize()">
-    <img src = "./assets/svg/home.svg" id="home"onclick = "home()" width = "60" height = "60" class = "topbar" style="top: 32px; left: 0px; opacity: 0.75;">
-    <img src = "./assets/svg/help.svg" id="help" onclick = "//TBD" width = "60" height = "60" class = "topbar" style="top: 32px; right: 0px; opacity: 0.75;">
+    <img src = "./assets/svg/home.svg" id="home"onclick = "home()" width = "60" height = "60" class = "topbarButtons" style="top: 32px; left: 0px; opacity: 0.75;">
+    <img src = "./assets/svg/help.svg" id="help" onclick = "info()" width = "60" height = "60" class = "topbarButtons" style="top: 32px; right: 0px; opacity: 0.75;">
   
    <!-- These are the styles for the tables, charts, fonts etc displayed on this page -->  
   <style>
@@ -146,6 +146,9 @@
       // function to go back to home
       function home() {
           window.location.href = '/index.html'
+      }
+      function info() {
+          window.location.href = '/tutorial.html'
       }
  </script>
  
