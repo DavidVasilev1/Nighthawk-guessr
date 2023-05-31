@@ -36,6 +36,11 @@
     <div id = "transitionRoundScore" width="267" height="80" class = "transitionTextMed" style="top:471px;left:629px;opacity:0;pointer-events: none;z-index:3;text-align:center;"></div>
     <div id = "transitionTotalScore" width="1020" height="317" class = "transitionTextELarge" style="top:237px;left:629px;opacity:0;pointer-events: none;z-index:3;transform: rotate(-23deg);text-align:center;"></div>
     
+    <img src = "./assets/svg/playAgain.svg" id="playAgain" onclick = "location.reload();" width = "486" height = "88" class = "leaveOption" style = "top:482px;left:525px;opacity:0;pointer-events:none;z-index:3;">
+    <img src = "./assets/svg/goLeaderboard.svg" id="goLeaderboard" onclick = "//gotoleaderboard" width = "175" height = "88" class = "leaveOption" style = "top:654px;left:1052px;opacity:0;pointer-events:none;z-index:3;">
+    <img src = "./assets/svg/gameExit.svg" id="gameExit" onclick = "//gotohome" width = "175" height = "88" class = "leaveOption" style = "top:654px;left:1252px;opacity:0;pointer-events:none;z-index:3;">
+    <div id = "gameOver" width="1020" height="317" class = "transitionTextLarge" style="top:294px;left:552px;opacity:0;pointer-events: none;z-index:3;text-align:center;display:flex;align-items:center;justify-content:center;">GAME OVER!</div>
+    <div id = "gamePoints" width="267" height="80" class = "transitionTextMed" style="top:374px;left:629px;opacity:0;pointer-events: none;z-index:3;text-align:center;"></div>
 </body>
     <script>
     var round = 1;
@@ -131,6 +136,14 @@
         dynamic_Positioning('transitionRoundScore', 471, 629, size)
         dynamic_Positioning('transitionFeedback', 391, 635, size)
         // TRANSITION RESIZE
+
+        // GAME OVER
+        dynamic_imgSize('playAgain', 486, 88, 482, 525, size)
+        dynamic_imgSize('goLeaderboard', 175, 88, 654, 1052, size)
+        dynamic_imgSize('gameExit', 175, 88, 654, 1252, size)
+        dynamic_Positioning('gameOver', 294, 552, size)
+        dynamic_Positioning('gamePoints', 374, 629, size)
+        // GAME OVER
     }
     </script>
     <script> // util
@@ -357,16 +370,20 @@
                     retrieveImage();
                 }
             }
-            
         }
         function endGame() {
             transition=true
-            document.getElementById("transitionPage").style.pointerEvents = "all";
+            let total = convertScoreToString();
+            document.getElementById("gamePoints").innerHTML = total + " POINTS";
             document.getElementById("transitionPage").style.opacity = "1";
-            // play again button
-            // exit button
-            // leaderboard button
-            // text
+            document.getElementById("playAgain").style.pointerEvents = "all";
+            document.getElementById("playAgain").style.opacity = "1";
+            document.getElementById("goLeaderboard").style.pointerEvents = "all";
+            document.getElementById("goLeaderboard").style.opacity = "1";
+            document.getElementById("gameExit").style.pointerEvents = "all";
+            document.getElementById("gameExit").style.opacity = "1";
+            document.getElementById("gameOver").style.opacity = "1";
+            document.getElementById("gamePoints").style.opacity = "0.75";
 
             document.getElementById("home").style.pointerEvents = "none";
             document.getElementById("help").style.pointerEvents = "none";
