@@ -1,4 +1,4 @@
-<!--Dude sorry!-->
+    <!--Dude sorry!-->
 
 
 <!DOCTYPE html>
@@ -195,7 +195,7 @@
                 body: JSON.stringify(body)
             }
 
-            const api = isLocalhost ? "http://localhost:8570" : "";
+            const api = isLocalhost ? "http://localhost:8570" : "https://nighthawkguessr.duckdns.org";
             
             //calculating points in backend
             const getList = async () => {
@@ -441,7 +441,7 @@ function getCookie(name) {
                 },
             };
             // fetch the data from API
-            fetch("http://127.0.0.1:8570/api/leaderboard/leaderboard", read_options)
+            fetch("https://nighthawkguessr.duckdns.org/api/leaderboard/leaderboard", read_options)
                 // response is a RESTful "promise" on any successful fetch
                 .then(response => {
                     // check for response errors
@@ -535,7 +535,7 @@ function getCookie(name) {
             window.location.hostname === "[::1]" ||
             window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
         )
-        const api = isLocalhost ? "http://localhost:8570" : "";
+        const api = isLocalhost ? "http://localhost:8570" : "https://nighthawkguessr.duckdns.org";
         var endpoint = "/api/images/GetEasyImage"
 
         const getList = async () => {
