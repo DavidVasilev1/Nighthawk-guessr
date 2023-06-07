@@ -1,3 +1,5 @@
+---
+---
 <!DOCTYPE html>
 <html lang="en">
 <style>
@@ -27,55 +29,7 @@
     <link rel="stylesheet" href="./assets/style.css">
 </head>
 <script>
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-}
-
-function authenticateLogin() {
-    username = (getCookie("auth")).split(":")[0];
-    key = (getCookie("auth")).split(":")[1];
-    const body = {
-        username: username,
-        key: key
-    };
-    const read_options = {
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, *cors, same-origin
-        cache: 'default', // *default, no-cache, reload, force-cache, only-if-cached
-        body: JSON.stringify(body),
-        credentials: 'omit', // include, *same-origin, omit
-        headers: {
-            'Content-Type': 'application/json'
-        },
-    };
-    // fetch the data from API
-    fetch("http://127.0.0.1:8570/api/leaderboard/wap", read_options)
-        // response is a RESTful "promise" on any successful fetch
-        .then(response => {
-            // check for response errors
-            if (response.status !== 200) {
-                const errorMsg = 'Database read error: ' + response.status;
-                return;
-            }
-            // valid response will have json data
-            response.json().then(data => {
-            if (data !== null) {
-                if (data) {
-                    document.getElementById("text5").innerHTML = username;
-                }
-            }
-            else {
-                // display invalid creds
-            }
-        })
-    })
-    // catch fetch errors (ie ACCESS to server blocked)
-    .catch(err => {
-      console.error(err);
-    });
-}
+{% include env.js %}
 
 function getCookie(name) {
     let cookieArr = document.cookie.split("; ");
@@ -89,6 +43,34 @@ function getCookie(name) {
     }
     return null;
 }
+
+async function authenticateLogin() {
+    const read_options = {
+        method: 'GET', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        cache: 'default', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'omit', // include, *same-origin, omit
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'JWT ' + getCookie('auth')
+        },
+    };
+    try {
+        let response = await fetch(api + "/auth_status", read_options);
+        if (response.ok){
+            let data = await response.json();
+            document.body.style.visibility = "visible";
+            document.getElementById("text5").innerHTML = data['username'];
+            return;
+        }
+     console.log("authentication failed");
+    } catch(e){
+       console.error(e);
+    }
+    window.location.href='./login';
+}
+
+
 function signOut() {
     var Cookies = document.cookie.split(';');
     for (var i = 0; i < Cookies.length; i++) {
@@ -98,7 +80,7 @@ function signOut() {
 }
 
 </script>
-<body style="background-color: #f4faf8;" onload="resize();authenticateLogin();">
+<body style="background-color: #f4faf8; visibility:hidden" onload="resize();authenticateLogin(); ">
     <div class="bg" id="bg">
         <div id="text1" class="menuText" style="top: 235px;" onclick="difficulty('prompt')">PLAY</div>
         <div id="text2" class="menuText" style="top: 340px;" onclick="window.location = './Stats.html'">STATS</div>

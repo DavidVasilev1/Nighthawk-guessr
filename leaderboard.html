@@ -1,3 +1,5 @@
+---
+---
 <!DOCTYPE html>
 <html lang="en">
 <style>
@@ -242,14 +244,7 @@
       }
     </script>
     <script>
-      
-      const isLocalhost = Boolean(
-        window.location.hostname === "localhost" ||
-        window.location.hostname === "[::1]" ||
-        window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
-      )
-      const api = isLocalhost ? "http://localhost:8570" : "https://nighthawkguessr.duckdns.org";
-
+    {% include env.js %}  
       const getList = async () => {
         const list = await fetch(api + "/api/leaderboard/leaderboardTop10").then((r) => r.json());
         console.log("ap",list);

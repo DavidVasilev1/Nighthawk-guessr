@@ -1,3 +1,5 @@
+---
+---
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,6 +72,7 @@
     </div>
 </body>
 <script>
+{% include env.js %} 
 function auth(unID, pwID) {
     username = document.getElementById(unID).value;
     password = document.getElementById(pwID).value;
@@ -88,7 +91,7 @@ function auth(unID, pwID) {
         },
     };
     // fetch the data from API
-    fetch("https://nighthawkguessr.duckdns.org/api/leaderboard/auth", read_options)
+    fetch(api + "/auth", read_options)
         // response is a RESTful "promise" on any successful fetch
         .then(response => {
             // check for response errors
@@ -98,12 +101,8 @@ function auth(unID, pwID) {
             }
             // valid response will have json data
             response.json().then(data => {
-            if (data !== null) {
-                document.cookie = "auth="+data;
+                document.cookie = "auth="+data['access_token'];
                 window.location.href = '/index.html';
-            }
-            else {
-            }
         })
     })
     // catch fetch errors (ie ACCESS to server blocked)
@@ -111,16 +110,12 @@ function auth(unID, pwID) {
       console.error(err);
     });
 }
-function createUser(fnid, unid, pwid) {
-    fullname = document.getElementById(fnid).value;
+function createUser(fnuid, unid, pwid) {
     username = document.getElementById(unid).value;
     password = document.getElementById(pwid).value;
     const body = {
         username: username,
-        password: password,
-        pointsEasy: 0,
-        pointsMedium: 0,
-        pointsHard: 0
+        password: password
     };
     const read_options = {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -133,29 +128,18 @@ function createUser(fnid, unid, pwid) {
         },
     };
     // fetch the data from API
-    fetch("https://nighthawkguessr.duckdns.org/api/leaderboard/leaderboard", read_options)
+    fetch(api + "/register", read_options)
         // response is a RESTful "promise" on any successful fetch
         .then(response => {
             // check for response errors
-            if (response.status !== 200) {
-                const errorMsg = 'Database read error: ' + response.status;
+            if (response.status !== 201) {
                 return;
             }
-            // valid response will have json data
-            response.json().then(data => {
-            if (data !== null) {
-                window.location = "./index.html"
-            }
-            else {
-                // display invalid creds
-            }
+            auth(unid, pwid);
         })
-    })
-    // catch fetch errors (ie ACCESS to server blocked)
-    .catch(err => {
-      console.error(err);
-    });
-    auth(unid, pwid)
+        .catch(err => {
+            console.error(err);
+        });
 }
 function switchPage(current, page) {
     document.getElementById(current).style.opacity = "0";

@@ -1,0 +1,1 @@
+const api = ['localhost', '127.0.0.1'].includes(window.location.hostname) ? "http://localhost:8570" : "https://nighthawkguessr.duckdns.org";
