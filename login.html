@@ -102,7 +102,7 @@ function auth(unID, pwID) {
             // valid response will have json data
             response.json().then(data => {
                 document.cookie = "auth="+data['access_token'];
-                window.location.href = '/index.html';
+                window.location.href = './index.html';
         })
     })
     // catch fetch errors (ie ACCESS to server blocked)
